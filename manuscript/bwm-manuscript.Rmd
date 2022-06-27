@@ -1,5 +1,5 @@
 ---
-title: "Effect of urbanization and varying diets on the microbiome composition of the western black widow (Latrodectus hesperus)"
+title: "Effect of urbanization and varying diets on the microbiome of the western black widow (Latrodectus hesperus)"
 output: 
   word_document:
     reference_docx: bwm-styles.docx
