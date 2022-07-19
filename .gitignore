@@ -8,6 +8,7 @@ manuscript/*.log
 manuscript/*.aux
 manuscript/*.out
 
-# ignore tests and dump folders
+# ignore folders
 dump
 tests
+illumina_seq-folder
