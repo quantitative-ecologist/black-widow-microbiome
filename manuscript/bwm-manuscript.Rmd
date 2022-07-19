@@ -40,44 +40,6 @@ This study will provide a better understanding of the impacts of urbanization on
 
 \newpage
 # Materials and methods {.unnumbered}
-Black widow (Latrodectus hesperus)
-Western black widows (Latrodectus hesperus) will be used as a biological model to assess the impact of diets on the structure of their gut microbiome. L. hesperus occurs in cities and desert habitats from Mexico to western Canada. It is a polyphagous predatory species that feeds on a wide variety of prey. 
-They are considered generalist predators. Mature females are mostly solitary and sedentary. Indeed, it is a predatory arthropod that has a predation strategy based on the creation of a 3D web that is defined by a sit and wait mode. They would tend to stay on their web for a long time and feed locally on the prey that falls on their web (Dunaj, Bettencourt, Garb, et al. ,2020). The web would also be an interesting bio indicator that could inform on the nature of prey, predators and bacteria. Indeed, the web is a rich microbial environment that could provide information about the ecosystem and available prey.
-Predatory arthropods have a relatively simple gut and the diversity of their microbiome seems more likely to be affected by their diet. Black widow spiders (genus Latrodectus) are therefore a particularly suitable system to understand how microbes influence spider evolution
-The black widows used in the experiment come from a wild population collected and were reared and maintained in the laboratory under standardized conditions for a minimum of 3 years. The individuals were isolated and exposed to the same conditions of temperature (24°C ± 2°C), humidity (40% RH) and a day-night cycle of 12h-12h. Non-experimental individuals were fed twice a month with a live cricket.
-
-Methodology for the microbiome of spiders in the field
-In order to successfully extract as much genetic material as possible, it took an extensive period of optimization of the protocol. With L. hesperus specimens reared in the laboratory at the Université du Québec à Montréal (UQAM), several compartments (cuticles, bristles, feces, etc.) were tested with tested with different protocols from QIAGEN and targeting different genetic materials (eithergenetic material (either DNA or bacterial RNA). It was finally determined that bacterial DNA would be extracted more efficiently with the DNeasy® PowerSoil® protocol (QIAGEN).
-Sampling and Fieldwork
-During the sampling period (spring 2020), a total of 14 specimens of L. Hesperus were captured in the vicinity of and outside the city of Tucson, Arizona (USA). These specimens were distributed among 4 different sites, including 2 desert wilderness sites (Chaos Canyon (CC) and Dove Mountain (DM)) and 2 urban sites (University of Arizona Campus (UA) and a Lowe's (LO) parking lot). Spider webbing was collected for each individual captured under relatively sterile individual captured under relatively sterile conditions (latex gloves and alcohol) with a Falcon tube and a disinfected metal rod. The webs were recovered by turning the rod in the center of the specimen and was captured with a Falcon tube and a metal rod. The 14 individuals and their respective webs were identified and transported alive to storage at -20°C. The samples were finally sent by mail (placed in dry ice) to the laboratories of UQAM. The samples were placed on ice at irregular intervals during initial storage, transportation and finally final storage at the UQAM laboratories. The samples of each location and type, however, underwent this intermittent cooling uniformly. 
-
-Methodology for the microbiome of spiders in the laboratory
-Feeding bioassay
-In a laboratory feeding experiment, we tested whether a single meal has the potential to alter the gut bacterial community of black widow.
-The spiders were randomly allocated to three treatments: (1) no food (control), (2) a meal consisting of Gryllodes sigillatus (crickets), and (3) a meal consisting of Porcellionides pruinosus (isopod). Isopods are present in city. Isopods are poor in nutrients and contain little protein.
-Crickets represents one of the common preys of spider in labotary. They represent a food rich in lipid and protein that is beneficial to spiders
-Each individual was first transferred to a cardboard support where they build their web for 5 days. Second, the black widows were divided into their three distinct groups and identified in the database. Then, prey was administered weekly to maintain them at their satiation level. The diets were maintained for 6 weeks and the spiders were dissected 72 hours after their last meal. In the control group, the spiders were not fed for 6 weeks. 
-Cricket and isopod 
-The crickets and isopods used are within the range of potential natural prey. They both come from a controlled and ethical farm located on the south shore of Montreal.
-For the first diet, crickets of the species Gryllodes sigillatus were chosen and raised in the laboratory. They are housed in ventilated containers and maintained at room temperature. They are fed regularly with an assortment of vegetables, pet food and plants. Crickets are a good source of protein while being low in fat. They also have a very low calcium/phosphorus ratio. For the second diet, isopods of the species Porcellionides pruinosus were chosen and raised in the laboratory. The sowbugs are small terrestrial crustaceans that are not very nutritious. They are very low in fat and protein but very rich in several minerals, including calcium. They are kept in their container in a humid culture environment and at room temperature. They are fed with carrots and vegetables about twice a week.
-
-Sample processing for both of experience
-The analysis of intestinal bacteria was performed on dissected digestive tracts and the lipid profile. Each spider was transferred to a plastic jar with a lid to be anesthetized by introducing CO2 for 2 to 5 minutes than by freezing in a -20°C freezer. The samples were then rinsed in three steps. I performed an initial rinse with sterile pure water for 1 minute, followed by a second rinse with 70% ethanol for 5 minutes, and then a series of three more rinses times with sterile pure water. The hindgut of each individual was dissected in 0.1 M Sodium Chloride, 0.015 M Sodium Citrate, 0.1% Diethyl Pyrocarbonate sterile solution with sterile forceps under a binocular loupe, placed in 1.5 ml microcentrifuge tubes, washed three times with sterile water. All manipulations were performed under flame and the equipment sterilized at each use.
-Spiders being sacrificed, then stored at -20°C until DNA was extracted. the dissection was done in the same day of their euthanasia
-
-Extraction and amplification of DNA
-An external sterilization of the cuticle was performed before the bacterial DNA extractions for each spider to avoid any contamination to the internal microbiota. The specimens were first placed in a Falcon tube containing ultrapure water and then subjected to the sonicator  for 60 sec. They were then immersed in 95% ethanol and vortexed 30 sec. The same  step follows with 75% ethanol. Afterwards, the spiders are placed in a sterile mortar, then crushed to extract the inner liquids with a filter pipette and added to the   solution C1 of the DNeasy® PowerSoil® kit (QIAGEN), which will be used for all DNA extractions. 
-
-It is therefore the complete internal environment (fatty masses, cephalothorax, intestinal tract, ovaries, legs, etc. except for the cuticles) which is evaluated for its microbiota of spider on the field. The respective webs  respective webs were first dissected and cut under the hood or Bunsen flame with knives with sterile knives and tweezers and then incorporated into solution C1 of the DNeasy® PowerSoil® kit (QIAGEN) in order to analyze their to analyze their surfaces for bacteria. 
-For spider diet, after 6 weeks of a strict diet, three individuals per group were sacrificed in order to collect the digestive tract and the lipidic profile to extract the microbial DNA. The dissections were performed 72h after their last meal. Each spider was sterilized and then dissected under a binocular light microscope before used the DNeasy® PowerSoil® kit (QIAGEN). 
-A PCR was performed with the bacterial DNA extracted with the PCR Master Mix (QIAGEN) as well as the buffer and amplifying solution from Invitrogen company.
-
-À VALIDER
-Bactérie Tm = 57°C Eucaryotes Tm = 61°C
-Bacteria with 5uL DNA and Eucaryote 2uL DNA
-Polymerase : Phusion Hot Start II High-Fidelity
-
-Analyses statistiques
 
 
 \newpage
