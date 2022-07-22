@@ -45,7 +45,7 @@
  
  track_tab <- readRDS(
     file.path(outputs,
-              "env-track-reads.rds"))
+              "env-bac-track-reads.rds"))
  # remove negative control             
  track_tab <- track_tab[-(23), .(sample, nonchim)]
  setnames(track_tab, "nonchim", "nonchim_reads")
@@ -114,10 +114,16 @@ rownames(infos) <- rownames(seqtab.nochim)
 
 
 
+# Assign file path -------------------------------------------------
+
+ path <- file.path("./env-folder/env-data")
+
+
+
 # Save the R object table as .rds ----------------------------------
 
 # Save the phyloseq object to work with it
- saveRDS(ps, file.path(outputs, "env-bac-phylotab.rds"))
+ saveRDS(ps, file.path(path, "env-bac-phylotab.rds"))
 
 
 
@@ -125,11 +131,11 @@ rownames(infos) <- rownames(seqtab.nochim)
  
  # Save the modified taxonomy table (Short Name)
  write.csv(as.data.frame(as(tax_table(ps), "matrix")),
-           file = file.path(outputs, "ASV.tax.SN.csv"))
+           file = file.path(path, "env-bac-ASVTax-SN.csv"))
  
  # Save the modified transposed ASV matrix (Short Name)
  write.csv(as.data.frame(as(otu_table(ps), "matrix")),
-           file = file.path(outputs, "ASV.matrix.t.SN.csv"))
+           file = file.path(path, "env-bac-ASVMatrix-t-SN.csv"))
 
 # ==================================================================
 # ==================================================================
