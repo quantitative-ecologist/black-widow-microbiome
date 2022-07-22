@@ -66,6 +66,7 @@
 
 infos <- data.frame(
     sample_id = rownames(seqtab.nochim),
+    sample_no = seq(1, 28),
     sample_type = grepl("VN",
                         rownames(seqtab.nochim),
                         fixed = TRUE),
