@@ -12,3 +12,4 @@ manuscript/*.out
 dump
 tests
 illumina_seq-folder
+DnaSeq-pipeline
