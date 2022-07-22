@@ -131,11 +131,11 @@ rownames(infos) <- rownames(seqtab.nochim)
  
  # Save the modified taxonomy table (Short Name)
  write.csv(as.data.frame(as(tax_table(ps), "matrix")),
-           file = file.path(outputs, "ASV.tax.SN.csv"))
+           file = file.path(path, "ASV.tax.SN.csv"))
  
  # Save the modified transposed ASV matrix (Short Name)
  write.csv(as.data.frame(as(otu_table(ps), "matrix")),
-           file = file.path(outputs, "ASV.matrix.t.SN.csv"))
+           file = file.path(path, "ASV.matrix.t.SN.csv"))
 
 # ==================================================================
 # ==================================================================
