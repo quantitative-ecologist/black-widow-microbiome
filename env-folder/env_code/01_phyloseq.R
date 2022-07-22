@@ -45,7 +45,7 @@
  
  track_tab <- readRDS(
     file.path(outputs,
-              "env-track-reads.rds"))
+              "env-bac-track-reads.rds"))
  # remove negative control             
  track_tab <- track_tab[-(23), .(sample, nonchim)]
  setnames(track_tab, "nonchim", "nonchim_reads")
@@ -116,7 +116,9 @@ rownames(infos) <- rownames(seqtab.nochim)
 
 # Assign file path -------------------------------------------------
 
-path <- file.path("./env-folder/env-data")
+ path <- file.path("./env-folder/env-data")
+
+
 
 # Save the R object table as .rds ----------------------------------
 
