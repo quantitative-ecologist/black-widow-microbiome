@@ -114,14 +114,10 @@ rownames(infos) <- rownames(seqtab.nochim)
 
 
 
-# Assign file path -------------------------------------------------
-
-path <- file.path("./env-folder/env-data")
-
 # Save the R object table as .rds ----------------------------------
 
 # Save the phyloseq object to work with it
- saveRDS(ps, file.path(path, "env-bac-phylotab.rds"))
+ saveRDS(ps, file.path(outputs, "env-bac-phylotab.rds"))
 
 
 
