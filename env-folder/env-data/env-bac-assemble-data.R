@@ -31,20 +31,20 @@
 # Import data ------------------------------------------------------
 
  # Folder path
- outputs <- "./dnaSeq-pipeline/pipeline-env/outputs-env-bac"
+ folder <- "./env-folder/env-data"
  
 
- # .rds data
+ # .rds objects
  seqtab.nochim <- readRDS(
-    file.path(outputs,
+    file.path(folder,
               "env-bac-seqtab-nochim-clean.rds"))
  
  taxid <- readRDS(
-    file.path(outputs,
+    file.path(folder,
               "env-bac-taxid.rds"))
  
  track_tab <- readRDS(
-    file.path(outputs,
+    file.path(folder,
               "env-bac-track-reads.rds"))
  # remove negative control             
  track_tab <- track_tab[-(23), .(sample, nonchim)]
@@ -114,16 +114,10 @@ rownames(infos) <- rownames(seqtab.nochim)
 
 
 
-# Assign file path -------------------------------------------------
-
- path <- file.path("./env-folder/env-data")
-
-
-
 # Save the R object table as .rds ----------------------------------
 
 # Save the phyloseq object to work with it
- saveRDS(ps, file.path(path, "env-bac-phylotab.rds"))
+ saveRDS(ps, file.path(folder, "env-bac-phylotab.rds"))
 
 
 
@@ -131,11 +125,11 @@ rownames(infos) <- rownames(seqtab.nochim)
  
  # Save the modified taxonomy table (Short Name)
  write.csv(as.data.frame(as(tax_table(ps), "matrix")),
-           file = file.path(path, "env-bac-ASVTax-SN.csv"))
+           file = file.path(folder, "env-bac-ASVTax-SN.csv"))
  
  # Save the modified transposed ASV matrix (Short Name)
  write.csv(as.data.frame(as(otu_table(ps), "matrix")),
-           file = file.path(path, "env-bac-ASVMatrix-t-SN.csv"))
+           file = file.path(folder, "env-bac-ASVMatrix-t-SN.csv"))
 
 # ==================================================================
 # ==================================================================
