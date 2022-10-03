@@ -36,7 +36,7 @@
 
  # .rds objects
  seqtab.nochim <- readRDS(
-    file.path(folder,
+    file.path(folder, "env-raw"
               "env-bac-seqtab-nochim-clean.rds"))
  
  taxid <- readRDS(
