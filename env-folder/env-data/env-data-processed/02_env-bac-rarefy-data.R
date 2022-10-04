@@ -29,7 +29,7 @@
 
  library(phyloseq)
  library(data.table)
- library(picante)
+ library(vegan)
 
 
 
@@ -147,6 +147,46 @@ comm.pca <- prcomp(decostand(comm, "hellinger"))
 # plot ordination results
 ordiplot(comm.pca, display = "sites", type = "text", cex = 0.5)
 
+
+# ==================================================================
+# ==================================================================
+
+
+
+
+# Cette partie est un Test présentement.
+# ==================================================================
+# 10. Check for sequences in the negative controls
+# ==================================================================
+ 
+ # check l'étape du negatif controle
+# remove negative control             
+ track_tab <- track_tab[-(23), .(sample, nonchim)]
+
+
+ # Subset negative control sequences
+ neg <- subset(as.data.frame(t(seqtab.nochim)), `PCR-neg-CTRL-bac` != 0)
+ 
+
+ # First, verify the distribution of sequences
+ # Delete sequences from the negative control
+ seqtab.nochim <- seqtab.nochim[-c(23),
+                                -which(colnames(seqtab.nochim) %in%
+                                       rownames(neg))
+]
+
+ saveRDS(seqtab.nochim,
+         file = file.path(outputs, "env-bac-seqtab.nochim-clean.rds"))
+
+
+ # Save the taxonomy file as a .csv
+ write.csv(as.data.frame(taxid),
+           file = file.path(outputs, "env-bac-ASVTax.csv"))
+ 
+
+ # Save as a transposed ASV matrix to prevent loading bug (too many columns)
+ write.csv(as.data.frame(t(seqtab.nochim)),
+           file = file.path(outputs, "env-bac-ASVMatrix-t.csv"))
 
 # ==================================================================
 # ==================================================================

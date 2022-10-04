@@ -36,18 +36,17 @@
 
  # .rds objects
  seqtab.nochim <- readRDS(
-    file.path(folder, "env-raw",
+    file.path(folder, "env-data-raw",
               "env-bac-seqtab-nochim-clean.rds"))
  
  taxid <- readRDS(
-    file.path(folder, "env-raw",
+    file.path(folder, "env-data-raw",
               "env-bac-taxid.rds"))
  
  track_tab <- readRDS(
-    file.path(folder, "env-raw",
+    file.path(folder, "env-data-raw",
               "env-bac-track-reads.rds"))
- # remove negative control             
- track_tab <- track_tab[-(23), .(sample, nonchim)]
+ 
  setnames(track_tab, "nonchim", "nonchim_reads")
 
 # ==================================================================
@@ -66,7 +65,7 @@
 
 infos <- data.frame(
     sample_id = rownames(seqtab.nochim),
-    sample_no = paste0("S", seq(1, 28)),
+    sample_no = paste0("S", seq(1, 29)),
     sample_type = grepl("VN",
                         rownames(seqtab.nochim),
                         fixed = TRUE),
