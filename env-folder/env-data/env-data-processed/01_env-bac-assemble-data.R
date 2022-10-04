@@ -37,7 +37,7 @@
  # .rds objects
  seqtab.nochim <- readRDS(
     file.path(folder, "env-data-raw",
-              "env-bac-seqtab-nochim-clean.rds"))
+              "env-bac-seqtab-nochim-raw.rds"))
  
  taxid <- readRDS(
     file.path(folder, "env-data-raw",
@@ -80,6 +80,8 @@ infos$sample_type <- ifelse(infos$sample_type == TRUE,
 infos$sample_env <- ifelse(infos$sample_env == TRUE,
                            "desert",
                            "urban")
+infos[23, 3] <- "control"
+infos[23, 4] <- "control"
 
 rownames(infos) <- rownames(seqtab.nochim)
 
