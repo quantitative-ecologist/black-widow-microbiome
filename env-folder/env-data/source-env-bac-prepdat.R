@@ -49,13 +49,6 @@
  taxo <- taxa_sp[colnames(comm),]
  rm(taxa_sp)
 
- # Number of reads that made it through the pipeline
- reads_tab <- readRDS(
-    file.path(folder, "env-data-raw",
-              "env-bac-reads-tab.rds"))
- 
- setnames(reads_tab, "nonchim", "nonchim_reads")
-
 # ==================================================================
 # ==================================================================
 
@@ -64,58 +57,7 @@
 
 
 # ==================================================================
-# 2. Assemble metadata
-# ==================================================================
-
-
-# Create metadata --------------------------------------------------
- 
- # Create dataframe
- metadata <- data.frame(
-     sample_id = rownames(comm),
-     sample_no = paste0("S", seq(1, 29)),
-     sample_type = grepl("VN",
-                         rownames(comm),
-                         fixed = TRUE),
-     sample_env = grepl(paste(c("DM", "CC"),
-                              collapse = "|"),
-                        rownames(comm)),
-     sample_site = c(rep("CC", 6), rep("DM", 8),
-                     rep("LO", 8), "control",
-                     rep("UA", 6)),
-     nonchim_reads = reads_tab$nonchim_reads)
- 
- # Add information
- metadata$sample_type <- ifelse(metadata$sample_type == TRUE,
-                                "spider",
-                                "web")
- metadata$sample_env <- ifelse(metadata$sample_env == TRUE,
-                               "desert",
-                               "urban")
- metadata[23, 3] <- "control"
- metadata[23, 4] <- "control"
- 
- rownames(metadata) <- rownames(comm)
- 
-
- # Remove reads tab
- rm(reads_tab)
-
- # Save the data
- write.csv(metadata,
-           file = file.path(folder,
-                            "env-data-clean",
-                            "env-bac-metadata.csv"))
-
-# ==================================================================
-# ==================================================================
-
-
-
-
-
-# ==================================================================
-# 3. Assemble raw taxa and community data
+# 2. Assemble raw taxa and community data
 # ==================================================================
 
 # Rename ASVs from sequences to ASV number -------------------------
@@ -176,6 +118,54 @@
 
  # Apply changes to the community data
  comm <- comm[, rownames(taxo)]
+
+# ==================================================================
+# ==================================================================
+
+
+
+
+
+# ==================================================================
+# 3. Assemble metadata
+# ==================================================================
+
+
+# Create metadata --------------------------------------------------
+ 
+ # Create dataframe
+ metadata <- data.frame(
+     sample_id = rownames(comm),
+     sample_no = paste0("S", seq(1, 29)),
+     sample_type = grepl("VN",
+                         rownames(comm),
+                         fixed = TRUE),
+     sample_env = grepl(paste(c("DM", "CC"),
+                              collapse = "|"),
+                        rownames(comm)),
+     sample_site = c(rep("CC", 6), rep("DM", 8),
+                     rep("LO", 8), "control",
+                     rep("UA", 6)),
+     n_reads = rowSums(comm))
+ 
+ # Add information
+ metadata$sample_type <- ifelse(metadata$sample_type == TRUE,
+                                "spider",
+                                "web")
+ metadata$sample_env <- ifelse(metadata$sample_env == TRUE,
+                               "desert",
+                               "urban")
+ metadata[23, 3] <- "control"
+ metadata[23, 4] <- "control"
+ 
+ rownames(metadata) <- rownames(comm)
+
+ 
+ # Save the data
+ write.csv(metadata,
+           file = file.path(folder,
+                            "env-data-clean",
+                            "env-bac-metadata.csv"))
 
 # ==================================================================
 # ==================================================================
