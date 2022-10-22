@@ -1,6 +1,6 @@
 # ==================================================================
 
-#          Synthetic data processing with phyloseq : part I
+#          Synthetic data processing : part I - Prepare data
 
 # ==================================================================
 
@@ -97,6 +97,9 @@
  
  rownames(metadata) <- rownames(comm)
  
+
+ # Remove reads tab
+ rm(reads_tab)
 
  # Save the data
  write.csv(metadata,
