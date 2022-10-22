@@ -13,13 +13,12 @@
 # W = web, VN = Black widow
 
 
-
+# Eventually download the data directly from OSF through API *****
 
 
 # ==================================================================
 # 1. Import packages and data
 # ==================================================================
-
 
 
 # Import libraries -------------------------------------------------
@@ -28,26 +27,34 @@
  library(data.table)
 
 
+
 # Import data ------------------------------------------------------
 
  # Folder path
  folder <- "./env-folder/env-data"
  
 
- # .rds objects
- seqtab.nochim <- readRDS(
+ # load raw data :
+
+ # Community data
+ comm <- readRDS(
     file.path(folder, "env-data-raw",
-              "env-bac-seqtab-nochim-raw.rds"))
+              "env-bac-seqtabnochim.rds"))
  
- taxid <- readRDS(
+ # Taxonomy data
+ taxa_sp <- readRDS(
     file.path(folder, "env-data-raw",
-              "env-bac-taxid.rds"))
- 
- track_tab <- readRDS(
+              "env-bac-taxa-table2.rds"))
+ # make sur order of ASVs match 
+ taxo <- taxa_sp[colnames(comm),]
+ rm(taxa_sp)
+
+ # Number of reads that made it through the pipeline
+ reads_tab <- readRDS(
     file.path(folder, "env-data-raw",
-              "env-bac-track-reads.rds"))
+              "env-bac-reads-tab.rds"))
  
- setnames(track_tab, "nonchim", "nonchim_reads")
+ setnames(reads_tab, "nonchim", "nonchim_reads")
 
 # ==================================================================
 # ==================================================================
@@ -57,87 +64,108 @@
 
 
 # ==================================================================
-# 2. Build the simplified phyloseq table
+# 2. Assemble metadata
 # ==================================================================
 
 
-# Create data information for sample_data --------------------------
-
-infos <- data.frame(
-    sample_id = rownames(seqtab.nochim),
-    sample_no = paste0("S", seq(1, 29)),
-    sample_type = grepl("VN",
-                        rownames(seqtab.nochim),
-                        fixed = TRUE),
-    sample_env = grepl(paste(c("DM", "CC"),
-                             collapse = "|"),
-                       rownames(seqtab.nochim)),
-    nonchim_reads = track_tab$nonchim_reads)
-
-infos$sample_type <- ifelse(infos$sample_type == TRUE,
-                            "spider",
-                            "web")
-infos$sample_env <- ifelse(infos$sample_env == TRUE,
-                           "desert",
-                           "urban")
-infos[23, 3] <- "control"
-infos[23, 4] <- "control"
-
-rownames(infos) <- rownames(seqtab.nochim)
-
-
-
-# Build the simplified table ---------------------------------------
+# Create metadata --------------------------------------------------
  
- ps <- phyloseq(otu_table(t(seqtab.nochim),
-                          taxa_are_rows = TRUE),
-                sample_data(infos),
-                tax_table(as.matrix(taxid)))
+ # Create dataframe
+ metadata <- data.frame(
+     sample_id = rownames(comm),
+     sample_no = paste0("S", seq(1, 29)),
+     sample_type = grepl("VN",
+                         rownames(comm),
+                         fixed = TRUE),
+     sample_env = grepl(paste(c("DM", "CC"),
+                              collapse = "|"),
+                        rownames(comm)),
+     sample_site = c(rep("CC", 6), rep("DM", 8),
+                     rep("LO", 8), "control",
+                     rep("UA", 6)),
+     nonchim_reads = reads_tab$nonchim_reads)
  
- #ps1 <- phyloseq(otu_table(seqtab.nochim,
- #                         taxa_are_rows = FALSE),
- #                sample_data(infos),
- #                tax_table(as.matrix(taxid)))
-
-
- # Attribute short ASV names to the table
- taxa_names(ps) <- paste0("ASV", seq(ntaxa(ps)))
-
-# ==================================================================
-# ==================================================================
-
-
-
-
-
-# ==================================================================
-# 3. Save the data
-# ==================================================================
-
-
-
-# Save the R object table as .rds ----------------------------------
-
-# Save the phyloseq object to work with it
- saveRDS(ps, file.path(folder,
-                       "env-data-processed",
-                       "01_env-bac-phyloseq-data.rds"))
-
-
-
-# Save the tables as .csv ------------------------------------------
+ # Add information
+ metadata$sample_type <- ifelse(metadata$sample_type == TRUE,
+                                "spider",
+                                "web")
+ metadata$sample_env <- ifelse(metadata$sample_env == TRUE,
+                               "desert",
+                               "urban")
+ metadata[23, 3] <- "control"
+ metadata[23, 4] <- "control"
  
- # Save the modified taxonomy table (Short Name)
- write.csv(as.data.frame(as(tax_table(ps), "matrix")),
+ rownames(metadata) <- rownames(comm)
+ 
+
+ # Save the data
+ write.csv(metadata,
            file = file.path(folder,
-                            "env-data-processed", 
-                            "01_env-bac-ASVTax-SN.csv"))
+                            "env-data-clean",
+                            "env-bac-metadata.csv"))
+
+# ==================================================================
+# ==================================================================
+
+
+
+
+
+# ==================================================================
+# 3. Assemble raw taxa and community data
+# ==================================================================
+
+# Rename ASVs from sequences to ASV number -------------------------
  
- # Save the modified transposed ASV matrix (Short Name)
- write.csv(as.data.frame(as(otu_table(ps), "matrix")),
-           file = file.path(folder,
-                            "env-data-processed", 
-                            "01_env-bac-ASVMatrix-t-SN.csv"))
+ # Create dataframe
+ ASV_seq_info <- data.frame(ASV_name = paste0("ASV_",
+                                              1:dim(comm)[2]),
+                            ASV_sequence = colnames(comm))
+ 
+ # Apply new names to comm and taxo tables
+ colnames(comm) <- ASV_seq_info$ASV_name
+ rownames(taxo) <- ASV_seq_info$ASV_name
+
+
+
+# Remove non target DNA --------------------------------------------
+ 
+ # Inspect for ASVs other than bacteria in "domain"
+ table(taxo[,"domain"]) # 2 eukaryota
+ 
+ # Remove the eukaryotas
+ taxo <- subset(taxo, taxo[,"domain"]!="Eukaryota")
+
+ 
+ # Inspect if there are chloroplasts or mitochondria
+ table(taxo[,"order"])["Chloroplast"]
+ table(taxo[,"family"])["Mitochondria"]
+ 
+ # Delete any mitochondria or chloroplast
+ taxo <- subset(taxo,
+                taxo[, "order"]!= "Chloroplast" &
+                taxo[, "family"]!= "Mitochondria")
+
+
+ # Delete unclassified ASVs at the phylum level
+ table(taxo[, "phylum"])
+ taxo <- subset(taxo,
+                taxo[, "phylum"]!= "unclassified_Bacteria")
+
+
+ # Delete unclassified ASVs at the class level
+ table(taxo[, "class"])
+ vec <- as.character(taxo[,"class"])
+ 
+ taxo <- subset(taxo,
+                taxo[, "class"] %in% unique(
+                    grep("unclassified_",
+                         vec,
+                         invert = TRUE,
+                         value = TRUE)))
+
+ # Apply changes to the community data
+ comm <- comm[, rownames(taxo)]
 
 # ==================================================================
 # ==================================================================
