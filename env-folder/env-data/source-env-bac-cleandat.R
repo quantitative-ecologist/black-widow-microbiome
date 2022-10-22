@@ -1,6 +1,6 @@
 # ==================================================================
 
-#         Synthetic data processing with phyloseq : part II
+#        Synthetic data processing : part II - clean the data
 
 # ==================================================================
 

@@ -129,6 +129,9 @@
  colnames(comm) <- ASV_seq_info$ASV_name
  rownames(taxo) <- ASV_seq_info$ASV_name
 
+ # Remove object
+ rm(ASV_seq_info)
+
 
 
 # Remove non target DNA --------------------------------------------
@@ -166,6 +169,10 @@
                          vec,
                          invert = TRUE,
                          value = TRUE)))
+ 
+ # Delete vec object
+ rm(vec)
+
 
  # Apply changes to the community data
  comm <- comm[, rownames(taxo)]
