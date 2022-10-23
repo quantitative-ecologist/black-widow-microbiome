@@ -1,6 +1,6 @@
 # ==================================================================
 
-#          Synthetic data processing : part I - Prepare data
+#          Synthetic data processing : part I - raw metadata
 
 # ==================================================================
 
@@ -17,24 +17,15 @@
 
 
 # ==================================================================
-# 1. Import packages and data
+# 1. Import data
 # ==================================================================
-
-
-# Import libraries -------------------------------------------------
-
- library(phyloseq)
- library(data.table)
-
-
-
-# Import data ------------------------------------------------------
 
  # Folder path
  folder <- "./env-folder/env-data"
  
 
- # load raw data :
+
+# Load raw data ----------------------------------------------------
 
  # Community data
  comm <- readRDS(
@@ -57,77 +48,7 @@
 
 
 # ==================================================================
-# 2. Assemble raw taxa and community data
-# ==================================================================
-
-# Rename ASVs from sequences to ASV number -------------------------
- 
- # Create dataframe
- ASV_seq_info <- data.frame(ASV_name = paste0("ASV_",
-                                              1:dim(comm)[2]),
-                            ASV_sequence = colnames(comm))
- 
- # Apply new names to comm and taxo tables
- colnames(comm) <- ASV_seq_info$ASV_name
- rownames(taxo) <- ASV_seq_info$ASV_name
-
- # Remove object
- rm(ASV_seq_info)
-
-
-
-# Remove non target DNA --------------------------------------------
- 
- # Inspect for ASVs other than bacteria in "domain"
- table(taxo[,"domain"]) # 2 eukaryota
- 
- # Remove the eukaryotas
- taxo <- subset(taxo, taxo[,"domain"]!="Eukaryota")
-
- 
- # Inspect if there are chloroplasts or mitochondria
- table(taxo[,"order"])["Chloroplast"]
- table(taxo[,"family"])["Mitochondria"]
- 
- # Delete any mitochondria or chloroplast
- taxo <- subset(taxo,
-                taxo[, "order"]!= "Chloroplast" &
-                taxo[, "family"]!= "Mitochondria")
-
-
- # Delete unclassified ASVs at the phylum level
- table(taxo[, "phylum"])
- taxo <- subset(taxo,
-                taxo[, "phylum"]!= "unclassified_Bacteria")
-
-
- # Delete unclassified ASVs at the class level
- table(taxo[, "class"])
- vec <- as.character(taxo[,"class"])
- 
- taxo <- subset(taxo,
-                taxo[, "class"] %in% unique(
-                    grep("unclassified_",
-                         vec,
-                         invert = TRUE,
-                         value = TRUE)))
- 
- # Delete vec object
- rm(vec)
-
-
- # Apply changes to the community data
- comm <- comm[, rownames(taxo)]
-
-# ==================================================================
-# ==================================================================
-
-
-
-
-
-# ==================================================================
-# 3. Assemble metadata
+# 2. Assemble raw metadata
 # ==================================================================
 
 
@@ -164,8 +85,8 @@
  # Save the data
  write.csv(metadata,
            file = file.path(folder,
-                            "env-data-clean",
-                            "env-bac-metadata.csv"))
+                            "env-data-raw",
+                            "env-bac-metadata-raw.csv"))
 
 # ==================================================================
 # ==================================================================
