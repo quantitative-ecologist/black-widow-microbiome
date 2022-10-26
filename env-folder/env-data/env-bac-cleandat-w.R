@@ -88,7 +88,7 @@
 # Remove non target DNA --------------------------------------------
  
  # Inspect for ASVs other than bacteria in "domain"
- table(taxo[,"domain"]) # 2 eukaryota
+ table(taxo[,"domain"]) # 3 eukaryota
  
  # Remove the eukaryotas
  taxo <- subset(taxo, taxo[,"domain"]!="Eukaryota")
@@ -271,7 +271,7 @@
 
 
  # also take subset of ASVs present in the remaining samples
- comm_sub <- comm_sub[, colSums(comm_sub) > 0]
+ comm_sub <- comm_sub[, colSums(comm_sub) > 1]
  # what is the dimension of the subset community data set?
  dim(comm_sub)
 
@@ -359,8 +359,15 @@
  set.seed(0)
  # Randomly rarefy samples
  comm_rarfy <- rrarefy(comm_sub, sample = min(rowSums(comm_sub)))
+ dim(comm_rarfy)
+
  # Remove any ASVs whose abundance is 0 after rarefaction
  comm_rarfy <- comm_rarfy[, colSums(comm_rarfy) > 0]
+ dim(comm_rarfy)
+
+ # Remove species that are too rare
+ comm_rarfy <- comm_rarfy[, colSums(comm_rarfy) > 1]
+ dim(comm_rarfy)
 
  # Match ASV taxonomy to rarefied community
  taxo_rarfy <- taxo_sub[colnames(comm_rarfy),]
