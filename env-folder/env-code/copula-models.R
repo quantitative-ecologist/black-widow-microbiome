@@ -1,0 +1,114 @@
+# ==================================================================
+
+#               Compare communities using copula model
+
+# ==================================================================
+
+
+
+
+
+# ==================================================================
+# 1. Import libraries and data
+# ==================================================================
+ 
+
+# Import libraries -------------------------------------------------
+ 
+ # For ncores
+ options(mc.cores = parallel::detectCores())
+ library(parallel)
+ 
+ # For analysis
+ library(ecoCopula)
+
+
+
+# Import data ------------------------------------------------------
+ 
+ # Community matrices
+ comm_bw <- readRDS(file.path(path, "env-bac-comm-bw.rds"))
+ comm_w <- readRDS(file.path(path, "env-bac-comm-w.rds"))
+ 
+ # Metadata
+ meta_bw <- readRDS(file.path(path, "env-bac-metadata-bw.rds"))
+ meta_w <- readRDS(file.path(path, "env-bac-metadata-w.rds"))
+
+
+ # Delete rare communities for web samples
+ dim(comm_w)
+ comm_w <- comm_w[, colSums(comm_w) > 1]
+ dim(comm_w)
+
+# ==================================================================
+# ==================================================================
+
+
+
+
+
+# ==================================================================
+# 2. Fit the models
+# ==================================================================
+
+
+# For spiders ------------------------------------------------------
+
+ # fit marginal model
+ fit_bw <- stackedsdm(comm_bw, ~ 1,
+                      data = meta_bw,
+                      family = "negative.binomial",
+                      do_parallel = TRUE,
+                      ncores = 20)
+ 
+ # fit copula ordination 
+ bw_lv <- cord(fit_bw, seed = 123)
+
+ # fit graphical model 
+ bw_gr <- cgr(fit_bw, seed = 3)
+
+
+
+# For webs ---------------------------------------------------------
+
+ # fit marginal model
+ fit_w <- stackedsdm(comm_w, ~ 1,
+                     data = data.frame(meta_w$sample_env),
+                     family = "negative.binomial",
+                     do_parallel = TRUE,
+                     ncores = 20)
+ 
+ # fit copula ordination 
+ w_lv <- cord(fit_w, seed = 123)
+
+ # fit graphical model 
+ w_gr <- cgr(fit_w, seed = 3)
+
+# ==================================================================
+# ==================================================================
+
+
+
+
+
+# ==================================================================
+# 3. Save the outputs
+# ==================================================================
+
+
+# Biplot spiders model ---------------------------------------------
+ 
+ saveRDS(fit_bw, file = "stackedsdm_bw.rds")
+ saveRDS(bw_lv, file = "lvm_bw.rds")
+ saveRDS(bw_gr, file = "grm_bw.rds")
+
+
+
+# Correlation matrix spiders model ---------------------------------
+ 
+ saveRDS(fit_w, file = "stackedsdm_w.rds")
+ saveRDS(w_lv, file = "lvm_w.rds")
+ saveRDS(w_gr, file = "grm_w.rds")
+
+# ==================================================================
+# ==================================================================
