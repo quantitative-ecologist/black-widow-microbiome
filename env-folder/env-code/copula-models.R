@@ -34,12 +34,6 @@
  meta_bw <- readRDS(file.path(path, "env-bac-metadata-bw.rds"))
  meta_w <- readRDS(file.path(path, "env-bac-metadata-w.rds"))
 
-
- # Delete rare communities for web samples
- dim(comm_w)
- comm_w <- comm_w[, colSums(comm_w) > 1]
- dim(comm_w)
-
 # ==================================================================
 # ==================================================================
 
