@@ -55,7 +55,7 @@
                       data = meta_bw,
                       family = "negative.binomial",
                       do_parallel = TRUE,
-                      ncores = 20)
+                      ncores = 48)
  
  # fit copula ordination 
  bw_lv <- cord(fit_bw, seed = 123)
@@ -72,7 +72,7 @@
                      data = data.frame(meta_w$sample_env),
                      family = "negative.binomial",
                      do_parallel = TRUE,
-                     ncores = 20)
+                     ncores = 48)
  
  # fit copula ordination 
  w_lv <- cord(fit_w, seed = 123)
