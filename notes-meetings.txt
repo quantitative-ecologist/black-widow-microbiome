@@ -1,0 +1,5 @@
+Pour meeting du 2022-10-27
+
+- Questions sur le metadata de Laura (nom des samples, etc.)
+- Questions sur la région qui est séquencée
+- Questions sur si je fait la raréfaction combinée ou pas (spider + web).
