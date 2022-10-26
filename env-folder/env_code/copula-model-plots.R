@@ -1,6 +1,6 @@
 # ==================================================================
 
-#               Compare communities using copula model
+#                       Plot the copula models
 
 # ==================================================================
 
@@ -15,11 +15,6 @@
 
 # Import libraries -------------------------------------------------
  
- # For ncores
- options(mc.cores = parallel::detectCores())
- library(parallel)
- 
- # For analysis
  library(ggplot2)
  library(corrplot)
  library(ecoCopula)
@@ -51,68 +46,9 @@
  dim(comm_w)
  comm_w <- comm_w[, colSums(comm_w) > 1]
  dim(comm_w)
-
-# ==================================================================
-# ==================================================================
-
-
-
-
-
-# ==================================================================
-# 2. Fit the models
-# ==================================================================
-
-
-# For spiders ------------------------------------------------------
-
- # fit marginal model
- fit_bw <- stackedsdm(comm_bw, ~ 1,
-                      data = meta_bw,
-                      family = "negative.binomial",
-                      ncores = 20)
- # Check residuals
- plot(fit_bw)
  
- # fit copula ordination 
- bw_lv <- cord(fit_bw)
- plot(bw_lv, biplot = TRUE)
- 
- # Check the summary
- summary(bw_lv)
+ # Load the models
 
- # fit graphical model 
- bw_gr <- cgr(fit_bw, seed = 3)
- # biplot
- plot(bw_gr, pad = 1)
- # There are no associations between taxa
-
- # Check the summary
- summary(bw_gr)
-
-
-
-# For webs ---------------------------------------------------------
-
- # fit marginal model
- fit_w <- stackedsdm(comm_w, ~ 1,
-                     data = data.frame(meta_w$sample_env),
-                     family = "negative.binomial",
-                     ncores = 20)
- # Check residuals
- plot(fit_w)
- 
- # Check the model summary
- summary(fit_w)
- 
- # fit copula ordination 
- w_lv <- cord(fit_w)
-
- # fit graphical model 
- w_gr <- cgr(fit_w, seed = 3)
- # biplot
- plot(w_gr, pad = 1)
- # 
 
 # ==================================================================
 # ==================================================================
@@ -122,7 +58,7 @@
 
 
 # ==================================================================
-# 3. Plot the model for spiders
+# 2. Plot the model for spiders
 # ==================================================================
 
 
@@ -211,7 +147,7 @@ biplot1 <- ggplot() +
 
 
 # ==================================================================
-# 4. Plot the model for webs
+# 3. Plot the model for webs
 # ==================================================================
 
 
