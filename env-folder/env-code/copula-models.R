@@ -62,6 +62,11 @@
 
  # fit graphical model 
  bw_gr <- cgr(fit_bw, seed = 3)
+ 
+ # Save the outputs
+ saveRDS(fit_bw, file = "stackedsdm_bw.rds")
+ saveRDS(bw_lv, file = "lvm_bw.rds")
+ saveRDS(bw_gr, file = "grm_bw.rds")
 
 
 
@@ -75,36 +80,15 @@
                      ncores = 48)
  
  # fit copula ordination 
- w_lv <- cord(fit_w, seed = 123)
+ w_lv <- cord(fit_w, n.samp = 100, seed = 123)
 
  # fit graphical model 
- w_gr <- cgr(fit_w, seed = 3)
+ #w_gr <- cgr(fit_w, n.samp = 100, seed = 3)
 
-# ==================================================================
-# ==================================================================
-
-
-
-
-
-# ==================================================================
-# 3. Save the outputs
-# ==================================================================
-
-
-# Biplot spiders model ---------------------------------------------
- 
- saveRDS(fit_bw, file = "stackedsdm_bw.rds")
- saveRDS(bw_lv, file = "lvm_bw.rds")
- saveRDS(bw_gr, file = "grm_bw.rds")
-
-
-
-# Correlation matrix spiders model ---------------------------------
- 
+ # Save the outputs
  saveRDS(fit_w, file = "stackedsdm_w.rds")
  saveRDS(w_lv, file = "lvm_w.rds")
- saveRDS(w_gr, file = "grm_w.rds")
+ #saveRDS(w_gr, file = "grm_w.rds")
 
 # ==================================================================
 # ==================================================================
