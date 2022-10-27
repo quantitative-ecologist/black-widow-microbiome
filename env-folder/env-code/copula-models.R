@@ -1,10 +1,10 @@
 # ==================================================================
 
-#               Compare communities using copula model
+#             Compare communities using copula model
 
 # ==================================================================
 
-
+# Notes CalculCan : 100 trop bas, 500 overhead, test 200
 
 
 
@@ -80,10 +80,10 @@
                      ncores = 48)
  
  # fit copula ordination 
- w_lv <- cord(fit_w, n.samp = 100, seed = 123)
+ w_lv <- cord(fit_w, n.samp = 200, seed = 123)
 
  # fit graphical model 
- #w_gr <- cgr(fit_w, n.samp = 100, seed = 3)
+ #w_gr <- cgr(fit_w, n.samp = 200, seed = 3)
 
  # Save the outputs
  saveRDS(fit_w, file = "stackedsdm_w.rds")

@@ -23,32 +23,28 @@
 
 # Import data ------------------------------------------------------
  
- # Folder
- path <- file.path(getwd(), "env-folder", 
+ # Folders
+ path1 <- file.path(getwd(), "env-folder", 
                    "env-data", 'env-data-clean')
- 
+ path2 <- file.path(getwd(), "env-folder", 
+                   "env-outputs")
 
  # Data files
  # Community matrices
- comm_bw <- readRDS(file.path(path, "env-bac-comm-bw.rds"))
- comm_w <- readRDS(file.path(path, "env-bac-comm-w.rds"))
+ comm_bw <- readRDS(file.path(path1, "env-bac-comm-bw.rds"))
+ comm_w <- readRDS(file.path(path1, "env-bac-comm-w.rds"))
  
  # Metadata
- meta_bw <- readRDS(file.path(path, "env-bac-metadata-bw.rds"))
- meta_w <- readRDS(file.path(path, "env-bac-metadata-w.rds"))
+ meta_bw <- readRDS(file.path(path1, "env-bac-metadata-bw.rds"))
+ meta_w <- readRDS(file.path(path1, "env-bac-metadata-w.rds"))
 
  # Taxa
- taxa_bw <- readRDS(file.path(path, "env-bac-taxa-bw.rds"))
- taxa_w <- readRDS(file.path(path, "env-bac-taxa-w.rds"))
+ taxa_bw <- readRDS(file.path(path1, "env-bac-taxa-bw.rds"))
+ taxa_w <- readRDS(file.path(path1, "env-bac-taxa-w.rds"))
 
-
- # Delete rare communities for web samples
- dim(comm_w)
- comm_w <- comm_w[, colSums(comm_w) > 1]
- dim(comm_w)
  
  # Load the models
-
+ lvm_bw <- readRDS(file.path(path2, "lvm_bw.rds"))
 
 # ==================================================================
 # ==================================================================
@@ -68,25 +64,25 @@
  
  # Prepare plotting parameters
  alpha <- 2
- site_res <- data.frame(bw_lv$scores, meta_bw)
- sp_res <- data.frame(bw_lv$loadings,
+ site_res <- data.frame(lvm_bw$scores, meta_bw)
+ sp_res <- data.frame(lvm_bw$loadings,
                       ASV = colnames(comm_bw))
  fam <- data.frame(ASV = rownames(taxa_bw),
                    family = taxa_bw[,6])
  sp_res <- merge(sp_res, fam, by = "ASV")
 
 # Draw the plot
-biplot1 <- ggplot() +
+ggplot() +
     geom_point(data = site_res,
        aes(x = Factor1,
            y = Factor2,
            color = sample_env),
        size = 3) +
-    geom_text(data = sp_res,
-       aes(x = Factor1*alpha,
-           y = Factor2*alpha,
-           label = family),
-       size = 2.5) +
+    #geom_text(data = sp_res,
+    #   aes(x = Factor1*alpha,
+    #       y = Factor2*alpha,
+    #       label = family),
+    #   size = 2.5) +
     scale_x_continuous(breaks = seq(-2, 2, 0.5),
                        limits = c(-2.5, 2.5)) +
     scale_y_continuous(breaks = seq(-2, 2, 0.5),
