@@ -170,7 +170,7 @@
                                    "#666666")) +
      labs(color = "Environment :",
           shape = "Environment :") +
-     xlab("\nFactor 1") + ylab("Factor 2\n") +
+     xlab("\nLatent variable 1") + ylab("Latent variable 2\n") +
      custom_theme
  
  # Save the plot
