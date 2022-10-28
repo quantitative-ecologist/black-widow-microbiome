@@ -25,8 +25,10 @@
 
 
 # Import data ------------------------------------------------------
- 
+ # On Cedar
  path <- file.path(getwd(), "env-data-clean")
+ # On my computer
+ #path <- file.path(getwd(), "env-folder", "env-data", "env-data-clean")
 
  # Community matrices
  comm_bw <- readRDS(file.path(path, "env-bac-comm-bw.rds"))
