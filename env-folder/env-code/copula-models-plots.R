@@ -189,7 +189,6 @@
  cormat <- lvm_bw$sigma
  
  # Produce and export the correlation plot
- 
  png(file.path(path3, "corrplot_bw.png"),
      res = 300,
      width = 1500,
