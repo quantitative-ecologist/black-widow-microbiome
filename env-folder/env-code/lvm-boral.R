@@ -30,11 +30,11 @@
  path <- file.path(getwd(), "env-data-clean")
 
  # Community matrices
- comm_bw <- readRDS(file.path(path, "env-bac-comm-bw.rds"))
+ #comm_bw <- readRDS(file.path(path, "env-bac-comm-bw.rds"))
  comm_w <- readRDS(file.path(path, "env-bac-comm-w.rds"))
  
  # Metadata
- meta_bw <- readRDS(file.path(path, "env-bac-metadata-bw.rds"))
+ #meta_bw <- readRDS(file.path(path, "env-bac-metadata-bw.rds"))
  meta_w <- readRDS(file.path(path, "env-bac-metadata-w.rds"))
 
 # ==================================================================
