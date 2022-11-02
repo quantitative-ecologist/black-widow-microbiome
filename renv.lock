@@ -163,16 +163,29 @@
     },
     "bslib": {
       "Package": "bslib",
-      "Version": "0.3.1",
+      "Version": "0.4.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "56ae7e1987b340186a8a5a157c2ec358",
+      "Hash": "be5ee090716ce1671be6cd5d7c34d091",
       "Requirements": [
+        "cachem",
         "htmltools",
         "jquerylib",
         "jsonlite",
+        "memoise",
         "rlang",
         "sass"
+      ]
+    },
+    "cachem": {
+      "Package": "cachem",
+      "Version": "1.0.6",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "648c5b3d71e6a37e3043617489a0a0e9",
+      "Requirements": [
+        "fastmap",
+        "rlang"
       ]
     },
     "cli": {
@@ -185,10 +198,10 @@
     },
     "cluster": {
       "Package": "cluster",
-      "Version": "2.1.3",
+      "Version": "2.1.4",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "c5f8447373ec2a0f593c694024e5b7ee",
+      "Hash": "5edbbabab6ce0bf7900a74fd4358628e",
       "Requirements": []
     },
     "coda": {
@@ -231,14 +244,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "fcf11a91936fd5047b2ee9bc00595e36",
-      "Requirements": []
-    },
-    "crayon": {
-      "Package": "crayon",
-      "Version": "1.5.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "8dc45fd8a1ee067a92b85ef274e66d6a",
       "Requirements": []
     },
     "digest": {
@@ -294,10 +299,10 @@
     },
     "evaluate": {
       "Package": "evaluate",
-      "Version": "0.15",
+      "Version": "0.17",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "699a7a93d08c962d9f8950b2d7a227f1",
+      "Hash": "9171b012a55a1ef53f1442b1d798a3b4",
       "Requirements": []
     },
     "fansi": {
@@ -365,10 +370,10 @@
     },
     "ggplot2": {
       "Package": "ggplot2",
-      "Version": "3.3.5",
+      "Version": "3.3.6",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "d7566c471c7b17e095dd023b9ef155ad",
+      "Hash": "0fb26d0674c82705c6b701d1a61e02ea",
       "Requirements": [
         "MASS",
         "digest",
@@ -408,10 +413,10 @@
     },
     "gtable": {
       "Package": "gtable",
-      "Version": "0.3.0",
+      "Version": "0.3.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "ac5c6baf7822ce8732b343f14c072c4d",
+      "Hash": "36b4265fb818f6a342bed217549cd896",
       "Requirements": []
     },
     "highr": {
@@ -426,10 +431,10 @@
     },
     "htmltools": {
       "Package": "htmltools",
-      "Version": "0.5.2",
+      "Version": "0.5.3",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "526c484233f42522278ab06fb185cb26",
+      "Hash": "6496090a9e00f8354b811d1a2d47b566",
       "Requirements": [
         "base64enc",
         "digest",
@@ -439,22 +444,23 @@
     },
     "igraph": {
       "Package": "igraph",
-      "Version": "1.3.0",
+      "Version": "1.3.5",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "bf0f6f80c2eaf5c4485ecbe710dd0a30",
+      "Hash": "132b06d7060f11ba8b4c7e7f385e9b7a",
       "Requirements": [
         "Matrix",
         "magrittr",
-        "pkgconfig"
+        "pkgconfig",
+        "rlang"
       ]
     },
     "isoband": {
       "Package": "isoband",
-      "Version": "0.2.5",
+      "Version": "0.2.6",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "7ab57a6de7f48a8dc84910d1eca42883",
+      "Hash": "cfdea9dea85c1a973991c8cbe299f4da",
       "Requirements": []
     },
     "iterators": {
@@ -477,18 +483,18 @@
     },
     "jsonlite": {
       "Package": "jsonlite",
-      "Version": "1.8.0",
+      "Version": "1.8.2",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "d07e729b27b372429d42d24d503613a0",
+      "Hash": "2e7ed071fd6bd047fe2366d3adf4fe46",
       "Requirements": []
     },
     "knitr": {
       "Package": "knitr",
-      "Version": "1.38",
+      "Version": "1.40",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "10b3dc3c6acb925910edda5d0543b3a2",
+      "Hash": "caea8b0f899a0b1738444b9bc47067e7",
       "Requirements": [
         "evaluate",
         "highr",
@@ -542,6 +548,17 @@
       "Repository": "CRAN",
       "Hash": "7ce2733a9826b3aeb1775d56fd305472",
       "Requirements": []
+    },
+    "memoise": {
+      "Package": "memoise",
+      "Version": "2.0.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "e2817ccf4a065c5d9d7f2cfbe7c1d78c",
+      "Requirements": [
+        "cachem",
+        "rlang"
+      ]
     },
     "mgcv": {
       "Package": "mgcv",
@@ -608,20 +625,20 @@
     },
     "nlme": {
       "Package": "nlme",
-      "Version": "3.1-158",
+      "Version": "3.1-159",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "9469aeaeddf4f48a7ac70877d0b7ba36",
+      "Hash": "4a0b3a68f846cb999ff0e8e519524fbb",
       "Requirements": [
         "lattice"
       ]
     },
     "nnet": {
       "Package": "nnet",
-      "Version": "7.3-17",
+      "Version": "7.3-18",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "cb1d8d9f300a7e536b89c8a88c53f610",
+      "Hash": "170da2130d5332bea7d6ede01875ba1d",
       "Requirements": []
     },
     "numDeriv": {
@@ -667,14 +684,12 @@
     },
     "pillar": {
       "Package": "pillar",
-      "Version": "1.7.0",
+      "Version": "1.8.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "51dfc97e1b7069e9f7e6f83f3589c22e",
+      "Hash": "f2316df30902c81729ae9de95ad5a608",
       "Requirements": [
         "cli",
-        "crayon",
-        "ellipsis",
         "fansi",
         "glue",
         "lifecycle",
@@ -749,10 +764,10 @@
     },
     "rmarkdown": {
       "Package": "rmarkdown",
-      "Version": "2.13",
+      "Version": "2.17",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "ac78f4d2e0289d4cba73b88af567b8b1",
+      "Hash": "e97c8be593e010f93520e8215c0f9189",
       "Requirements": [
         "bslib",
         "evaluate",
@@ -778,10 +793,10 @@
     },
     "sass": {
       "Package": "sass",
-      "Version": "0.4.1",
+      "Version": "0.4.2",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "f37c0028d720bab3c513fd65d28c7234",
+      "Hash": "1b191143d7d3444d504277843f3a95fe",
       "Requirements": [
         "R6",
         "fs",
@@ -792,10 +807,10 @@
     },
     "scales": {
       "Package": "scales",
-      "Version": "1.1.1",
+      "Version": "1.2.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "6f76f71042411426ec8df6c54f34e6dd",
+      "Hash": "906cb23d2f1c5680b8ce439b44c6fa63",
       "Requirements": [
         "R6",
         "RColorBrewer",
@@ -803,6 +818,7 @@
         "labeling",
         "lifecycle",
         "munsell",
+        "rlang",
         "viridisLite"
       ]
     },
@@ -874,10 +890,10 @@
     },
     "tinytex": {
       "Package": "tinytex",
-      "Version": "0.38",
+      "Version": "0.42",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "759d047596ac173433985deddf313450",
+      "Hash": "7629c6c1540835d5248e6e7df265fa74",
       "Requirements": [
         "xfun"
       ]
@@ -934,10 +950,10 @@
     },
     "viridisLite": {
       "Package": "viridisLite",
-      "Version": "0.4.0",
+      "Version": "0.4.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "55e157e2aa88161bdb0754218470d204",
+      "Hash": "62f4b5da3e08d8e5bcba6cac15603f70",
       "Requirements": []
     },
     "withr": {
@@ -950,10 +966,10 @@
     },
     "xfun": {
       "Package": "xfun",
-      "Version": "0.30",
+      "Version": "0.33",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "e83f48136b041845e50a6658feffb197",
+      "Hash": "1a666f915cd65072f4ccf5b2888d5d39",
       "Requirements": []
     },
     "yaml": {
@@ -966,10 +982,10 @@
     },
     "zoo": {
       "Package": "zoo",
-      "Version": "1.8-10",
+      "Version": "1.8-11",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "277b8b4c5b7b47e664aebfe024a2092e",
+      "Hash": "874a5b77fe0cfacf2a3450069ae70926",
       "Requirements": [
         "lattice"
       ]
