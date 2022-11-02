@@ -42,6 +42,7 @@
       "Repository": "CRAN",
       "Hash": "2cbec2a33f7d007f5507b82eb21bbc01",
       "Requirements": [
+        "boot",
         "coda"
       ]
     },
@@ -133,6 +134,14 @@
         "modeltools",
         "sandwich"
       ]
+    },
+    "boot": {
+      "Package": "boot",
+      "Version": "1.3-28",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "0baa960e3b49c6176a4f42addcbacc59",
+      "Requirements": []
     },
     "boral": {
       "Package": "boral",
