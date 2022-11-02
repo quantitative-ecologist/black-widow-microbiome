@@ -22,30 +22,30 @@
 # Import data ------------------------------------------------------
 
  # Folder path
- folder <- "./env-folder/env-data"
+ folder <- "./diet-folder/diet-data"
  # Eventually, load the files from the OSF repo
  
  # Community data
  comm <- readRDS(
-    file.path(folder, "env-data-raw",
-              "env-bac-seqtabnochim.rds"))
+    file.path(folder, "diet-data-raw",
+              "diet-bac-seqtabnochim.rds"))
 
   # Taxonomy data
  taxa_sp <- readRDS(
-    file.path(folder, "env-data-raw",
-              "env-bac-taxa-table2.rds"))
+    file.path(folder, "diet-data-raw",
+              "diet-bac-taxa-table2.rds"))
  # make sur order of ASVs match 
  taxo <- taxa_sp[colnames(comm),]
  rm(taxa_sp)
 
   # Raw metadata
- metadata <- read.csv(
-    file.path(folder, "env-data-raw",
-              "env-bac-metadata-raw.csv"),
-              row.names = 1)
- # only spider samples
- metadata <- metadata[metadata$sample_type %in%
-                      c("spider", "control"),]
+ #metadata <- read.csv(
+ #   file.path(folder, "diet-data-raw",
+ #             "diet-bac-metadata-raw.csv"),
+ #             row.names = 1)
+ ## only spider samples
+ #metadata <- metadata[metadata$sample_type %in%
+ #                     c("spider", "control"),]
 
 # ==================================================================
 # ==================================================================
@@ -78,19 +78,11 @@
  
  # Inspect for ASVs other than bacteria in "domain"
  table(taxo[,"domain"]) # 2 eukaryota
- 
- # Remove the eukaryotas
- taxo <- subset(taxo, taxo[,"domain"]!="Eukaryota")
 
  
  # Inspect if there are chloroplasts or mitochondria
  table(taxo[,"order"])["Chloroplast"]
  table(taxo[,"family"])["Mitochondria"]
- 
- # Delete any mitochondria or chloroplast
- taxo <- subset(taxo,
-                taxo[, "order"]!= "Chloroplast" &
-                taxo[, "family"]!= "Mitochondria")
 
 
  # Delete unclassified ASVs at the phylum level
@@ -132,25 +124,21 @@
 
 # Summary statistics -----------------------------------------------
 
- # Separate community to have only spider samples
- comm_bw <- comm[c(1:3, 7:10, 15:18, 23, 24:26), ]
-
-
  # Number of reads per sample
- rowSums(comm_bw)
+ rowSums(comm)
 
 # Delete samples with too few reads
- comm_bw <- comm_bw[rowSums(comm_bw)>300, ]
- metadata <- metadata[rownames(comm_bw),]
- metadata$n_reads <- rowSums(comm_bw)
+ #comm <- comm[rowSums(comm)>300, ]
+ #metadata <- metadata[rownames(comm),]
+ #metadata$n_reads <- rowSums(comm)
 
  # visualize log10 number of reads per sample
- hist(rowSums(comm_bw))
- hist(log10(rowSums(comm_bw)))
+ hist(rowSums(comm))
+ hist(log10(rowSums(comm)))
  # Most samples have around 35K to 100K reads
 
  # log10 of number of reads per ASV
- hist(log10(colSums(comm_bw)))
+ hist(log10(colSums(comm)))
 
 
 
@@ -162,13 +150,13 @@
  lty <- c("solid", "dashed", "longdash", "dotdash")
  pars <- expand.grid(col = col, lty = lty,
                      stringsAsFactors = FALSE)
- samples <- data.frame(sample = as.factor(rownames(comm_bw)))
+ samples <- data.frame(sample = as.factor(rownames(comm)))
 
 
  # Plot rarefaction curve over all samples (NO zoom)
  with(#pars[1:12,],
       pars[1:13,],
-    rarecurve(comm_bw, step = 200, #sample = raremax,
+    rarecurve(comm, step = 200, #sample = raremax,
               label = TRUE, col = pars$col,
               lty = pars$lty, cex = 0.7))
  with(samples,
@@ -180,10 +168,10 @@
  # Plot rarefaction curve over all samples (WITH zoom)
  with(#pars[1:12,],
       pars[1:13,],
-    rarecurve(comm_bw, step = 200, #sample = raremax,
+    rarecurve(comm, step = 200, #sample = raremax,
               label = TRUE, col = pars$col,
               lty = pars$lty, cex = 0.7,
-              xlim = c(0, 50000)))
+              xlim = c(0, 10000)))
  with(samples,
     legend("topright", legend = levels(sample),
            col = pars$col, lty = pars$lty,
@@ -193,7 +181,7 @@
 # Plot rarefaction curve over all samples (WITH zoom)
  with(#pars[1:12,],
       pars[1:13,],
-    rarecurve(comm_bw, step = 200, #sample = raremax,
+    rarecurve(comm, step = 200, #sample = raremax,
               label = TRUE, col = pars$col,
               lty = pars$lty, cex = 0.7,
               xlim = c(0, 1000)))
@@ -210,7 +198,7 @@
 # Visualize the community before rarefying -------------------------
 
  # PCA on Hellinger-transformed community data
- comm_pca <- prcomp(decostand(comm_bw, "hellinger"))
+ comm_pca <- prcomp(decostand(comm, "hellinger"))
  
  # Extract sample information for plotting
  labs <- metadata$sample_env
@@ -220,14 +208,15 @@
           display = "species",
           xlim = c(-1, 1),
           ylim = c(-1, 1))
- color <- c("#E69F00", "#666666")
+ color <- c("#E69F00", "#666666", "blue")
  score <- scores(comm_pca)[, 1:2]
  
  text(score, rownames(score),
-      col = color, cex = 0.8)
- ordiellipse(comm_pca,
-             labs,
-             label = TRUE, cex = 0.8, font = 4)
+      #col = color,
+      cex = 0.8)
+ #ordiellipse(comm_pca,
+ #            labs,
+ #            label = TRUE, cex = 0.8, font = 4)
 
 # We see that the sample LO-VN-114-BAC is very similar to the negative control.
 # If I remove this sample we will have a problem 
@@ -235,7 +224,7 @@
 
 
  # Number of sequences per sample mapped onto ordination axes
- ordisurf(comm_pca, rowSums(comm_bw),
+ ordisurf(comm_pca, rowSums(comm),
           bubble = TRUE, cex = 2,
           main = "Library size (sequences/sample)")
 
@@ -244,14 +233,14 @@
 # Check negative controls -----------------------------------------
 
  # Abundance of ASVs in negative control
- comm_bw["PCR-neg-CTRL-bac",][
-     comm_bw["PCR-neg-CTRL-bac",]>0]
+ comm["PCR-neg-CTRL-bac",][
+     comm["PCR-neg-CTRL-bac",]>0]
  # Some problems here. Some ASVs are above 100
  # See ASV_172, ASV_354, and ASV_399
 
  # Check the taxonomic identity of ASVs present in negative control
- taxo[names(comm_bw["PCR-neg-CTRL-bac",][
-     comm_bw["PCR-neg-CTRL-bac",]>0]),]
+ taxo[names(comm["PCR-neg-CTRL-bac",][
+     comm["PCR-neg-CTRL-bac",]>0]),]
 
 # ==================================================================
 # ==================================================================
@@ -267,16 +256,16 @@
 
 # Remove low sequence number samples -------------------------------
 
- dim(comm_bw)
+ dim(comm)
 
  # take subset of communities with at least 1528 sequences
  #comm_sub <- comm_bw[rowSums(comm_bw)>=1528,]
 
  # Remove negative control
- comm_sub <- comm_bw[-12,]
+ comm_sub <- comm[-13,]
 
  # Remove sample too close to negative control
- comm_sub <- comm_sub[-8,]
+ #comm_sub <- comm_sub[-8,]
 
 
  # also take subset of ASVs present in the remaining samples
