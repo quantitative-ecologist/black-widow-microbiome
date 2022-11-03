@@ -55,6 +55,14 @@
  nmds_w <- metaMDS(comm_w_hel, distance = "bray", trace = FALSE)
  nmds_bw <- metaMDS(comm_bw_hel, distance = "bray", trace = FALSE)
  
+ plot(cca(comm_w_hel), type = "points")
+ plot(cca(comm_bw_hel), type = "points")
+ 
+ biplot(pcoa(vegdist(comm_w_hel,"bray")))
+ biplot(pcoa(vegdist(comm_bw_hel,"bray")))
+ 
+ obj1 <- pcoa(vegdist(comm_w_hel,"bray"))
+ obj2 <- pcoa(vegdist(comm_bw_hel,"bray"))
 # ==================================================================
 # ==================================================================
 
