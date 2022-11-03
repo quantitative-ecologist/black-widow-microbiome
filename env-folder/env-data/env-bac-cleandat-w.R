@@ -27,7 +27,7 @@
 # Import libraries -------------------------------------------------
 
  library(picante)
-
+ library(ggplot2)
 
 
 # Import data ------------------------------------------------------
@@ -105,24 +105,24 @@
 
 
  # Delete unclassified ASVs at the phylum level
- table(taxo[, "phylum"])
- taxo <- subset(taxo,
-                taxo[, "phylum"]!= "unclassified_Bacteria")
+ #table(taxo[, "phylum"])
+ #taxo <- subset(taxo,
+ #               taxo[, "phylum"]!= "unclassified_Bacteria")
 
 
  # Delete unclassified ASVs at the class level
- table(taxo[, "class"])
- vec <- as.character(taxo[,"class"])
- 
- taxo <- subset(taxo,
-                taxo[, "class"] %in% unique(
-                    grep("unclassified_",
-                         vec,
-                         invert = TRUE,
-                         value = TRUE)))
- 
- # Delete vec object
- rm(vec)
+ #table(taxo[, "class"])
+ #vec <- as.character(taxo[,"class"])
+ #
+ #taxo <- subset(taxo,
+ #               taxo[, "class"] %in% unique(
+ #                   grep("unclassified_",
+ #                        vec,
+ #                        invert = TRUE,
+ #                        value = TRUE)))
+ #
+ ## Delete vec object
+ #rm(vec)
 
 
  # Apply changes to the community data
@@ -270,7 +270,7 @@
  comm_sub <- comm_sub[-8,]
 
 
- # also take subset of ASVs present in the remaining samples
+ # Remove ASVs that are too rare
  comm_sub <- comm_sub[, colSums(comm_sub) > 1]
  # what is the dimension of the subset community data set?
  dim(comm_sub)
@@ -294,8 +294,7 @@
  
  comm_sub_pca <- prcomp(decostand(comm_sub,"hellinger"))
  
- # plot ordination results
- library(ggplot2)
+ # Prepare ordination results for the plots
  score <- scores(comm_sub_pca)[, 1:2]
  score <- cbind(score, sample_env = metadata_sub$sample_env)
  score <- data.frame(score)
@@ -378,67 +377,17 @@
 
 
 
-# Apply rarefaction 1000X ------------------------------------------
-
-# # This function increases the speed of vegan::rrarefy
-# vegan_rrarefy <- function(x, sample) {
-#   x <- as.matrix(x)
-#   if (!identical(all.equal(x, round(x)), TRUE))
-#     stop("function is meaningful only for integers (counts)")
-#   if (!is.integer(x))
-#     x <- round(x)
-#   if (ncol(x) == 1)
-#     x <- t(x)
-#   if (length(sample) > 1 && length(sample) != nrow(x))
-#     stop(gettextf("length of 'sample' and number of rows of 'x' do not match"))
-#   if (any(rowSums(x) < sample))
-#     warning("some row sums < 'sample' and are not rarefied")
-#   out <- apply(x, 1, \(y) .Call(vegan:::do_rrarefy, y, sample))
-#   rownames(out) <- colnames(x)
-#   t(out)
-# }
-#
-# # This function runs rarefaction multiple times
-# rarefy_vegan_multiSeeds <- function(mat, n, seed){
-#   mat <- mat[rowSums(mat) >= n,]
-#   mat <- mat[,colSums(mat) > 0]
-#   vapply(`names<-`(seed, seed), \(s) {
-#     set.seed(s)
-#     vegan_rrarefy(mat, n)
-#   }, matrix(numeric(), nrow(mat), ncol(mat)))
-# }
-#
-#
-# # Rarefy and resample 1000X
-# set.seed(123)
-# comm_rarfy <- rarefy_vegan_multiSeeds(mat = comm_sub,
-#                                       n = min(rowSums(comm_sub)),
-#                                       seed = 1:1000)
-
-# # Calculate the mean abundance over all 1000 runs
-# comm_rarfy <- round(apply(comm_rarfy, c(1, 2), mean))
-# comm_rarfy <- comm_rarfy[, colSums(comm_rarfy) > 0]
-
-
-# # Match ASV taxonomy to rarefied community
-# taxo_rarfy <- taxo_sub[colnames(comm_rarfy),]
-#
-# # Match rarefied community to metadata
-# metadata_sub <- metadata[rownames(comm_rarfy),]
-# metadata_sub$n_reads_rarfy <- rowSums(comm_rarfy)
-
-
-
 # Check the effect of rarefaction ---------------------------------
 
  richness_raw <- rowSums((comm_sub>0)*1)
  richness_rarfy <- rowSums((comm_rarfy>0)*1)
  
  plot(richness_rarfy ~ richness_raw,
-      #xlim = c(0, 120), ylim = c(0,120),
+      xlim = c(0, 1000), ylim = c(0,1000),
+      pch = 16,
       xlab = "number of ASVs in raw data",
       ylab = "number of ASVs in rarefied data")
- 
+ abline(0:1000, 1:1000, lty = 2)
 # ==================================================================
 # ==================================================================
 
