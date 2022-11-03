@@ -27,6 +27,7 @@
 # Import libraries -------------------------------------------------
 
  library(picante)
+ library(ggplot2)
 
 
 
@@ -105,24 +106,24 @@
 
 
  # Delete unclassified ASVs at the phylum level
- table(taxo[, "phylum"])
- taxo <- subset(taxo,
-                taxo[, "phylum"]!= "unclassified_Bacteria")
+ #table(taxo[, "phylum"])
+ #taxo <- subset(taxo,
+ #               taxo[, "phylum"]!= "unclassified_Bacteria")
 
 
  # Delete unclassified ASVs at the class level
- table(taxo[, "class"])
- vec <- as.character(taxo[,"class"])
+ #table(taxo[, "class"])
+ #vec <- as.character(taxo[,"class"])
  
- taxo <- subset(taxo,
-                taxo[, "class"] %in% unique(
-                    grep("unclassified_",
-                         vec,
-                         invert = TRUE,
-                         value = TRUE)))
+ #taxo <- subset(taxo,
+ #               taxo[, "class"] %in% unique(
+ #                   grep("unclassified_",
+ #                        vec,
+ #                        invert = TRUE,
+ #                        value = TRUE)))
  
  # Delete vec object
- rm(vec)
+ #rm(vec)
 
 
  # Apply changes to the community data
@@ -194,7 +195,7 @@
     rarecurve(comm_bw, step = 200, #sample = raremax,
               label = TRUE, col = pars$col,
               lty = pars$lty, cex = 0.7,
-              xlim = c(0, 50000)))
+              xlim = c(0, 5000)))
  with(samples,
     legend("topright", legend = levels(sample),
            col = pars$col, lty = pars$lty,
@@ -213,7 +214,7 @@
            col = pars$col, lty = pars$lty,
            bty = "n"))
 
-# Most samples seem to reach a plateau around 5000
+# Most samples seem to reach a plateau around 200
 # Except for DM-VN-112-bac and LO-VN-116-bac (too low)
 
 
@@ -241,8 +242,6 @@
              label = TRUE, cex = 0.8, font = 4)
 
 # We see that the sample LO-VN-114-BAC is very similar to the negative control.
-# If I remove this sample we will have a problem 
-# of very low sample size for the urban environment
 
 
  # Number of sequences per sample mapped onto ordination axes
@@ -290,8 +289,14 @@
  comm_sub <- comm_sub[-8,]
 
 
- # also take subset of ASVs present in the remaining samples
+ # Remove ASVs that do not appear in any sample
  comm_sub <- comm_sub[, colSums(comm_sub) > 0]
+ # what is the dimension of the subset community data set?
+ dim(comm_sub)
+
+
+ # Remove ASVs that are excessively rare
+ comm_sub <- comm_sub[, colSums(comm_sub) > 1]
  # what is the dimension of the subset community data set?
  dim(comm_sub)
 
@@ -312,10 +317,9 @@
  # Inspect PCA for subset
  labs <- as.factor(metadata_sub$sample_env)
  
- comm_sub_pca <- prcomp(decostand(comm_sub,"hellinger"))
+ comm_sub_pca <- prcomp(decostand(comm_sub, "hellinger"))
  
- # plot ordination results
- library(ggplot2)
+ # Prepare the ordination results for plotting
  score <- scores(comm_sub_pca)[, 1:2]
  score <- cbind(score, sample_env = metadata_sub$sample_env)
  score <- data.frame(score)
@@ -444,13 +448,17 @@
  
  plot(richness_rarfy ~ richness_raw,
       xlim = c(0, 120), ylim = c(0,120),
+      pch = 16,
       xlab = "number of ASVs in raw data",
       ylab = "number of ASVs in rarefied data")
+ abline(0:120, 1:120, lty = 2)
  
  plot(richness_rarfy[-6] ~ richness_raw[-6],
       xlim = c(0, 30), ylim = c(0,30),
+      pch = 16,
       xlab = "number of ASVs in raw data",
       ylab = "number of ASVs in rarefied data")
+ abline(0:30, 1:30, lty = 2)
  
 # ==================================================================
 # ==================================================================
@@ -469,13 +477,22 @@
                    "env-data-clean")
  
  # Save clean taxa table
- saveRDS(taxo_rarfy, file = file.path(path, "env-bac-taxa-bw.rds"))
+ saveRDS(
+  taxo_rarfy,
+  file = file.path(path, "env-bac-taxa-bw.rds")
+ )
 
  # Save clean community table
- saveRDS(comm_rarfy, file = file.path(path, "env-bac-comm-bw.rds"))
+ saveRDS(
+  comm_rarfy,
+  file = file.path(path, "env-bac-comm-bw.rds")
+ )
 
  # Save clean metadata
- saveRDS(metadata_sub, file = file.path(path, "env-bac-metadata-bw.rds"))
+ saveRDS(
+  metadata_sub,
+  file = file.path(path, "env-bac-metadata-bw.rds")
+ )
 
 # ==================================================================
 # ==================================================================
