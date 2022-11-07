@@ -303,6 +303,7 @@
 
  # subset metadata and taxonomy to match
  metadata_sub <- metadata[rownames(comm_sub),]
+ metadata_sub$n_reads <- rowSums(comm_sub)
  taxo_sub <- taxo[colnames(comm_sub),]
 
  # descriptive stats for samples and ASVs
@@ -334,8 +335,8 @@
    geom_point(data = sp,
               aes(x = PC1,
                   y = PC2),
-              size = 1,
-              shape = 3) +
+              shape = 3,
+              size = 1) +
    geom_point(data = score,
               aes(x = PC1,
                   y = PC2,
@@ -351,7 +352,7 @@
                 level = 0.95,
                 alpha = 0.25,
                 linetype = "dashed",
-                size = 1,
+                linewidth = 1,
                 show.legend = FALSE) +
    scale_x_continuous(breaks = seq(-1, 1, 0.5),
                       limits = c(-1.2, 1.2)) +
@@ -378,16 +379,46 @@
 # ==================================================================
 
 
-# Apply rarefaction ------------------------------------------------
+# Inspect rarefaction curves ---------------------------------------
+ 
+ # Prepare ploting options
+ col <- c("black", "darkred", "forestgreen", "orange",
+          "blue", "darkblue", "hotpink")
+ lty <- c("solid", "dashed", "longdash", "dotdash")
+ pars <- expand.grid(col = col, lty = lty,
+                     stringsAsFactors = FALSE)
+ samples <- data.frame(sample = as.factor(rownames(comm_sub)))
 
-#set.seed(0)
-## Randomly rarefy samples
-#comm_rarfy <- rrarefy(comm_sub, sample = min(rowSums(comm_sub)))
-## Remove any ASVs whose abundance is 0 after rarefaction
-#comm_rarfy <- comm_rarfy[, colSums(comm_rarfy) > 1]
-## Match ASV taxonomy to rarefied community
-#taxo_rarfy <- taxo_sub[colnames(comm_rarfy),]
+ # Plot rarefaction curves
+  with(pars[1:11,],
+     rarecurve(comm_sub, step = 200,
+               label = FALSE, col = pars$col,
+               lty = pars$lty, cex = 0.7,
+               xlim = c(0, max(rowSums(comm_sub)))))
+  with(samples,
+     legend("topright", legend = levels(sample),
+            col = pars$col, lty = pars$lty,
+            bty = "n"))
 
+  with(pars[1:11,],
+     rarecurve(comm_sub, step = 200,
+               label = FALSE, col = pars$col,
+               lty = pars$lty, cex = 0.7,
+               xlim = c(0, 50000)))
+  with(samples,
+     legend("topright", legend = levels(sample),
+            col = pars$col, lty = pars$lty,
+            bty = "n"))
+
+  with(pars[1:11,],
+     rarecurve(comm_sub, step = 200,
+               label = FALSE, col = pars$col,
+               lty = pars$lty, cex = 0.7,
+               xlim = c(0, 2000)))
+  with(samples,
+     legend("topright", legend = levels(sample),
+            col = pars$col, lty = pars$lty,
+            bty = "n"))
 
 
 # Apply rarefaction 1000X ------------------------------------------
@@ -424,20 +455,22 @@
  # Rarefy and resample 1000X
  set.seed(123)
  comm_rarfy <- rarefy_vegan_multiSeeds(mat = comm_sub,
-                                       n = min(rowSums(comm_sub)),
+                                       n = 1536,
                                        seed = 1:1000)
+ 
+ comm_rarfy[1:10,1:211,1]
 
  # Calculate the mean abundance over all 1000 runs
- comm_rarfy <- round(apply(comm_rarfy, c(1, 2), mean))
- comm_rarfy <- comm_rarfy[, colSums(comm_rarfy) > 0]
-
-
- # Match ASV taxonomy to rarefied community
- taxo_rarfy <- taxo_sub[colnames(comm_rarfy),]
-
- # Match rarefied community to metadata
- metadata_sub <- metadata[rownames(comm_rarfy),]
- metadata_sub$n_reads_rarfy <- rowSums(comm_rarfy)
+ #comm_rarfy <- round(apply(comm_rarfy, c(1, 2), mean))
+ #comm_rarfy <- comm_rarfy[, colSums(comm_rarfy) > 0]
+#
+#
+ ## Match ASV taxonomy to rarefied community
+ #taxo_rarfy <- taxo_sub[colnames(comm_rarfy),]
+#
+ ## Match rarefied community to metadata
+ #metadata_sub <- metadata[rownames(comm_rarfy),]
+ #metadata_sub$n_reads_rarfy <- rowSums(comm_rarfy)
 
 
 
