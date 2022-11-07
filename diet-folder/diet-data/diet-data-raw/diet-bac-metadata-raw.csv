@@ -1,0 +1,14 @@
+"","sample_id","sample_no","diet_treatment","spider_weight","n_reads"
+"482-bac","482-bac","S1","ad_libitum",150.9,3509
+"505-bac","505-bac","S2","ad_libitum",250.8,6304
+"301-bac","301-bac","S3","ad_libitum",344.2,1272
+"367-bac","367-bac","S4","ad_libitum",292,27365
+"336-bac","336-bac","S5","cricket",439.2,274
+"447-bac","447-bac","S6","cricket",437.7,6251
+"359-bac","359-bac","S7","cricket",419.2,249
+"265-bac","265-bac","S8","cricket",282,31118
+"504-bac","504-bac","S9","isopod",207,479
+"298-bac","298-bac","S10","isopod",217,12562
+"263-bac","263-bac","S11","isopod",278,18688
+"560-bac","560-bac","S12","isopod",289,7805
+"CTRL-PCR-neg-bac","CTRL-PCR-neg-bac","S13","control",NA,0

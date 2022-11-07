@@ -1,6 +1,6 @@
 # ==================================================================
 
-#               Clean the lab spider data for analysis
+#          Clean the diet treated spider data for analysis
 
 # ==================================================================
 
@@ -39,13 +39,10 @@
  rm(taxa_sp)
 
   # Raw metadata
- #metadata <- read.csv(
- #   file.path(folder, "diet-data-raw",
- #             "diet-bac-metadata-raw.csv"),
- #             row.names = 1)
- ## only spider samples
- #metadata <- metadata[metadata$sample_type %in%
- #                     c("spider", "control"),]
+ metadata <- read.csv(
+    file.path(folder, "diet-data-raw",
+              "diet-bac-metadata-raw.csv"),
+              row.names = 1)
 
 # ==================================================================
 # ==================================================================
@@ -77,7 +74,7 @@
 # Remove non target DNA --------------------------------------------
  
  # Inspect for ASVs other than bacteria in "domain"
- table(taxo[,"domain"]) # 2 eukaryota
+ table(taxo[,"domain"])
 
  
  # Inspect if there are chloroplasts or mitochondria
@@ -87,27 +84,12 @@
 
  # Delete unclassified ASVs at the phylum level
  table(taxo[, "phylum"])
- taxo <- subset(taxo,
-                taxo[, "phylum"]!= "unclassified_Bacteria")
-
-
- # Delete unclassified ASVs at the class level
- table(taxo[, "class"])
- vec <- as.character(taxo[,"class"])
- 
- taxo <- subset(taxo,
-                taxo[, "class"] %in% unique(
-                    grep("unclassified_",
-                         vec,
-                         invert = TRUE,
-                         value = TRUE)))
- 
- # Delete vec object
- rm(vec)
 
 
  # Apply changes to the community data
+ dim(comm)
  comm <- comm[, rownames(taxo)]
+ dim(comm)
 
 # ==================================================================
 # ==================================================================
@@ -119,7 +101,6 @@
 # ==================================================================
 # 3. Data exploration
 # ==================================================================
-
 
 
 # Summary statistics -----------------------------------------------
@@ -154,8 +135,7 @@
 
 
  # Plot rarefaction curve over all samples (NO zoom)
- with(#pars[1:12,],
-      pars[1:13,],
+ with(pars[1:12,],
     rarecurve(comm, step = 200, #sample = raremax,
               label = TRUE, col = pars$col,
               lty = pars$lty, cex = 0.7))
@@ -166,8 +146,7 @@
 
 
  # Plot rarefaction curve over all samples (WITH zoom)
- with(#pars[1:12,],
-      pars[1:13,],
+ with(pars[1:12,],
     rarecurve(comm, step = 200, #sample = raremax,
               label = TRUE, col = pars$col,
               lty = pars$lty, cex = 0.7,
@@ -179,29 +158,28 @@
 
 
 # Plot rarefaction curve over all samples (WITH zoom)
- with(#pars[1:12,],
-      pars[1:13,],
+ with(pars[1:12,],
     rarecurve(comm, step = 200, #sample = raremax,
               label = TRUE, col = pars$col,
               lty = pars$lty, cex = 0.7,
-              xlim = c(0, 1000)))
+              xlim = c(0, 2000)))
  with(samples,
     legend("topright", legend = levels(sample),
            col = pars$col, lty = pars$lty,
            bty = "n"))
 
-# Most samples seem to reach a plateau around 5000
-# Except for DM-VN-112-bac and LO-VN-116-bac (too low)
-
 
 
 # Visualize the community before rarefying -------------------------
+ 
+ # Reorder rows to follow treatment order
+ comm1 <- comm[c(9,11,4,7,5,8,6,2,10,3,1,12),]
 
  # PCA on Hellinger-transformed community data
- comm_pca <- prcomp(decostand(comm, "hellinger"))
+ comm_pca <- prcomp(decostand(comm1, "hellinger"))
  
  # Extract sample information for plotting
- labs <- metadata$sample_env
+ labs <- metadata[-13,]$diet_treatment
  
  # plot ordination results
  ordiplot(comm_pca, type = "points",
@@ -212,7 +190,7 @@
  score <- scores(comm_pca)[, 1:2]
  
  text(score, rownames(score),
-      #col = color,
+     # col = color,
       cex = 0.8)
  #ordiellipse(comm_pca,
  #            labs,
