@@ -3,3 +3,13 @@ Pour meeting du 2022-10-27
 - Questions sur le metadata de Laura (nom des samples, etc.)
 - Questions sur la région qui est séquencée
 - Questions sur si je fait la raréfaction combinée ou pas (spider + web).
+
+# Verdict : Pas d'avenue établie...
+
+
+# Code pour le median sequencing depth
+total = median(sample_sums(GP))
+standf = function(x, t=total) round(t * (x / sum(x)))
+gps = transform_sample_counts(GP, standf)
+
+# Voir quel type d'objet est GP avec la page web : https://web.stanford.edu/class/bios221/labs/phyloseq/lab_phyloseq.html
