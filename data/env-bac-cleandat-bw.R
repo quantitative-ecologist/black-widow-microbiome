@@ -34,7 +34,7 @@
 # Import data ------------------------------------------------------
 
  # Folder path
- folder <- "./env-folder/env-data"
+ folder <- "./data"
  # Eventually, load the files from the OSF repo
  
  # Community data
@@ -103,27 +103,6 @@
  taxo <- subset(taxo,
                 taxo[, "order"]!= "Chloroplast" &
                 taxo[, "family"]!= "Mitochondria")
-
-
- # Delete unclassified ASVs at the phylum level
- #table(taxo[, "phylum"])
- #taxo <- subset(taxo,
- #               taxo[, "phylum"]!= "unclassified_Bacteria")
-
-
- # Delete unclassified ASVs at the class level
- #table(taxo[, "class"])
- #vec <- as.character(taxo[,"class"])
- 
- #taxo <- subset(taxo,
- #               taxo[, "class"] %in% unique(
- #                   grep("unclassified_",
- #                        vec,
- #                        invert = TRUE,
- #                        value = TRUE)))
- 
- # Delete vec object
- #rm(vec)
 
 
  # Apply changes to the community data
