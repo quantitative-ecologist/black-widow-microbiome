@@ -90,17 +90,16 @@
 # ==================================================================
 
  # Setup the folder path
- path1 <- file.path(getwd(), "outputs")
- path2 <- 
+ path <- file.path(getwd(), "outputs")
  
  # Models for the env spiders
- saveRDS(fit1, file = file.path(path1, "env-bac-fit-bw.rds"))
- saveRDS(lvm1, file = file.path(path1, "env-bac-lvm-bw.rds"))
+ saveRDS(fit1, file = file.path(path, "env-bac-fit-bw.rds"))
+ saveRDS(lvm1, file = file.path(path, "env-bac-lvm-bw.rds"))
 
  
  # Models for the diet spiders
- saveRDS(fit2, file = file.path(path2, "diet-bac-fit-bw.rds"))
- saveRDS(lvm2, file = file.path(path2, "diet-bac-lvm-bw.rds"))
+ saveRDS(fit2, file = file.path(path, "diet-bac-fit-bw.rds"))
+ saveRDS(lvm2, file = file.path(path, "diet-bac-lvm-bw.rds"))
 
 # ==================================================================
 # ==================================================================

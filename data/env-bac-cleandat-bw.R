@@ -130,8 +130,10 @@
  # Number of reads per sample
  rowSums(comm_bw)
  
+
  # Adjust the new number of reads to the metadata
  metadata$n_reads <- rowSums(comm_bw)
+
 
  # visualize log10 number of reads per sample
  hist(rowSums(comm_bw))
@@ -145,46 +147,48 @@
 
 # Visualize the community ------------------------------------------
 
-# PCA on Hellinger-transformed community data
-comm_pca <- prcomp(decostand(comm_bw, "hellinger"))
+ # PCA on Hellinger-transformed community data
+ comm_pca <- prcomp(decostand(comm_bw, "hellinger"))
+ 
 
-# Prepare the ordination results for plotting
-labs <- as.factor(metadata$sample_env)
-score <- scores(comm_pca)[, 1:2]
-score <- cbind(score, sample_env = metadata$sample_env)
-score <- data.frame(score)
-score[,1] <- as.numeric(score[,1])
-score[,2]<- as.numeric(score[,2])
-score[,3] <- as.factor(score[,3])
-score$sample_id <- as.factor(rownames(score))
-sp <- data.frame(comm_pca$rotation[, 1:2])
-summ <- summary(comm_pca)$importance[2, 1:2]
+ # Prepare the ordination results for plotting
+ labs <- as.factor(metadata$sample_env)
+ score <- scores(comm_pca)[, 1:2]
+ score <- cbind(score, sample_env = metadata$sample_env)
+ score <- data.frame(score)
+ score[,1] <- as.numeric(score[,1])
+ score[,2]<- as.numeric(score[,2])
+ score[,3] <- as.factor(score[,3])
+ score$sample_id <- as.factor(rownames(score))
+ sp <- data.frame(comm_pca$rotation[, 1:2])
+ summ <- summary(comm_pca)$importance[2, 1:2]
+ 
 
-# Plot the results
-ggplot() +
-  geom_point(data = sp,
+ # Plot the results
+ ggplot() +
+   geom_point(data = sp,
+              aes(x = PC1,
+                  y = PC2),
+              shape = 3,
+              size = 1) +
+   geom_text(data = score,
              aes(x = PC1,
-                 y = PC2),
-             shape = 3,
-             size = 1) +
-  geom_text(data = score,
-            aes(x = PC1,
-                y = PC2,
-                label = sample_id,
-                color = sample_env),
-            size = 3) +
-  scale_x_continuous(breaks = seq(-1, 1, 0.5),
-                     limits = c(-1, 1)) +
-  scale_y_continuous(breaks = seq(-1, 1, 0.5),
-                     limits = c(-1, 1)) +
-  scale_color_manual(values = c("black",
-                               "#E69F00",
-                               "#666666")) +
-  labs(color = "Environment :") +
-  xlab("\nPC1 (34.8%)") + ylab("PC2 (18.9%)\n") +
-  theme_bw() + 
-  theme(legend.position = "top",
-        panel.grid = element_blank())
+                 y = PC2,
+                 label = sample_id,
+                 color = sample_env),
+             size = 3) +
+   scale_x_continuous(breaks = seq(-1, 1, 0.5),
+                      limits = c(-1, 1)) +
+   scale_y_continuous(breaks = seq(-1, 1, 0.5),
+                      limits = c(-1, 1)) +
+   scale_color_manual(values = c("black",
+                                "#E69F00",
+                                "#666666")) +
+   labs(color = "Environment :") +
+   xlab("\nPC1 (34.8%)") + ylab("PC2 (18.9%)\n") +
+   theme_bw() + 
+   theme(legend.position = "top",
+         panel.grid = element_blank())
 
  # LO-VN-114-BAC is very similar to the negative control.
 
@@ -220,7 +224,8 @@ ggplot() +
 
 
 # Remove the neg control and similar sample ------------------------
-
+ 
+ # Check the dimension
  dim(comm_bw)
 
  # Remove negative control
@@ -239,7 +244,6 @@ ggplot() +
  # what is the dimension of the subset community data set?
  dim(comm_sub)
 
-
  # Remove ASVs that are excessively rare
  comm_sub <- comm_sub[, colSums(comm_sub) > 1]
  # what is the dimension of the subset community data set?
@@ -250,6 +254,7 @@ ggplot() +
  metadata_sub <- metadata[rownames(comm_sub),]
  metadata_sub$n_reads <- rowSums(comm_sub)
  taxo_sub <- taxo[colnames(comm_sub),]
+
 
  # descriptive stats for samples and ASVs
  # number of sequences per sample
@@ -263,6 +268,7 @@ ggplot() +
  # Inspect PCA for subset
  comm_sub_pca <- prcomp(decostand(comm_sub, "hellinger"))
  
+
  # Prepare the ordination results for plotting
  labs <- as.factor(metadata_sub$sample_env)
  score <- scores(comm_sub_pca)[, 1:2]
@@ -274,6 +280,7 @@ ggplot() +
  sp <- data.frame(comm_sub_pca$rotation[, 1:2])
  summ <- summary(comm_sub_pca)$importance[2, 1:2]
  
+
  # Plot the results
  ggplot() +
    geom_point(data = sp,
@@ -324,9 +331,11 @@ ggplot() +
 # ==================================================================
 # 6. Save outputs
 # ==================================================================
-
+ 
+ # Setup folder path
  path <- file.path(folder,
                    "env-data-clean")
+ 
  
  # Save clean taxa table
  saveRDS(
