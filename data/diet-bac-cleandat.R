@@ -127,8 +127,6 @@
  # Abundance of ASVs in negative control
  comm["CTRL-PCR-neg-bac",][
      comm["CTRL-PCR-neg-bac",]>0]
- # Some problems here. Some ASVs are above 100
- # See ASV_172, ASV_354, and ASV_399
 
  # Check the taxonomic identity of ASVs present in negative control
  taxo[names(comm["CTRL-PCR-neg-bac",][
@@ -243,8 +241,10 @@
 # ==================================================================
  
  # Setup folder path
- path <- file.path(folder,
-                   "diet-data-clean")
+ path <- file.path(
+    folder,
+    "diet-data-clean"
+ )
  
 
  # Save clean taxa table
