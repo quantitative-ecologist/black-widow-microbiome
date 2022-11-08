@@ -1,10 +1,10 @@
 # ==================================================================
 
-#             Compare communities using copula model
+#             Compare communities using copula models
 
 # ==================================================================
 
-# Notes CalculCan : 100 trop bas, 500 overhead, test 200
+
 
 
 
@@ -15,9 +15,9 @@
 
 # Import libraries -------------------------------------------------
  
- # For ncores
- options(mc.cores = parallel::detectCores())
- library(parallel)
+ # For ncores (if there is parallel computing)
+ #options(mc.cores = parallel::detectCores())
+ #library(parallel)
  
  # For analysis
  library(ecoCopula)
@@ -25,18 +25,18 @@
 
 
 # Import data ------------------------------------------------------
- # On Cedar
- path <- file.path(getwd(), "env-data-clean")
+
  # On my computer
- #path <- file.path(getwd(), "env-folder", "env-data", "env-data-clean")
+ path1 <- file.path(getwd(), "data", "env-data-clean")
+ path2 <- file.path(getwd(), "data", "diet-data-clean")
 
  # Community matrices
- comm_bw <- readRDS(file.path(path, "env-bac-comm-bw.rds"))
- comm_w <- readRDS(file.path(path, "env-bac-comm-w.rds"))
+ comm_bw_env <- readRDS(file.path(path1, "env-bac-comm-bw.rds"))
+ comm_bw_diet <- readRDS(file.path(path2, "diet-bac-comm-bw.rds"))
  
  # Metadata
- meta_bw <- readRDS(file.path(path, "env-bac-metadata-bw.rds"))
- meta_w <- readRDS(file.path(path, "env-bac-metadata-w.rds"))
+ meta_bw_env <- readRDS(file.path(path1, "env-bac-metadata-bw.rds"))
+ meta_bw_diet <- readRDS(file.path(path2, "diet-bac-metadata-w.rds"))
 
 # ==================================================================
 # ==================================================================
@@ -53,44 +53,54 @@
 # For spiders ------------------------------------------------------
 
  # fit marginal model
- fit_bw <- stackedsdm(comm_bw, ~ 1,
-                      data = meta_bw,
-                      family = "negative.binomial",
-                      do_parallel = TRUE,
-                      ncores = 48)
+ fit1 <- stackedsdm(comm_bw_env, ~ n_reads,
+                    # If parallelization is enabled
+                    #do_parallel = TRUE,
+                    #ncores = 48,
+                    data = meta_bw_env,
+                    family = "negative.binomial")
  
  # fit copula ordination 
- bw_lv <- cord(fit_bw, seed = 123)
-
- # fit graphical model 
- bw_gr <- cgr(fit_bw, seed = 3)
- 
- # Save the outputs
- saveRDS(fit_bw, file = "stackedsdm_bw.rds")
- saveRDS(bw_lv, file = "lvm_bw.rds")
- saveRDS(bw_gr, file = "grm_bw.rds")
+ lvm1 <- cord(fit1, seed = 123)
 
 
 
 # For webs ---------------------------------------------------------
 
  # fit marginal model
- fit_w <- stackedsdm(comm_w, ~ 1,
-                     data = data.frame(meta_w$sample_env),
-                     family = "negative.binomial",
-                     do_parallel = TRUE,
-                     ncores = 48)
+ fit2 <- stackedsdm(comm_bw_diet, ~ n_reads,
+                    # If parallelization is enabled
+                    #do_parallel = TRUE,
+                    #ncores = 48,
+                    data = meta_bw_diet,
+                    family = "negative.binomial")
  
  # fit copula ordination 
- w_lv <- cord(fit_w, n.samp = 200, seed = 123)
+ lvm2 <- cord(fit2, seed = 123)
 
- # fit graphical model 
- #w_gr <- cgr(fit_w, n.samp = 200, seed = 3)
+# ==================================================================
+# ==================================================================
 
- # Save the outputs
- saveRDS(fit_w, file = "stackedsdm_w.rds")
- saveRDS(w_lv, file = "lvm_w.rds")
- #saveRDS(w_gr, file = "grm_w.rds")
+
+
+
+
+# ==================================================================
+# 3. Save the outputs 
+# ==================================================================
+
+ # Setup the folder path
+ path1 <- file.path(getwd(), "outputs")
+ path2 <- 
+ 
+ # Models for the env spiders
+ saveRDS(fit1, file = file.path(path1, "env-bac-fit-bw.rds"))
+ saveRDS(lvm1, file = file.path(path1, "env-bac-lvm-bw.rds"))
+
+ 
+ # Models for the diet spiders
+ saveRDS(fit2, file = file.path(path2, "diet-bac-fit-bw.rds"))
+ saveRDS(lvm2, file = file.path(path2, "diet-bac-lvm-bw.rds"))
 
 # ==================================================================
 # ==================================================================
