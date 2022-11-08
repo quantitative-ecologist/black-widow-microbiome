@@ -162,7 +162,7 @@
 # Calculate ellipses for each environment --------------------------
  
  # Mean Factor axis for each environment
- lvm_mean <- aggregate(
+ lvm_mean1 <- aggregate(
   site_res1[,1:2],
   list(site_res1$sample_env),
   mean
@@ -212,7 +212,7 @@
         size = 3
      ) +
      geom_path(
-        data = df_ell,
+        data = df_ell1,
         aes(x = Factor1,
             y = Factor2,
             color = sample_env),
@@ -252,23 +252,23 @@
 
 # Prepare plot data ------------------------------------------------
 
- alpha <- 0.7 # ou 2 comme dans l'exemple?
- site_res <- data.frame(lvm2$scores, meta2)
- site_res$diet_treatment <- as.factor(site_res$diet_treatment)
- sp_res <- data.frame(lvm2$loadings,
+ alpha2 <- 0.7 # ou 2 comme dans l'exemple?
+ site_res2 <- data.frame(lvm2$scores, meta2)
+ site_res2$diet_treatment <- as.factor(site_res2$diet_treatment)
+ sp_res2 <- data.frame(lvm2$loadings,
                       ASV = colnames(comm2))
- fam <- data.frame(ASV = rownames(taxa2),
+ fam2 <- data.frame(ASV = rownames(taxa2),
                    family = taxa2[,5])
- sp_res <- merge(sp_res, fam, by = "ASV")
+ sp_res2 <- merge(sp_res2, fam2, by = "ASV")
 
 
 
 # Calculate ellipses for each environment --------------------------
  
  # Mean Factor axis for each environment
- lvm_mean <- aggregate(
-  site_res[,1:2],
-  list(site_res$diet_treatment),
+ lvm_mean2 <- aggregate(
+  site_res2[,1:2],
+  list(site_res2$diet_treatment),
   mean
  )
  
@@ -287,11 +287,11 @@
 
 
  # Create a data frame of the ellipses results for ggplot
- df_ell <- data.frame()
-  for (g in levels(site_res$diet_treatment)) {
-    df_ell <- rbind(df_ell,
+ df_ell2 <- data.frame()
+  for (g in levels(site_res2$diet_treatment)) {
+    df_ell2 <- rbind(df_ell2,
                     cbind(as.data.frame(with(
-                      site_res[site_res$diet_treatment == g, ],
+                      site_res2[site_res2$diet_treatment == g, ],
                       veganCovEllipse(cov.wt(
                         cbind(Factor1, Factor2),
                         wt = rep(1 / length(Factor1), length(Factor2))
@@ -308,7 +308,7 @@
  # Compute the plot
  plot2 <- ggplot() +
      geom_point(
-        data = site_res,
+        data = site_res2,
         aes(x = Factor1,
             y = Factor2,
             fill = diet_treatment,
@@ -316,7 +316,7 @@
         size = 3
      ) +
      geom_path(
-        data = df_ell,
+        data = df_ell2,
         aes(x = Factor1, 
             y = Factor2,
             color = diet_treatment),
@@ -360,7 +360,7 @@
   plot1,
   file = file.path(
     path2,
-    "env-lvm-biplot-bw.png"
+    "env-bac-lvm-bw.png"
   )
  )
 
@@ -369,7 +369,7 @@
   plot2,
   file = file.path(
     path2,
-    "diet-lvm-biplot-bw.png"
+    "diet-bac-lvm-bw.png"
   )
  )
 
