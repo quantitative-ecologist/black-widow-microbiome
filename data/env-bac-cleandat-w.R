@@ -33,7 +33,7 @@
 # Import data ------------------------------------------------------
 
  # Folder path
- folder <- "./env-folder/env-data"
+ folder <- "./data"
  # Eventually, load the files from the OSF repo
  
  # Community data
@@ -104,27 +104,6 @@
                 taxo[, "family"]!= "Mitochondria")
 
 
- # Delete unclassified ASVs at the phylum level
- #table(taxo[, "phylum"])
- #taxo <- subset(taxo,
- #               taxo[, "phylum"]!= "unclassified_Bacteria")
-
-
- # Delete unclassified ASVs at the class level
- #table(taxo[, "class"])
- #vec <- as.character(taxo[,"class"])
- #
- #taxo <- subset(taxo,
- #               taxo[, "class"] %in% unique(
- #                   grep("unclassified_",
- #                        vec,
- #                        invert = TRUE,
- #                        value = TRUE)))
- #
- ## Delete vec object
- #rm(vec)
-
-
  # Apply changes to the community data
  comm <- comm[, rownames(taxo)]
 
@@ -138,7 +117,6 @@
 # ==================================================================
 # 3. Data exploration
 # ==================================================================
-
 
 
 # Summary statistics -----------------------------------------------
@@ -182,18 +160,20 @@
  with(samples,
     legend("topright", legend = levels(sample),
            col = pars$col, lty = pars$lty,
+           cex = 0.7,
            bty = "n"))
 
 
  # Plot rarefaction curve over all samples (WITH zoom)
  with(pars[1:15,],
     rarecurve(comm_w, step = 200, #sample = raremax,
-              label = TRUE, col = pars$col,
+              label = FALSE, col = pars$col,
               lty = pars$lty, cex = 0.7,
               xlim = c(0, 30000)))
  with(samples,
     legend("topright", legend = levels(sample),
            col = pars$col, lty = pars$lty,
+           cex = 0.7,
            bty = "n"))
 
  # Plateau seems to be reached around 15 000 reads
@@ -204,29 +184,46 @@
 
  # PCA on Hellinger-transformed community data
  comm_pca <- prcomp(decostand(comm_w, "hellinger"))
- 
- # Extract sample information for plotting
- labs <- metadata$sample_env
- 
- # plot ordination results
- ordiplot(comm_pca, type = "points",
-          display = "species",
-          xlim = c(-1, 1),
-          ylim = c(-1, 1))
- color <- c("#E69F00", "#666666")
+
+ # Prepare the ordination results for plotting
+ labs <- as.factor(metadata$sample_env)
  score <- scores(comm_pca)[, 1:2]
+ score <- cbind(score, sample_env = metadata$sample_env)
+ score <- data.frame(score)
+ score[,1] <- as.numeric(score[,1])
+ score[,2]<- as.numeric(score[,2])
+ score[,3] <- as.factor(score[,3])
+ score$sample_id <- as.factor(rownames(score))
+ sp <- data.frame(comm_pca$rotation[, 1:2])
+ summ <- summary(comm_pca)$importance[2, 1:2]
  
- text(score, rownames(score),
-      #col = color,
-      cex = 0.9)
- ordiellipse(comm_pca,
-             labs,
-             #label = TRUE,
-             cex = 0.8, font = 4)
+ # Plot the results
+ ggplot() +
+   geom_point(data = sp,
+              aes(x = PC1,
+                  y = PC2),
+              shape = 3,
+              size = 1) +
+   geom_text(data = score,
+             aes(x = PC1,
+                 y = PC2,
+                 label = sample_id,
+                 color = sample_env),
+             size = 3) +
+   scale_x_continuous(breaks = seq(-1, 1, 0.5),
+                      limits = c(-1, 1)) +
+   scale_y_continuous(breaks = seq(-1, 1, 0.5),
+                      limits = c(-1, 1)) +
+   scale_color_manual(values = c("black",
+                                "#E69F00",
+                                "#666666")) +
+   labs(color = "Environment :") +
+   xlab("\nPC1 (13.8%)") + ylab("PC2 (13.0%)\n") +
+   theme_bw() + 
+   theme(legend.position = "top",
+         panel.grid = element_blank())
 
- # Some samples are close to the negative control.
- # I am having trouble coloring the samples by env
-
+ # LO-VN-114-BAC is very similar to the negative control.
 
  # Number of sequences per sample mapped onto ordination axes
  ordisurf(comm_pca, rowSums(comm_w),
@@ -259,7 +256,7 @@
 # ==================================================================
 
 
-# Remove low sequence number samples -------------------------------
+# Remove the neg control and similar sample ------------------------
 
  dim(comm_w)
 
@@ -268,6 +265,19 @@
 
  # Remove sample too close to negative control
  comm_sub <- comm_sub[-8,]
+
+
+
+# Remove very rare species -----------------------------------------
+ 
+
+ # Remove ASVs that do not appear in any sample
+ # Check dim before
+ dim(comm_w)
+ # Remove ASVs
+ comm_sub <- comm_sub[, colSums(comm_sub) > 0]
+ # what is the dimension of the subset community data set?
+ dim(comm_sub)
 
 
  # Remove ASVs that are too rare
@@ -290,11 +300,10 @@
 # PCA on the subset -----------------------------------------------
 
  # Inspect PCA for subset
- labs <- as.factor(metadata_sub$sample_env)
- 
  comm_sub_pca <- prcomp(decostand(comm_sub,"hellinger"))
  
  # Prepare ordination results for the plots
+ labs <- as.factor(metadata_sub$sample_env)
  score <- scores(comm_sub_pca)[, 1:2]
  score <- cbind(score, sample_env = metadata_sub$sample_env)
  score <- data.frame(score)
@@ -399,19 +408,26 @@
 # 6. Save outputs
 # ==================================================================
 
- path <- file.path(getwd(),
-                   "env-folder",
-                   "env-data",
+ path <- file.path(folder,
                    "env-data-clean")
  
  # Save clean taxa table
- saveRDS(taxo_rarfy, file = file.path(path, "env-bac-taxa-w.rds"))
+ saveRDS(
+    taxo_rarfy,
+    file = file.path(path, "env-bac-taxa-w.rds")
+ )
 
  # Save clean community table
- saveRDS(comm_rarfy, file = file.path(path, "env-bac-comm-w.rds"))
+ saveRDS(
+    comm_rarfy,
+    file = file.path(path, "env-bac-comm-w.rds")
+ )
 
  # Save clean metadata
- saveRDS(metadata_sub, file = file.path(path, "env-bac-metadata-w.rds"))
+ saveRDS(
+    metadata_sub,
+    file = file.path(path, "env-bac-metadata-w.rds")
+ )
 
 # ==================================================================
 # ==================================================================
