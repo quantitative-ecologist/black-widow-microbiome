@@ -36,7 +36,7 @@
  
  # Metadata
  meta_bw_env <- readRDS(file.path(path1, "env-bac-metadata-bw.rds"))
- meta_bw_diet <- readRDS(file.path(path2, "diet-bac-metadata-w.rds"))
+ meta_bw_diet <- readRDS(file.path(path2, "diet-bac-metadata-bw.rds"))
 
 # ==================================================================
 # ==================================================================
@@ -53,12 +53,15 @@
 # For spiders ------------------------------------------------------
 
  # fit marginal model
- fit1 <- stackedsdm(comm_bw_env, ~ n_reads,
-                    # If parallelization is enabled
-                    #do_parallel = TRUE,
-                    #ncores = 48,
-                    data = meta_bw_env,
-                    family = "negative.binomial")
+ fit1 <- stackedsdm(
+    y = comm_bw_env,
+    formula_X = ~ n_reads,
+    # If parallelization is enabled
+    #do_parallel = TRUE,
+    #ncores = 48,
+    data = meta_bw_env,
+    family = "negative.binomial"
+ )
  
  # fit copula ordination 
  lvm1 <- cord(fit1, seed = 123)
@@ -68,15 +71,29 @@
 # For webs ---------------------------------------------------------
 
  # fit marginal model
- fit2 <- stackedsdm(comm_bw_diet, ~ n_reads,
-                    # If parallelization is enabled
-                    #do_parallel = TRUE,
-                    #ncores = 48,
-                    data = meta_bw_diet,
-                    family = "negative.binomial")
+ fit2a <- stackedsdm(
+    y = comm_bw_diet,
+    formula_X = ~ n_reads,
+    # If parallelization is enabled
+    #do_parallel = TRUE,
+    #ncores = 48,
+    data = meta_bw_diet,
+    family = "negative.binomial"
+ )
+
+ fit2b <- stackedsdm(
+    y = comm_bw_diet,
+    formula_X = ~ n_reads + spider_weight,
+    # If parallelization is enabled
+    #do_parallel = TRUE,
+    #ncores = 48,
+    data = meta_bw_diet,
+    family = "negative.binomial"
+ )
  
  # fit copula ordination 
- lvm2 <- cord(fit2, seed = 123)
+ lvm2a <- cord(fit2a, seed = 123)
+ lvm2b <- cord(fit2b, seed = 123)
 
 # ==================================================================
 # ==================================================================
@@ -98,8 +115,11 @@
 
  
  # Models for the diet spiders
- saveRDS(fit2, file = file.path(path, "diet-bac-fit-bw.rds"))
- saveRDS(lvm2, file = file.path(path, "diet-bac-lvm-bw.rds"))
+ saveRDS(fit2a, file = file.path(path, "diet-bac-fit1-bw.rds"))
+ saveRDS(lvm2a, file = file.path(path, "diet-bac-lvm1-bw.rds"))
+
+ saveRDS(fit2b, file = file.path(path, "diet-bac-fit2-bw.rds"))
+ saveRDS(lvm2b, file = file.path(path, "diet-bac-lvm2-bw.rds"))
 
 # ==================================================================
 # ==================================================================
