@@ -50,7 +50,7 @@
 # ==================================================================
 
 
-# For spiders ------------------------------------------------------
+# For env spiders --------------------------------------------------
 
  # fit marginal model
  fit1 <- stackedsdm(
@@ -63,12 +63,17 @@
     family = "negative.binomial"
  )
  
- # fit copula ordination 
- lvm1 <- cord(fit1, seed = 123)
+ # Inspect the residuals
+ plot(
+    residuals(fit1) ~ fitted(fit1),
+    xlab = "Fitted values", 
+    ylab = "Dunn-Smyth residuals"
+ )
+ abline(h = 0, col = "red")
 
 
 
-# For webs ---------------------------------------------------------
+# For diet spiders -------------------------------------------------
 
  # fit marginal model
  fit2a <- stackedsdm(
@@ -91,7 +96,43 @@
     family = "negative.binomial"
  )
  
- # fit copula ordination 
+ # Inspect the residuals fit1
+ plot(
+    residuals(fit2a) ~ fitted(fit2a),
+    xlab = "Fitted values", 
+    ylab = "Dunn-Smyth residuals"
+ )
+ abline(h = 0, col = "red")
+
+ # Inspect the residuals fit2
+ plot(
+    residuals(fit2b) ~ fitted(fit2b),
+    xlab = "Fitted values", 
+    ylab = "Dunn-Smyth residuals"
+ )
+ abline(h = 0, col = "red")
+
+# ==================================================================
+# ==================================================================
+
+
+
+
+# ==================================================================
+# 3. Fit the copula ordination
+# ==================================================================
+
+
+# For env spiders --------------------------------------------------
+ 
+ # Fit
+ lvm1 <- cord(fit1, seed = 123)
+
+
+
+# For diet spiders -------------------------------------------------
+ 
+ # Fit
  lvm2a <- cord(fit2a, seed = 123)
  lvm2b <- cord(fit2b, seed = 123)
 
@@ -101,9 +142,8 @@
 
 
 
-
 # ==================================================================
-# 3. Save the outputs 
+# 4. Save the outputs 
 # ==================================================================
 
  # Setup the folder path

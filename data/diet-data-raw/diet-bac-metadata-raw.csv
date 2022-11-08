@@ -1,8 +1,8 @@
 "","sample_id","sample_no","diet_treatment","spider_weight","n_reads"
-"482-bac","482-bac","S1","ad_libitum",150.9,3509
-"505-bac","505-bac","S2","ad_libitum",250.8,6304
-"301-bac","301-bac","S3","ad_libitum",344.2,1272
-"367-bac","367-bac","S4","ad_libitum",292,27365
+"482-bac","482-bac","S1","not fed",150.9,3509
+"505-bac","505-bac","S2","not fed",250.8,6304
+"301-bac","301-bac","S3","not fed",344.2,1272
+"367-bac","367-bac","S4","not fed",292,27365
 "336-bac","336-bac","S5","cricket",439.2,274
 "447-bac","447-bac","S6","cricket",437.7,6251
 "359-bac","359-bac","S7","cricket",419.2,249
