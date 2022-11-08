@@ -129,10 +129,6 @@
 
  # Number of reads per sample
  rowSums(comm_bw)
-
- # Delete samples with too few reads
- #comm_bw <- comm_bw[rowSums(comm_bw)>300, ]
- #metadata <- metadata[rownames(comm_bw),]
  
  # Adjust the new number of reads to the metadata
  metadata$n_reads <- rowSums(comm_bw)
