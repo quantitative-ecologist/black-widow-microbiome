@@ -147,7 +147,11 @@
 # ==================================================================
 
  # Setup the folder path
- path <- file.path(getwd(), "outputs")
+ path <- file.path(
+   getwd(),
+   "outputs",
+   "fits"
+ )
  
  # Models for the env spiders
  saveRDS(fit1, file = file.path(path, "env-bac-fit-bw.rds"))

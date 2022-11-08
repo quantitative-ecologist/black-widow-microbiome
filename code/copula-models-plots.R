@@ -25,7 +25,7 @@
  
  # Setup paths to import data
  path1 <- file.path(getwd(), "data")
- path2 <- file.path(getwd(), "outputs")
+ path2 <- file.path(getwd(), "outputs", "fits")
 
 
 
@@ -354,12 +354,18 @@
 # 5. Export the plots
 # ==================================================================
  
+ # Folder path
+ path <- file.path(
+  getwd(),
+  "outputs",
+  "plots"
+ )
 
  # Environment spiders
  ggsave(
   plot1,
   file = file.path(
-    path2,
+    path,
     "env-bac-lvm-bw.png"
   )
  )
@@ -368,7 +374,7 @@
  ggsave(
   plot2,
   file = file.path(
-    path2,
+    path,
     "diet-bac-lvm-bw.png"
   )
  )

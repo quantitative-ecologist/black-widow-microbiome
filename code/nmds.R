@@ -203,10 +203,14 @@ df_ell <- data.frame()
 # 5. Save the plot
 # ==================================================================
  
- # Foler
- path1 <- file.path(getwd(), "outputs")
+ # Folder
+ path1 <- file.path(
+  getwd(),
+  "outputs",
+  "plots"
+ )
  
- # Webs
+ # Export to folder
  ggsave(plot1, file = file.path(path1, "env-bac-nmds-w.png"))
 
 
