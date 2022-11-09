@@ -1,0 +1,12 @@
+---
+title: "Supporting information for : Effects of urbanization and diet on the microbiome of the western black widow (*Latrodectus hesperus*)"
+output: 
+  word_document:
+    reference_docx: bwm-styles.docx
+bibliography: bwm-references.bib
+csl: oikos.csl
+---
+
+
+# Notes for Laura's field collection
+With L. hesperus specimens reared in the laboratory at the Université du Québec à Montréal (UQAM), several compartments (cuticles, bristles, feces, etc.) were tested with different protocols from QIAGEN and targeting different genetic materials (eithergenetic material (either DNA or bacterial RNA). It was finally determined that bacterial DNA would be extracted more efficiently with the DNeasy® PowerSoil® protocol (QIAGEN).
