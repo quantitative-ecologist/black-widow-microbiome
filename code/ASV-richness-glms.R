@@ -187,7 +187,7 @@
  diet_bw$ASV_id <- rownames(diet_bw)
 
  # Reorder
- diet_bw <- diet_bw[,c(14,1:13)]
+ diet_bw <- diet_bw[,c(13,1:12)]
 
  # Transform
  diet_bw <- data.table(diet_bw)
@@ -213,7 +213,7 @@
  # Merge with the metadata to add covariates
  data3 <- merge(
    data3,
-   meta_bw_diet[,c(1,4,6)],
+   meta_bw_diet[,c(1,3, 4, 5)],
    by = "sample_id")
 
 
@@ -239,14 +239,46 @@
 
 # Setup the model formulas -----------------------------------------
  
- # Gaussian model on log transformed data
- form1 <- bf(log_sp_richness ~ 1 + sample_env + n_reads,
-            sigma ~ 1 + sample_env + n_reads) +
-   gaussian()
+ # Gaussian model for env spiders
+ form1 <- bf(
+  log_sp_richness ~
+    1 +
+    sample_env +
+    n_reads,
+ sigma ~ 
+    1 +
+    sample_env +
+    n_reads
+ ) +
+ gaussian()
+ 
 
- form2 <- bf(log_sp_richness ~ 1 + diet_treatment + n_reads,
-            sigma ~ 1 + diet_treatment + n_reads) +
-   gaussian()
+ # Gaussian model for env webs
+ form2 <- bf(
+  log_sp_richness ~
+    1 + 
+    sample_env,
+  sigma ~ 
+    1 + 
+    sample_env
+ ) +
+ gaussian()
+
+
+ # Gaussian model for diet spiders
+ form3 <- bf(
+  log_sp_richness ~ 
+    1 + 
+    diet_treatment + 
+    spider_weight  + 
+    n_reads,
+  sigma ~ 
+    1 + 
+    diet_treatment + 
+    spider_weight + 
+    n_reads
+ ) + 
+ gaussian()
 
 
 
@@ -291,7 +323,7 @@
 
 
  # Model for env webs
- model1 <- brm(form1,
+ model2 <- brm(form2,
               warmup = 2000, 
               iter = 22000,
               thin = 80,
@@ -311,7 +343,7 @@
 
 
  # Model for diet spiders
- model3 <- brm(form2,
+ model3 <- brm(form3,
               warmup = 2000, 
               iter = 22000,
               thin = 80,
