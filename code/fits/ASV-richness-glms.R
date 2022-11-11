@@ -225,6 +225,13 @@
  
  # Environment as factor
  data3$diet_treatment <- as.factor(data3$diet_treatment)
+
+ # Transform covariates
+ stdz <- function (x) {(x - mean(x)) / sd(x)}
+
+ data3[, Zspider_weight := lapply(.SD, stdz), .SDcols = "spider_weight"]
+ data3[, logn_reads := n_reads]
+
 # ==================================================================
 # ==================================================================
 
@@ -270,13 +277,13 @@
   log_sp_richness ~ 
     1 + 
     diet_treatment + 
-    spider_weight  + 
-    n_reads,
+    Zspider_weight  + 
+    logn_reads,
   sigma ~ 
     1 + 
     diet_treatment + 
-    spider_weight + 
-    n_reads
+    Zspider_weight + 
+    logn_reads
  ) + 
  gaussian()
 
