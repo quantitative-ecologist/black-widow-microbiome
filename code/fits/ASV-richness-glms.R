@@ -344,9 +344,9 @@
 
  # Model for diet spiders
  model3 <- brm(form3,
-              warmup = 2000, 
-              iter = 22000,
-              thin = 80,
+              warmup = 5000, 
+              iter = 65000,
+              thin = 240,
               chains = 4,
               seed = 123,
               init = 0,
@@ -354,7 +354,7 @@
               threads = threading(12),
               backend = "cmdstanr",
               control = list(
-                adapt_delta = 0.99,
+                adapt_delta = 0.999,
                 max_treedepth = 12),
               data = data3)
  
