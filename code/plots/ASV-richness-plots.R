@@ -192,8 +192,8 @@
                                   color = "black"),
      axis.text.x   = element_text(size = 13,
                                   color = "black"),
-     axis.title.y  = element_text(size = 14),
-     axis.title.x  = element_text(size = 14),
+     axis.title.y  = element_text(size = 13),
+     axis.title.x  = element_text(size = 13),
      axis.ticks.length = unit(.15, "cm"),
      panel.background = element_blank(),
      panel.grid.major = element_blank(), 
@@ -244,8 +244,7 @@
       ylab("Log(posterior predicted richness)") +
       #xlab("\nParameter") +
       custom_theme +
-      theme(axis.title.x = element_blank(),
-            axis.text.x = element_text(size = 14))
+      theme(axis.title.x = element_blank())
 
 
 
@@ -273,8 +272,7 @@
       ylab("Log(posterior predicted richness)") +
       #xlab("\nParameter") +
       custom_theme + 
-      theme(axis.title.x = element_blank(),
-            axis.text.x = element_text(size = 14))
+      theme(axis.title.x = element_blank())
 
 
 
@@ -303,8 +301,7 @@
       ylab("Log(posterior predicted richness)") +
       #xlab("\nParameter") +
       custom_theme + 
-      theme(axis.title.x = element_blank(),
-            axis.text.x = element_text(size = 14))
+      theme(axis.title.x = element_blank())
 
 # ==================================================================
 # ==================================================================
