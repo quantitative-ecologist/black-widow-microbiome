@@ -230,7 +230,7 @@
  stdz <- function (x) {(x - mean(x)) / sd(x)}
 
  data3[, Zspider_weight := lapply(.SD, stdz), .SDcols = "spider_weight"]
- data3[, logn_reads := n_reads]
+ data3[, logn_reads := log(n_reads)]
 
 # ==================================================================
 # ==================================================================
