@@ -1,6 +1,6 @@
 # ==================================================================
 
-#               Compare ASV richness for env spiders
+#          Compare ASV richness for env spiders and webs
 
 # ==================================================================
 
@@ -27,15 +27,15 @@
 # Load the data ----------------------------------------------------
 
  # Path on Cedar
- path1 <- file.path(getwd(), "env-data-clean")
+ path <- file.path(getwd(), "env-data-clean")
 
  # Community matrices
- comm_bw_env <- readRDS(file.path(path1, "env-bac-comm-bw.rds"))
- comm_w_env <- readRDS(file.path(path1, "env-bac-comm-w.rds"))
+ comm_bw_env <- readRDS(file.path(path, "env-bac-comm-bw.rds"))
+ comm_w_env <- readRDS(file.path(path, "env-bac-comm-w.rds"))
  
  # Metadata
- meta_bw_env <- readRDS(file.path(path1, "env-bac-metadata-bw.rds"))
- meta_w_env <- readRDS(file.path(path1, "env-bac-metadata-w.rds"))
+ meta_bw_env <- readRDS(file.path(path, "env-bac-metadata-bw.rds"))
+ meta_w_env <- readRDS(file.path(path, "env-bac-metadata-w.rds"))
 
 # ==================================================================
 # ==================================================================
