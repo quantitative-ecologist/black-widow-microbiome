@@ -364,6 +364,10 @@
  # Environment spiders
  ggsave(
   plot1,
+  width = 12,
+  height = 12,
+  dpi = 300,
+  units = c("cm"),
   file = file.path(
     path,
     "env-bac-lvm-bw.png"
@@ -373,6 +377,10 @@
  # Diet spiders
  ggsave(
   plot2,
+  width = 12,
+  height = 12,
+  dpi = 300,
+  units = c("cm"),
   file = file.path(
     path,
     "diet-bac-lvm-bw.png"

@@ -211,7 +211,14 @@ df_ell <- data.frame()
  )
  
  # Export to folder
- ggsave(plot1, file = file.path(path1, "env-bac-nmds-w.png"))
+ ggsave(
+  plot1,
+  width = 12,
+  height = 12,
+  dpi = 300,
+  units = c("cm"),
+  file = file.path(path1, "env-bac-nmds-w.png")
+ )
 
 
 
