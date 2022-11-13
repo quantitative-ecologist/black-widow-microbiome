@@ -278,11 +278,6 @@
     1 + 
     diet_treatment + 
     Zspider_weight  + 
-    logn_reads,
-  sigma ~ 
-    1 + 
-    diet_treatment + 
-    Zspider_weight + 
     logn_reads
  ) + 
  gaussian()
@@ -292,7 +287,7 @@
 # Setup the priors -------------------------------------------------
  
  # Gaussian priors for b and intercepts
- priors <- c(
+ priors1 <- c(
    set_prior("normal(0, 2)", 
              class = "Intercept"),
    set_prior("normal(0, 2)", 
@@ -303,6 +298,14 @@
    set_prior("normal(0, 2)",
              class = "b",
              dpar = "sigma")
+ )
+
+ # Gaussian priors for b and intercepts
+ priors2 <- c(
+   set_prior("normal(0, 2)", 
+             class = "Intercept")
+   set_prior("normal(0, 2)",
+             class = "b")
  )
 
 
@@ -317,7 +320,7 @@
               chains = 4,
               seed = 123,
               init = 0,
-              prior = priors,
+              prior = priors1,
               threads = threading(12),
               backend = "cmdstanr",
               control = list(
@@ -337,7 +340,7 @@
               chains = 4,
               seed = 123,
               init = 0,
-              prior = priors,
+              prior = priors1,
               threads = threading(12),
               backend = "cmdstanr",
               control = list(
@@ -357,7 +360,7 @@
               chains = 4,
               seed = 123,
               init = 0,
-              prior = priors,
+              prior = priors2,
               threads = threading(12),
               backend = "cmdstanr",
               control = list(
