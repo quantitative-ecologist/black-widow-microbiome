@@ -41,6 +41,7 @@
  meta1 <- readRDS(file.path(path1, "env-bac-metadata-bw.rds"))
  meta2 <- readRDS(file.path(path1, "env-bac-metadata-w.rds"))
  meta3 <- readRDS(file.path(path2, "diet-bac-metadata-bw.rds"))
+ 
 # ==================================================================
 # ==================================================================
 
