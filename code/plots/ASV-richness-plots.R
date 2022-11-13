@@ -336,9 +336,10 @@
  legend_b <- get_legend(plot3 + theme(legend.position="bottom"))
 
  # Combine the plot with legends
- fig <- plot_grid(prow,
-       plot_grid(legend_a, legend_b),
-       ncol = 1, nrow = 2, rel_heights = c(1, .2)
+ fig <- plot_grid(
+   prow,
+   plot_grid(legend_a, legend_b),
+   ncol = 1, nrow = 2, rel_heights = c(1, .2)
  )
 
 # Export in the outputs folder -------------------------------------
