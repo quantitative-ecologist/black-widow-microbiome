@@ -134,7 +134,7 @@
  # Gaussian priors for b and intercepts
  priors <- c(
    set_prior("normal(0, 2)", 
-             class = "Intercept")
+             class = "Intercept"),
    set_prior("normal(0, 2)",
              class = "b")
  )
