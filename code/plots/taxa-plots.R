@@ -101,11 +101,13 @@
                      position = "fill") +
             ylab("\nRelative abundance (%)") +
             xlab("Sample ID") +
+            ggtitle("Spiders collected in situ") +
             labs(fill = "Bacteria family") +
             scale_y_continuous(expand = c(0, 0)) +
             scale_fill_viridis_d(direction = -1L) +
             theme_classic() +
-            theme(axis.title.y = element_blank(),
+            theme(plot.title = element_text(face = "bold"),
+                  axis.title.y = element_blank(),
                   panel.spacing = unit(1, "cm",
                                        data = NULL)) +
             coord_flip()
@@ -147,13 +149,15 @@
             geom_bar(color = "black",
                      width = .7,
                      position = "fill") +
+            ggtitle("Spiders collected in situ") +
             ylab("\nRelative abundance (%)") +
             xlab("Environment") +
             labs(fill = "Bacteria family") +
             scale_y_continuous(expand = c(0, 0)) +
             scale_fill_viridis_d(direction = -1L) +
             theme_classic() +
-            theme(axis.title.y = element_blank(),
+            theme(plot.title = element_text(face = "bold"),
+                  axis.title.y = element_blank(),
                   panel.spacing = unit(1, "cm",
                                        data = NULL)) +
             coord_flip()
@@ -215,13 +219,15 @@
             geom_bar(color = "black",
                      width = .7,
                      position = "fill") +
+            ggtitle("Webs of spiders collected in situ") +
             ylab("\nRelative abundance (%)") +
             xlab("Sample ID") +
             labs(fill = "Bacteria class") +
             scale_y_continuous(expand = c(0, 0)) +
             scale_fill_viridis_d(direction = -1L) +
             theme_classic() +
-            theme(axis.title.y = element_blank(),
+            theme(plot.title = element_text(face = "bold"),
+                  axis.title.y = element_blank(),
                   panel.spacing = unit(1, "cm",
                                        data = NULL)) +
             coord_flip()
@@ -263,13 +269,15 @@
             geom_bar(color = "black",
                      width = .7,
                      position = "fill") +
+            ggtitle("Webs of spiders collected in situ") +
             ylab("\nRelative abundance (%)") +
             xlab("Environment") +
             labs(fill = "Bacteria class") +
             scale_y_continuous(expand = c(0, 0)) +
             scale_fill_viridis_d(direction = -1L) +
             theme_classic() +
-            theme(axis.title.y = element_blank(),
+            theme(plot.title = element_text(face = "bold"),
+                  axis.title.y = element_blank(),
                   panel.spacing = unit(1, "cm",
                                        data = NULL)) +
             coord_flip()
@@ -288,11 +296,11 @@
 
 # Prepare data for the plot ----------------------------------------
 
- # community data aggregation at the class level :
+ # community data aggregation at the phylum level :
  
  # take the sum of each phylum in each sample
  taxa_agg3 <- aggregate(t(comm3),
-                        by = list(tax3[colnames(comm3),3]),
+                        by = list(tax3[colnames(comm3),2]),
                         FUN = sum)
  
  # clean up resulting object
@@ -302,14 +310,14 @@
  # convert abundances to relative abundances
  fam_data3 <- fam_data3/rowSums(fam_data3)
  
- # remove rare families
+ # remove rare phylum
  fam_data3 <- fam_data3[, colSums(fam_data3) > 0.01]
  
  # now reshape phylum data to long format
  fam_data3 <- reshape2::melt(fam_data3)
  
  # rename columns
- colnames(fam_data3)[1:2] <- c("sample_id", "bacteria_class")
+ colnames(fam_data3)[1:2] <- c("sample_id", "bacteria_phylum")
  
  # Add env column
  meta3$sample_id <- as.factor(meta3$sample_id)
@@ -327,17 +335,19 @@
  plot3a <- ggplot(fam_data3,
                   aes(sample_id,
                       weight = value,
-                      fill = bacteria_class)) +
+                      fill = bacteria_phylum)) +
             geom_bar(color = "black",
                      width = .7,
                      position = "fill") +
+            ggtitle("Spiders in the diet experiment") +
             ylab("\nRelative abundance (%)") +
             xlab("Sample ID") +
-            labs(fill = "Bacteria class") +
+            labs(fill = "Bacteria phylum") +
             scale_y_continuous(expand = c(0, 0)) +
             scale_fill_viridis_d(direction = -1L) +
             theme_classic() +
-            theme(axis.title.y = element_blank(),
+            theme(plot.title = element_text(face = "bold"),
+                  axis.title.y = element_blank(),
                   panel.spacing = unit(1, "cm",
                                        data = NULL)) +
             coord_flip()
@@ -359,12 +369,12 @@
  fam_data_agg3 <- aggregate(
     fam_data3$value,
     by = list(meta3[fam_data3$sample_id,]$diet_treatment,
-              fam_data3$bacteria_class),
+              fam_data3$bacteria_phylum),
               FUN = mean
  )
  
  # rename columns
- colnames(fam_data_agg3) <- c("env", "bacteria_class", "value")
+ colnames(fam_data_agg3) <- c("env", "bacteria_phylum", "value")
 
 
 
@@ -374,17 +384,19 @@
  plot3b <- ggplot(fam_data_agg3,
                   aes(env,
                       weight = value,
-                      fill = bacteria_class)) +
+                      fill = bacteria_phylum)) +
             geom_bar(color = "black",
                      width = .7,
                      position = "fill") +
+            ggtitle("Spiders in the diet experiment") +
             ylab("\nRelative abundance (%)") +
             xlab("Diet treatment") +
-            labs(fill = "Bacteria class") +
+            labs(fill = "Bacteria phylum") +
             scale_y_continuous(expand = c(0, 0)) +
             scale_fill_viridis_d(direction = -1L) +
             theme_classic() +
-            theme(axis.title.y = element_blank(),
+            theme(plot.title = element_text(face = "bold"),
+                  axis.title.y = element_blank(),
                   panel.spacing = unit(1, "cm",
                                        data = NULL)) +
             coord_flip()
@@ -404,15 +416,47 @@
  path <- file.path(getwd(), "outputs", "plots")
 
  # Env spiders
- ggsave(plot1a, file = file.path(path, "env-bac-taxa-bw1.png"))
- ggsave(plot1b, file = file.path(path, "env-bac-taxa-bw2.png"))
+ fig1 <- ggarrange(
+  plot1a, plot1b,
+  nrow = 1, ncol = 2,
+  common.legend = TRUE,
+  legend = "right"
+ )
+
+  ggexport(
+    fig1,
+    filename = file.path(path, "env-bac-taxa-bw.png"),
+    width = 3000, height = 1800, res = 300
+ )
+
 
  # Env webs
- ggsave(plot2a, file = file.path(path, "env-bac-taxa-w1.png"))
- ggsave(plot2b, file = file.path(path, "env-bac-taxa-w2.png"))
+ fig2 <- ggarrange(
+  plot2a, plot2b,
+  nrow = 1, ncol = 2,
+  common.legend = TRUE,
+  legend = "right"
+ )
+
+  ggexport(
+    fig2,
+    filename = file.path(path, "env-bac-taxa-w.png"),
+    width = 3000, height = 1800, res = 300
+ )
  
+
  # Diet spiders
- ggsave(plot3a, file = file.path(path, "diet-bac-taxa-bw1.png"))
- ggsave(plot3b, file = file.path(path, "diet-bac-taxa-bw2.png"))
+ fig3 <- ggarrange(
+  plot3a, plot3b,
+  nrow = 1, ncol = 2,
+  common.legend = TRUE,
+  legend = "right"
+ )
+
+  ggexport(
+    fig3,
+    filename = file.path(path, "diet-bac-taxa-bw.png"),
+    width = 3000, height = 1800, res = 300
+ )
 # ==================================================================
 # ==================================================================
