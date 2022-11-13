@@ -168,6 +168,16 @@
   mean
  )
  
+# Some personal notes : now I understand the function
+# This should give the same results
+# SO it is an standard error of the weighted
+# centroid with 95% confidence interva
+#plot(lvm1$scores)
+#ord<- vegan::ordiellipse(lvm1$scores, meta1$sample_env, display = "sites", 
+#                   kind = "se", conf = 0.95, label = T)
+#
+#ord<-ordiellipse(sol, MyMeta$amt, display = "sites", 
+#                   kind = "se", conf = 0.95, label = T)
 
  # Compute the function to calculate ellipses
  veganCovEllipse <-
