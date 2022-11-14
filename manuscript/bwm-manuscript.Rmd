@@ -11,17 +11,43 @@ csl: oikos.csl
 
 ...
 
+*potential journals :*
+- Microbial ecology
+- Animal microbiome
+- molecular ecology
+- oikos?
+- ISME journal
+- biological conservation?
+
+
 Keywords :
 
 
 \newpage
 # Introduction {.unnumbered}
 
-Human-induced environmental modifications alter trophic interactions by reshaping prey and predator communities (REFS). An increasing number of studies report a massive loss of arthropod species diversity, which is the most diverse group in the animal kingdom [@Giribet.Edgecombe2010], due to the combined effects of urbanization and human activities [@Newbold.etal2015;@Bosmans.etal2018;@Seibold.etal2019]. For instance, urbanization transforms the habitat characteristics where predatory arthropods hunt (REFS), which may then incur changes in the community composition of their prey [@Hallmann.etal2017;@Seibold.etal2019]. Consequently, these new environmental pressures can lead to drastic diet changes which may impair the capacity of predatory arthropods to survive in urbanized habitats (REFS).
+Human-induced environmental modifications alter trophic interactions by reshaping prey and predator communities (REFS). An increasing number of studies report a massive loss of arthropod species across the globe, which is the most diverse group in the animal kingdom [@Giribet.Edgecombe2010], due to urbanization and human activities [@Vergnes.etal2014;@Newbold.etal2015;@Seibold.etal2019;@Vasconcelos.etal2022]. These environmental pressures can manifest through increased exposure to novel pathogens, habitat loss, as well as drastic diet shifts due to changes in prey communities [REFS]. Together or individually, these effects may impair the capacity of predatory arthropods to survive in urbanized environments.
 
-Numerous studies have shown that varying diets can influence the physiology, behaviour, and fitness of wild predatory animals (REFS). Changes in species composition can alter the quantity of available prey for predatory arthropods, but also their quality, for example, via reduced nutritional components (REFS). The microbial communities inhabiting arthropods' bodies provide numerous functions related to food consumption such as nutrient acquisition, food digestion, and food detoxification [@Boone.etal2013;@Brune.Ohkuma2011;@LeBlanc.etal2013]. The microbiome of arthropods may thus play a key role for their survival and reproduction in a changing landscape. Recently, the role of diet has been highlighted as a critical factor mediating the structure of arthropod microbiome communities [@Kennedy.etal2020]. Yet, we still have very limited knowledge on the ecological mechanisms driving arthropod microbiome diversity in the wild, such as habitat change and prey diet. Moreover, studies of microbiome diversity in arthropods have been mostly descriptive, and the ecological and evolutionary consequences of host-microbe interactions for arthropods are just beginning to be explored [@Engel.Moran2013;@Parks.etal2017]. Accordingly, the composition of the microbial environment of arthropods could indicate adaptive responses to changes in habitat and prey diversity.
+It is now recognized that the microorganisms inhabiting arthropod hosts (i.e. microbiota) can play key roles in host immune function, nutrient acquisition, and fitness [@Dillon.Dillon2004;@Zilber-Rosenberg.Rosenberg2008;@Brune.Ohkuma2011;@Engel.Moran2013]. The microbiota composition of arthropods has been shown to be majorly driven by landscape components and local habitat [@Moro.etal2011;@Tiede.etal2017a;@Bosmans.etal2018;@Bennett.etal2019], as well as the host's diet [@Hammer.etal2017;@Ng.etal2018;@Kennedy.etal2020a;@Dion-Phenix.etal2021]. Moreover, the microbial diversity of predatory arthropods hosts has also been positively linked to the local biodiversity of prey [@Schmid.etal2015;@Tiede.etal2017a]. Together, these examples highlight how arthropod micriobiota is highly dependent on external environmental factors. 
 
-In this study, we used the western black widow (*Latrodectus hesperus*), a sedentary predatory spider that uses its web as a hunting tool, to test the effect of urbanization and prey diet on their micriobiota composition. This predator can stay in one place for almost a year and feeds exclusively on local prey (REFS). While the western black widow is a facultative generalist, it has been shown to benefit from a diversity of prey to fulfill its nutritional requirements (REFS). A balanced diet of multiple prey types may be adaptive for spiders because polyphagy provides access to a variety of nutrients not available from a single prey source. This has been shown to maximize growth rate and survival of juveniles [@Uetz.etal1992;@Toft1999]. However, a mixed diet may be limited by the availability of certain prey types in the habitat where black widows establish themselves. Western black widows can be found both in desertic and urban environments. They are therefore ideal study systems to quantify the consequences of urbanization via the study of their microbiota. They could potentially serve as bioindicators informing on the state of the surrounding ecological communities [@Hose.etal2002;@De.etal2022;@Gregoric.etal2022].
+Yet , parler de l'urbanization. qu'on a pas encore étudié ça sous ce contexte chez des arthropodes prédateurs
+
+Moreover, a recent review suggested that such external mediated effects may play a crucial role idée conservation dégradation de l'habitat, mais on a rien vu encore au niveau de l'urbanization
+
+Aussi dans ce paragraphe parler de l'idée que par coiséquent, la composition bactérienne devrait être cruciale pour permettre aux orgaqnismes de survivre dans un contexte de changements globaux liés à l'activité humaine.
+
+Yet, we still have limited knowledge on the ecological mechanisms driving arthropod microbiome diversity in the wild, such as habitat change and prey diet. Moreover, studies of microbiome diversity in arthropods have been mostly descriptive, and the ecological and evolutionary consequences of host-microbe interactions for arthropods are just beginning to be explored [@Engel.Moran2013;@Parks.etal2017].
+
+The microbiome of arthropods may thus play a key role for their survival and reproduction in a changing landscape. 
+
+
+*Passive and active recruitment*
+*ou peut être mettre l'accent sur l'aspect résident vs transient*
+
+*section sur la diète :*
+Numerous studies in wild predatory animals have established direct links relating an individual's diet to its physiology, behaviour, and fitness (REFS). Changes in species composition can alter the quantity of available prey for predatory arthropods, but also their quality, for example, via reduced nutritional components (REFS). The microbial communities inhabiting arthropods' bodies provide numerous functions related to food consumption such as nutrient acquisition, food digestion, and food detoxification [@Boone.etal2013;@Brune.Ohkuma2011;@LeBlanc.etal2013]. Recently, the role of diet has been highlighted as a critical factor mediating the structure of arthropod microbiome communities [@Kennedy.etal2020]. 
+
+In this study, we used the western black widow (*Latrodectus hesperus*), a sedentary predatory spider that uses its web as a hunting tool, to test the effect of urbanization and prey diet on their micriobiota composition. This predator can stay in one place for almost a year and feeds exclusively on local prey (REFS). Western black widows can be found both in desertic and urban environments. They are therefore ideal study systems to quantify the consequences of urbanization via the study of their microbiota. They could potentially serve as bioindicators informing on the state of the surrounding ecological communities [@Hose.etal2002;@De.etal2022;@Gregoric.etal2022].
 
 Here, we combined field and laboratory experiments to evaluate the impacts of urbanization on microbiome communities and body condition of western black widows. In the field, we compared spiders collected from 4 different sites to measure the impacts of urbanization on microbiome diversity. Our objective is to characterize and compare the gut and web bacterial communities of western black widows according to their environment: desert (natural) versus urban. We hypothesize that the diversity and structure of the bacterial communities of the gut and webs will differ between spiders collected in desertic and urban habitats. Because prey diversity would likely be lower in urban environments [@Bosmans.etal2018], we predict that gut and web bacterial diversity will be higher for spiders collected in the desert. In a subsequent laboratory experiment, we studied the influence of a restricted diet on microbiome diversity. Our objective is to evaluate the effect of a restricted diet (i.e. crickets vs isopods) on the alpha and beta diversity of the western black widow's gut microbiome. First, knowing there is a functional relationship between diet and gut microbiome, spiders that consumed a similar diet should have a homogeneous community. Second, the rate of variation in beta diversity should be explained by the spider's diet. A diet composed of crickets should ellicit a greater abundance and diversity since crickets are omnivores with a high protein and fruit/vegetable diet [@Ng.etal2018]. On the contrary, spiders restricted with an isopod diet should have a lower variety of microorganisms specific to the carrot-based diet that was provided to the isopods. *peut être expliquer le transfert trophique de bactéries pour supporter notre hypothèse. On peut citer Hélène Dionx Phénix ici*
 
@@ -118,6 +144,13 @@ Process :
 
 *Our study provides a better understanding of the impacts of urbanization on the microbial ecology of L. hesperus in Arizona. It will also help determine how prey encountered by black widows shape the structure of their microbiome.*
 
+- *Voir intro de Hammer parlant de similarités entre différentes diètes. Idem pour les problèmes méthodologiques*
+
+- *Voir Kennedy pour effet de la diète chez des araignées et que le microbiote semble transiant + que résident*
+
+- *Voir Hammer et al. pour des éléments de discussion sur les espèces avec peu de microorganismes*
+
+- *Voir Bahrndorff pour implications en conservation*
 
 \newpage
 # References {.unnumbered}
