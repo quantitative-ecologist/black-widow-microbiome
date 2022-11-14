@@ -16,7 +16,8 @@
  library(brms)
  library(data.table)
  library(ggplot2)
- library(cowplot)
+ #library(cowplot)
+ library(ggpubr)
  library(viridis)
 
 
@@ -52,7 +53,7 @@
  # Keep columns of interest
  draws1 <- data.table(draws1[, c(1:3,5)])
  draws2 <- data.table(draws2[, c(1:4)])
- draws3 <- data.table(draws3[, c(1:4, 7:8)])
+ draws3 <- data.table(draws3[, c(1:3)])
 
 
 # Calculate the group means ----------------------------------------
@@ -71,9 +72,7 @@
  
  draws3[, ":=" 
     (mean_isopod = b_Intercept + b_diet_treatmentisopod,
-     sigma_isopod = b_sigma_Intercept + b_sigma_diet_treatmentisopod,
-     mean_notfed = b_Intercept + b_diet_treatmentnotfed,
-     sigma_notfed = b_sigma_Intercept + b_sigma_diet_treatmentnotfed)
+     mean_notfed = b_Intercept + b_diet_treatmentnotfed)
  ]
 
 
@@ -148,20 +147,13 @@
 # Prepare the plot3 table ------------------------------------------
   
  # Reshape the table for easier computation
- draws3 <- draws3[, c(1,2,7:10)]
+ draws3 <- draws3[, c(1, 4, 5)]
  setnames(draws3, "b_Intercept", "mean_cricket")
- setnames(draws3, "b_sigma_Intercept", "sigma_cricket")
  dat3 <- melt(
     draws3,
     variable.name = "coefficient",
     measure = patterns("_")
  )
- 
- # Detransform sigma values
- dat3 <- dat3[
-    coefficient %in% c("sigma_cricket", "sigma_isopod", "sigma_notfed"),
-    value := exp(value)
- ]
 
  # Calculate the posterior group means and CIs
  dat3 <- dat3[,
@@ -172,9 +164,12 @@
  ]
  
  # Add an env and type factor
- dat3[, diet := as.factor(c(rep("cricket",2), rep("isopod",2), rep("not fed", 2)))]
- dat3[, type := as.factor(rep(c("mean", "sigma"), 3))]
-
+ dat3[, diet := as.factor(c(
+   "cricket",
+   "isopod",
+   "not fed")
+   )
+ ]
 
 # ==================================================================
 # ==================================================================
@@ -279,7 +274,7 @@
 # Plot for diet spiders --------------------------------------------
 
  plot3 <- ggplot(dat3,
-                 aes(x = type, y = mean,
+                 aes(x = diet, y = mean,
                  fill = diet,
                  shape = diet)) +
       
@@ -295,13 +290,11 @@
       #scale_y_continuous(breaks = seq(0, 6, 2),
       #                   limits = c(0, 6.8)) +
       scale_x_discrete(expand = c(1, 0)) +
-      
-      labs(fill = "Diet :",
-           shape = "Diet :") +
       ylab("Log(posterior predicted richness)") +
       #xlab("\nParameter") +
       custom_theme + 
-      theme(axis.title.x = element_blank())
+      theme(axis.title.x = element_blank(),
+            legend.position = "none")
 
 # ==================================================================
 # ==================================================================
@@ -318,39 +311,66 @@
 # Combine as one figure --------------------------------------------
 
  # Prepare the figure
- prow <- plot_grid(
-    plot1 + theme(legend.position="none"),
-    NULL,
-    plot2 + theme(legend.position="none"),
-    NULL,
-    plot3 + theme(legend.position="none"),
-    rel_widths = c(1, 0.08, 1, 0.08, 1),
-    align = "hv",
-    labels = c("(A)","", "(B)", "", "(C)"),
-    hjust = -0.2,
-    nrow = 1
- )
+ #prow <- plot_grid(
+ #   plot1 + theme(legend.position="none"),
+ #   NULL,
+ #   plot2 + theme(legend.position="none"),
+ #   NULL,
+ #   plot3 + theme(legend.position="none"),
+ #   rel_widths = c(1, 0.08, 1, 0.08, 1),
+ #   align = "hv",
+ #   labels = c("(A)","", "(B)", "", "(C)"),
+ #   hjust = -0.2,
+ #   nrow = 1
+ #)
  
+ fig <- ggarrange(
+    plot1, NULL, plot2,
+    nrow = 1, ncol = 3,
+    labels = c("(A)", "", "(B)"),
+    hjust = -0.1,
+    vjust = 1.5,
+    widths = c(1, 0.1, 1),
+    common.legend = TRUE,
+    legend.position = "top"
+ )
+
  # Create the two legends
- legend_a <- get_legend(plot1 + theme(legend.position="bottom"))
- legend_b <- get_legend(plot3 + theme(legend.position="bottom"))
+ #legend_a <- get_legend(plot1 + theme(legend.position="bottom"))
+ #legend_b <- get_legend(plot3 + theme(legend.position="bottom"))
 
  # Combine the plot with legends
- fig <- plot_grid(
-   prow,
-   plot_grid(legend_a, legend_b),
-   ncol = 1, nrow = 2, rel_heights = c(1, .2)
- )
+ #fig <- plot_grid(
+ #  prow,
+ #  plot_grid(legend_a, legend_b),
+ #  ncol = 1, nrow = 2, rel_heights = c(1, .2)
+ #)
+
+ #fig <- plot_grid(
+ #  prow,
+ #  plot_grid(legend_a),
+ #  ncol = 1, nrow = 2, rel_heights = c(1, .2)
+ #)
+
+
 
 # Export in the outputs folder -------------------------------------
  
  ggexport(
     fig,
-    filename = file.path(path, "plots", "ASV-richness-fig.png"),
-    width = 3500,
-    height = 1400,
+    filename = file.path(path, "plots", "env-bac-ASVrich-glm.png"),
+    width = 2000,
+    height = 1200,
     res = 300
  )
  
+ ggexport(
+    plot3,
+    filename = file.path(path, "plots", "diet-bac-ASVrich-glm.png"),
+    width = 1500,
+    height = 1500,
+    res = 300
+ )
+
 # ==================================================================
 # ==================================================================
