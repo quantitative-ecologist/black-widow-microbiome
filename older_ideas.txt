@@ -1,3 +1,12 @@
 Ideas from the introduction :
 
 While the western black widow is a facultative generalist, it has been shown to benefit from a diversity of prey to fulfill its nutritional requirements (REFS). A balanced diet of multiple prey types may be adaptive for spiders because it provides access to a greater variety of nutrients not available from a single prey source. Diversified diets maximize growth rate and survival of juveniles in... [@Uetz.etal1992;@Toft1999]. However, a mixed diet may be limited by the availability of certain prey types in the habitat where black widows establish themselves. 
+
+Yet, we still have limited knowledge on the ecological mechanisms driving arthropod microbiome diversity in the wild, such as habitat change and prey diet. Moreover, studies of microbiome diversity in arthropods have been mostly descriptive, and the ecological and evolutionary consequences of host-microbe interactions for arthropods are just beginning to be explored [@Engel.Moran2013;@Parks.etal2017].
+
+*section sur la diète :*
+Changes in species composition can alter the quantity of available prey for predatory arthropods, but also their quality, for example, via reduced nutritional components (REFS). The microbial communities inhabiting arthropods' bodies provide numerous functions related to food consumption such as nutrient acquisition, food digestion, and food detoxification [@Boone.etal2013;@Brune.Ohkuma2011;@LeBlanc.etal2013]. Recently, the role of diet has been highlighted as a critical factor mediating the structure of arthropod microbiome communities [@Kennedy.etal2020]. 
+
+
+The last objective would be to identify if there is a basal microbiome in the L. Herperus species. 
+One of the hypothesis would be that The permanent core microbiome should account for 30% of the species-specific microbial flora and thus be observed across groups leading to a stable and predictable microbial community (REFS). This should thus be resistant to the influence of diet on the community (Chu, Spencer, Curzi, Zavala, & Seufferheld, 2013 ; Engel & Moran, 2013 ; Reese & Dunn, 2018 ; Ruokolainen , Ikonen, Makkonen, & Hanski, 2016 ; Russell et al., 2009 ; Sanders et al., 2014 ).
