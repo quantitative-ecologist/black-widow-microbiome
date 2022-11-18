@@ -1,6 +1,6 @@
 # ==================================================================
 
-#           Clean the spider data for analysis of bacteria
+#          Clean the spider data for analysis of eukaryotes
 
 # ==================================================================
 
@@ -40,12 +40,12 @@
  # Community data
  comm <- readRDS(
     file.path(folder, "env-data-raw",
-              "env-bac-seqtabnochim.rds"))
+              "env-euk-seqtabnochim.rds"))
 
   # Taxonomy data
  taxa_sp <- readRDS(
     file.path(folder, "env-data-raw",
-              "env-bac-taxa-table2.rds"))
+              "env-euk-taxa-table2.rds"))
  # make sur order of ASVs match 
  taxo <- taxa_sp[colnames(comm),]
  rm(taxa_sp)
@@ -53,7 +53,7 @@
   # Raw metadata
  metadata <- read.csv(
     file.path(folder, "env-data-raw",
-              "env-bac-metadata-raw.csv"),
+              "env-euk-metadata-raw.csv"),
               row.names = 1)
  # only spider samples
  metadata <- metadata[metadata$sample_type %in%
