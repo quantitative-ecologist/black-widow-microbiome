@@ -110,8 +110,8 @@ Polymerase : Phusion Hot Start II High-Fidelity
 
 List of things to say:
 - dada2
-- packages and versions
-- reference databases
+- packages and versions (dada2, DECIPHER)
+- reference databases + citations
 - rarefaction for webs
 
 
