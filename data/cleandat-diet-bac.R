@@ -28,21 +28,21 @@
  
  # Community data
  comm <- readRDS(
-    file.path(folder, "diet-data-raw",
-              "diet-bac-seqtabnochim.rds"))
+    file.path(folder, "data-raw-diet",
+              "seqtabnochim-diet-bac.rds"))
 
   # Taxonomy data
  taxa_sp <- readRDS(
-    file.path(folder, "diet-data-raw",
-              "diet-bac-taxa-table2.rds"))
+    file.path(folder, "data-raw-diet",
+              "taxa-table2-diet-bac.rds"))
  # make sur order of ASVs match 
  taxo <- taxa_sp[colnames(comm),]
  rm(taxa_sp)
 
   # Raw metadata
  metadata <- read.csv(
-    file.path(folder, "diet-data-raw",
-              "diet-bac-metadata-raw.csv"),
+    file.path(folder, "data-raw-diet",
+              "metadata-raw-diet-bac.csv"),
               row.names = 1)
 
 # ==================================================================
@@ -243,26 +243,26 @@
  # Setup folder path
  path <- file.path(
     folder,
-    "diet-data-clean"
+    "data-clean-diet-bac"
  )
  
 
  # Save clean taxa table
  saveRDS(
   taxo_sub,
-  file = file.path(path, "diet-bac-taxa-bw.rds")
+  file = file.path(path, "taxa-diet-bac.rds")
  )
 
  # Save clean community table
  saveRDS(
   comm_sub,
-  file = file.path(path, "diet-bac-comm-bw.rds")
+  file = file.path(path, "comm-diet-bac.rds")
  )
 
  # Save clean metadata
  saveRDS(
   metadata_sub,
-  file = file.path(path, "diet-bac-metadata-bw.rds")
+  file = file.path(path, "metadata-diet-bac.rds")
  )
 
 # ==================================================================

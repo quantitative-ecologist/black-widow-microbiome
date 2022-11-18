@@ -38,21 +38,21 @@
  
  # Community data
  comm <- readRDS(
-    file.path(folder, "env-data-raw",
-              "env-bac-seqtabnochim.rds"))
+    file.path(folder, "data-raw-env",
+              "seqtabnochim-env-bac.rds"))
 
   # Taxonomy data
  taxa_sp <- readRDS(
-    file.path(folder, "env-data-raw",
-              "env-bac-taxa-table2.rds"))
+    file.path(folder, "data-raw-env",
+              "taxa-table2-env-bac.rds"))
  # make sur order of ASVs match 
  taxo <- taxa_sp[colnames(comm),]
  rm(taxa_sp)
 
   # Raw metadata
  metadata <- read.csv(
-    file.path(folder, "env-data-raw",
-              "env-bac-metadata-raw.csv"),
+    file.path(folder, "data-raw-env",
+              "metadata-raw-env-bac.csv"),
               row.names = 1)
  # only spider samples
  metadata <- metadata[metadata$sample_type %in%
@@ -128,7 +128,7 @@
  rowSums(comm_w)
 
  # Apply new read count to metadata
- metadata$n_reads <- rowSums(comm_w)
+ metadata$n_reads_bac <- rowSums(comm_w)
 
  # visualize log10 number of reads per sample
  hist(rowSums(comm_w))
@@ -382,7 +382,7 @@
  
  # Match rarefied community to metadata
  metadata_sub <- metadata[rownames(comm_rarfy),]
- metadata_sub$n_reads_rarfy <- rowSums(comm_rarfy)
+ metadata_sub$n_reads_bac_rarfy <- rowSums(comm_rarfy)
 
 
 
@@ -409,24 +409,24 @@
 # ==================================================================
 
  path <- file.path(folder,
-                   "env-data-clean")
+                   "data-clean-env")
  
  # Save clean taxa table
  saveRDS(
     taxo_rarfy,
-    file = file.path(path, "env-bac-taxa-w.rds")
+    file = file.path(path, "taxa-env-bac-w.rds")
  )
 
  # Save clean community table
  saveRDS(
     comm_rarfy,
-    file = file.path(path, "env-bac-comm-w.rds")
+    file = file.path(path, "comm-env-bac-w.rds")
  )
 
  # Save clean metadata
  saveRDS(
     metadata_sub,
-    file = file.path(path, "env-bac-metadata-w.rds")
+    file = file.path(path, "metadata-env-bac-w.rds")
  )
 
 # ==================================================================
