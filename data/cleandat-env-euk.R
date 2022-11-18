@@ -39,13 +39,13 @@
  
  # Community data
  comm <- readRDS(
-    file.path(folder, "env-data-raw",
-              "env-euk-seqtabnochim.rds"))
+    file.path(folder, "data-raw-env",
+              "seqtabnochim-env-euk.rds"))
 
   # Taxonomy data
  taxa_sp <- readRDS(
     file.path(folder, "env-data-raw",
-              "env-euk-taxa-table2.rds"))
+              "taxa-table-env-euk.rds"))
  # make sur order of ASVs match 
  taxo <- taxa_sp[colnames(comm),]
  rm(taxa_sp)
@@ -53,7 +53,7 @@
   # Raw metadata
  metadata <- read.csv(
     file.path(folder, "env-data-raw",
-              "env-euk-metadata-raw.csv"),
+              "metadata-raw-env-euk.csv"),
               row.names = 1)
  # only spider samples
  metadata <- metadata[metadata$sample_type %in%
