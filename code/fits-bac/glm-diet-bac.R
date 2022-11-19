@@ -27,13 +27,13 @@
 # Load the data ----------------------------------------------------
 
  # Path on Cedar
- path <- file.path(getwd(), "diet-data-clean")
+ path <- file.path(getwd(), "data-clean-diet")
 
  # Community matrix
- comm_bw_diet <- readRDS(file.path(path, "diet-bac-comm-bw.rds"))
+ comm_bw_diet <- readRDS(file.path(path, "comm-diet-bac-bw.rds"))
  
  # Metadata
- meta_bw_diet <- readRDS(file.path(path, "diet-bac-metadata-bw.rds"))
+ meta_bw_diet <- readRDS(file.path(path, "metadata-diet-bac-bw.rds"))
 
 # ==================================================================
 # ==================================================================
@@ -161,7 +161,7 @@
               data = data)
  
  # Save the model output
- saveRDS(model, file = "diet-bac-glm-bw.rds")
+ saveRDS(model, file = "glm-diet-bac-bw.rds")
 
 # ==================================================================
 # ==================================================================

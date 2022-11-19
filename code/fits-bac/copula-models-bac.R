@@ -27,16 +27,16 @@
 # Import data ------------------------------------------------------
 
  # On my computer
- path1 <- file.path(getwd(), "data", "env-data-clean")
- path2 <- file.path(getwd(), "data", "diet-data-clean")
+ path1 <- file.path(getwd(), "data", "data-clean-env")
+ path2 <- file.path(getwd(), "data", "data-clean-diet")
 
  # Community matrices
- comm_bw_env <- readRDS(file.path(path1, "env-bac-comm-bw.rds"))
- comm_bw_diet <- readRDS(file.path(path2, "diet-bac-comm-bw.rds"))
+ comm_bw_env <- readRDS(file.path(path1, "comm-env-bac-bw.rds"))
+ comm_bw_diet <- readRDS(file.path(path2, "comm-diet-bac-bw.rds"))
  
  # Metadata
- meta_bw_env <- readRDS(file.path(path1, "env-bac-metadata-bw.rds"))
- meta_bw_diet <- readRDS(file.path(path2, "diet-bac-metadata-bw.rds"))
+ meta_bw_env <- readRDS(file.path(path1, "metadata-env-bac-bw.rds"))
+ meta_bw_diet <- readRDS(file.path(path2, "metadata-diet-bac-bw.rds"))
 
 # ==================================================================
 # ==================================================================
@@ -154,16 +154,16 @@
  )
  
  # Models for the env spiders
- saveRDS(fit1, file = file.path(path, "env-bac-fit-bw.rds"))
- saveRDS(lvm1, file = file.path(path, "env-bac-lvm-bw.rds"))
+ saveRDS(fit1, file = file.path(path, "fit-env-bac-bw.rds"))
+ saveRDS(lvm1, file = file.path(path, "lvm-env-bac-bw.rds"))
 
  
  # Models for the diet spiders
- saveRDS(fit2a, file = file.path(path, "diet-bac-fit1-bw.rds"))
- saveRDS(lvm2a, file = file.path(path, "diet-bac-lvm1-bw.rds"))
+ saveRDS(fit2a, file = file.path(path, "fit1-diet-bac-bw.rds"))
+ saveRDS(lvm2a, file = file.path(path, "lvm1-diet-bac-bw.rds"))
 
- saveRDS(fit2b, file = file.path(path, "diet-bac-fit2-bw.rds"))
- saveRDS(lvm2b, file = file.path(path, "diet-bac-lvm2-bw.rds"))
+ saveRDS(fit2b, file = file.path(path, "fit2-diet-bac-bw.rds"))
+ saveRDS(lvm2b, file = file.path(path, "lvm2-diet-bac-bw.rds"))
 
 # ==================================================================
 # ==================================================================

@@ -25,7 +25,7 @@
  
  # Setup paths to import data
  path1 <- file.path(getwd(), "data")
- path2 <- file.path(getwd(), "outputs", "fits")
+ path2 <- file.path(getwd(), "outputs", "fits-bac")
 
 
 
@@ -36,16 +36,16 @@
  comm1 <- readRDS(
   file.path(
     path1,
-    "env-data-clean",
-    "env-bac-comm-bw.rds"
+    "data-clean-env",
+    "comm-env-bac-bw.rds"
   )
  )
  
  comm2 <- readRDS(
   file.path(
     path1,
-    "diet-data-clean",
-    "diet-bac-comm-bw.rds"
+    "data-clean-diet",
+    "comm-diet-bac-bw.rds"
   )
  )
 
@@ -54,16 +54,16 @@
  meta1 <- readRDS(
   file.path(
     path1,
-    "env-data-clean",
-    "env-bac-metadata-bw.rds"
+    "data-clean-env",
+    "metadata-env-bac-bw.rds"
   )
  )
 
  meta2 <- readRDS(
   file.path(
     path1,
-    "diet-data-clean",
-    "diet-bac-metadata-bw.rds"
+    "data-clean-diet",
+    "metadata-diet-bac-bw.rds"
   )
  )
 
@@ -72,16 +72,16 @@
  taxa1 <- readRDS(
   file.path(
     path1,
-    "env-data-clean",
-    "env-bac-taxa-bw.rds"
+    "data-clean-env",
+    "taxa-env-bac-bw.rds"
   )
  )
  
  taxa2 <- readRDS(
   file.path(
     path1,
-    "diet-data-clean",
-    "diet-bac-taxa-bw.rds"
+    "data-clean-diet",
+    "taxa-diet-bac-bw.rds"
   )
  )
 
@@ -90,14 +90,14 @@
  lvm1 <- readRDS(
   file.path(
     path2,
-    "env-bac-lvm-bw.rds"
+    "lvm-env-bac-bw.rds"
   )
  )
 
  lvm2 <- readRDS(
   file.path(
     path2,
-    "diet-bac-lvm2-bw.rds"
+    "lvm2-diet-bac-bw.rds"
   )
  )
 
@@ -368,7 +368,7 @@
  path <- file.path(
   getwd(),
   "outputs",
-  "plots"
+  "plots-bac"
  )
 
  # Environment spiders
@@ -380,7 +380,7 @@
   units = c("cm"),
   file = file.path(
     path,
-    "env-bac-lvm-bw.png"
+    "lvm-env-bac-bw.png"
   )
  )
 
@@ -393,7 +393,7 @@
   units = c("cm"),
   file = file.path(
     path,
-    "diet-bac-lvm-bw.png"
+    "lvm-diet-bac-bw.png"
   )
  )
 
