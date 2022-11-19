@@ -5,6 +5,7 @@ Pour meeting du 2022-10-27
 - Questions sur si je fait la raréfaction combinée ou pas (spider + web).
 
 # Verdict : Pas d'avenue établie...
+# Verdict2 : réglé
 
 
 # Code pour le median sequencing depth
