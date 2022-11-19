@@ -24,23 +24,23 @@
 # Community and taxa data ------------------------------------------
  
  # Folder paths
- path1 <- file.path(getwd(), "data", "env-data-clean")
- path2 <- file.path(getwd(), "data", "diet-data-clean")
+ path1 <- file.path(getwd(), "data", "data-clean-env")
+ path2 <- file.path(getwd(), "data", "data-clean-diet")
  
  # Community matrices
- comm1 <- readRDS(file.path(path1, "env-bac-comm-bw.rds"))
- comm2 <- readRDS(file.path(path1, "env-bac-comm-w.rds"))
- comm3 <- readRDS(file.path(path2, "diet-bac-comm-bw.rds"))
+ comm1 <- readRDS(file.path(path1, "comm-env-bac-bw.rds"))
+ comm2 <- readRDS(file.path(path1, "comm-env-bac-w.rds"))
+ comm3 <- readRDS(file.path(path2, "comm-diet-bac-bw.rds"))
  
  # Taxa data
- tax1 <- readRDS(file.path(path1, "env-bac-taxa-bw.rds"))
- tax2 <- readRDS(file.path(path1, "env-bac-taxa-w.rds"))
- tax3 <- readRDS(file.path(path2, "diet-bac-taxa-bw.rds"))
+ tax1 <- readRDS(file.path(path1, "taxa-env-bac-bw.rds"))
+ tax2 <- readRDS(file.path(path1, "taxa-env-bac-w.rds"))
+ tax3 <- readRDS(file.path(path2, "taxa-diet-bac-bw.rds"))
  
  # Metadata
- meta1 <- readRDS(file.path(path1, "env-bac-metadata-bw.rds"))
- meta2 <- readRDS(file.path(path1, "env-bac-metadata-w.rds"))
- meta3 <- readRDS(file.path(path2, "diet-bac-metadata-bw.rds"))
+ meta1 <- readRDS(file.path(path1, "metadata-env-bac-bw.rds"))
+ meta2 <- readRDS(file.path(path1, "metadata-env-bac-w.rds"))
+ meta3 <- readRDS(file.path(path2, "metadata-diet-bac-bw.rds"))
  
 # ==================================================================
 # ==================================================================
@@ -413,7 +413,7 @@
 # ==================================================================
  
  # Folder path
- path <- file.path(getwd(), "outputs", "plots")
+ path <- file.path(getwd(), "outputs", "plots-bac")
 
  # Env spiders
  fig1 <- ggarrange(
@@ -425,7 +425,7 @@
 
   ggexport(
     fig1,
-    filename = file.path(path, "env-bac-taxa-bw.png"),
+    filename = file.path(path, "taxa-env-bac-bw.png"),
     width = 3000, height = 1800, res = 300
  )
 
@@ -440,7 +440,7 @@
 
   ggexport(
     fig2,
-    filename = file.path(path, "env-bac-taxa-w.png"),
+    filename = file.path(path, "taxa-env-bac-w.png"),
     width = 3000, height = 1800, res = 300
  )
  
@@ -455,7 +455,7 @@
 
   ggexport(
     fig3,
-    filename = file.path(path, "diet-bac-taxa-bw.png"),
+    filename = file.path(path, "taxa-diet-bac-bw.png"),
     width = 3000, height = 1800, res = 300
  )
 # ==================================================================

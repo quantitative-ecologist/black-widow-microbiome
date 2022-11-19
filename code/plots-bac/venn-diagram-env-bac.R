@@ -25,19 +25,19 @@
 # Community and taxa data ------------------------------------------
 
  # Folder paths
- path1 <- file.path(getwd(), "data", "env-data-clean")
+ path1 <- file.path(getwd(), "data", "data-clean-env")
  
  # Community matrices
- comm1 <- readRDS(file.path(path1, "env-bac-comm-bw.rds"))
- comm2 <- readRDS(file.path(path1, "env-bac-comm-w.rds"))
+ comm1 <- readRDS(file.path(path1, "comm-env-bac-bw.rds"))
+ comm2 <- readRDS(file.path(path1, "comm-env-bac-w.rds"))
  
  # Taxa data
- tax1 <- readRDS(file.path(path1, "env-bac-taxa-bw.rds"))
- tax2 <- readRDS(file.path(path1, "env-bac-taxa-w.rds"))
+ tax1 <- readRDS(file.path(path1, "taxa-env-bac-bw.rds"))
+ tax2 <- readRDS(file.path(path1, "taxa-env-bac-w.rds"))
  
  # Metadata
- meta1 <- readRDS(file.path(path1, "env-bac-metadata-bw.rds"))
- meta2 <- readRDS(file.path(path1, "env-bac-metadata-w.rds"))
+ meta1 <- readRDS(file.path(path1, "metadata-env-bac-bw.rds"))
+ meta2 <- readRDS(file.path(path1, "metadata-env-bac-w.rds"))
 
 # ==================================================================
 # ==================================================================
@@ -236,7 +236,7 @@
 # ==================================================================
 
  # Folder path
- path <- file.path(getwd(), "outputs", "plots")
+ path <- file.path(getwd(), "outputs", "plots-bac")
 
  # Arrange
  fig <- ggarrange(
@@ -249,7 +249,7 @@
 
  ggexport(
     fig,
-    filename = file.path(path, "env-bac-venn.png"),
+    filename = file.path(path, "venn-env-bac.png"),
     width = 2000, height = 1000, res = 300
  )
 

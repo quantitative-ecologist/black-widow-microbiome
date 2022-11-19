@@ -22,13 +22,13 @@
 # Data -------------------------------------------------------------
  
  # Folder paths
- path1 <- file.path(getwd(), "data", "env-data-clean")
- path2 <- file.path(getwd(), "data", "diet-data-clean")
+ path1 <- file.path(getwd(), "data", "data-clean-env")
+ path2 <- file.path(getwd(), "data", "data-clean-diet")
 
  # Metadata
- meta_bw_env <- readRDS(file.path(path1, "env-bac-metadata-bw.rds"))
- meta_w_env <- readRDS(file.path(path1, "env-bac-metadata-w.rds"))
- meta_bw_diet <- readRDS(file.path(path2, "diet-bac-metadata-bw.rds"))
+ meta_bw_env <- readRDS(file.path(path1, "metadata-env-bac-bw.rds"))
+ meta_w_env <- readRDS(file.path(path1, "metadata-env-bac-w.rds"))
+ meta_bw_diet <- readRDS(file.path(path2, "metadata-diet-bac-bw.rds"))
 
 
 
@@ -38,9 +38,9 @@
  path3 <- file.path(getwd(), "outputs")
  
  # Models
- fit1 <- readRDS(file.path(path3, "fits", "env-bac-glm-bw.rds"))
- fit2 <- readRDS(file.path(path3, "fits", "env-bac-glm-w.rds"))
- fit3 <- readRDS(file.path(path3, "fits", "diet-bac-glm-bw.rds"))
+ fit1 <- readRDS(file.path(path3, "fits-bac", "glm-env-bac-bw.rds"))
+ fit2 <- readRDS(file.path(path3, "fits-bac", "glm-env-bac-w.rds"))
+ fit3 <- readRDS(file.path(path3, "fits-bac", "glm-diet-bac-bw.rds"))
 
 # ==================================================================
 # ==================================================================
@@ -137,15 +137,15 @@
  path4 <- file.path(getwd(), "outputs", "diagnostics")
 
  ggexport(stat_fig1,
-          filename = file.path(path4, "env-bac-glm-diag-bw.png"),
+          filename = file.path(path4, "glm-diag-env-bac-bw.png"),
           width = 3000, height = 2500, res = 300)
  
  ggexport(stat_fig2,
-          filename = file.path(path4, "env-bac-glm-diag-w.png"),
+          filename = file.path(path4, "glm-diag-env-bac-w.png"),
           width = 3000, height = 2500, res = 300)
  
  ggexport(stat_fig3,
-          filename = file.path(path4, "diet-bac-glm-diag-w.png"),
+          filename = file.path(path4, "glm-diag-diet-bac-w.png"),
           width = 3000, height = 2500, res = 300)
 
 # ==================================================================

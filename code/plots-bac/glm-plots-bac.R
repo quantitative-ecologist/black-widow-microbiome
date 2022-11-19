@@ -27,9 +27,9 @@
  # Folder path
  path <- file.path(getwd(), "outputs")
 
- fit1 <- readRDS(file.path(path, "fits", "env-bac-glm-bw.rds"))
- fit2 <- readRDS(file.path(path, "fits", "env-bac-glm-w.rds"))
- fit3 <- readRDS(file.path(path, "fits", "diet-bac-glm-bw.rds"))
+ fit1 <- readRDS(file.path(path, "fits-bac", "glm-env-bac-bw.rds"))
+ fit2 <- readRDS(file.path(path, "fits-bac", "glm-env-bac-w.rds"))
+ fit3 <- readRDS(file.path(path, "fits-bac", "glm-diet-bac-bw.rds"))
 
 # ==================================================================
 # ==================================================================
@@ -358,7 +358,7 @@
  
  ggexport(
     fig,
-    filename = file.path(path, "plots", "env-bac-ASVrich-glm.png"),
+    filename = file.path(path, "plots-bac", "glm-env-bac.png"),
     width = 2000,
     height = 1200,
     res = 300
@@ -366,7 +366,7 @@
  
  ggexport(
     plot3,
-    filename = file.path(path, "plots", "diet-bac-ASVrich-glm.png"),
+    filename = file.path(path, "plots-bac", "glm-diet-bac.png"),
     width = 1500,
     height = 1500,
     res = 300

@@ -26,13 +26,13 @@
 # Community and taxa data ------------------------------------------
 
  # Folder paths
- path <- file.path(getwd(), "data", "diet-data-clean")
+ path <- file.path(getwd(), "data", "data-clean-diet")
  
  # Community matrices
- comm <- readRDS(file.path(path, "diet-bac-comm-bw.rds"))
+ comm <- readRDS(file.path(path, "comm-diet-bac-bw.rds"))
  
  # Metadata
- meta <- readRDS(file.path(path, "diet-bac-metadata-bw.rds"))
+ meta <- readRDS(file.path(path, "metadata-diet-bac-bw.rds"))
 
 # ==================================================================
 # ==================================================================
@@ -177,7 +177,7 @@
 # ==================================================================
 
  # Folder path
- path <- file.path(getwd(), "outputs", "plots")
+ path <- file.path(getwd(), "outputs", "plots-bac")
 
  # Arrange
  fig <- ggarrange(
@@ -187,7 +187,7 @@
 
  ggexport(
     fig,
-    filename = file.path(path, "diet-bac-venn.png"),
+    filename = file.path(path, "venn-diet-bac.png"),
     width = 1200, height = 1200, res = 300
  )
 
