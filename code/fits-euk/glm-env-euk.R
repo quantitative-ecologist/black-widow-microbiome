@@ -237,7 +237,7 @@
     chains = 4,
     seed = 123,
     init = 0,
-    prior = priors1,
+    prior = priors,
     threads = threading(12),
     backend = "cmdstanr",
     control = list(
@@ -260,7 +260,7 @@
     chains = 4,
     seed = 123,
     init = 0,
-    prior = priors1,
+    prior = priors,
     threads = threading(12),
     backend = "cmdstanr",
     control = list(
