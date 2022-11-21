@@ -1,3 +1,4 @@
+# ===========================================================
 Pour meeting du 2022-10-27
 
 - Questions sur le metadata de Laura (nom des samples, etc.)
@@ -6,11 +7,29 @@ Pour meeting du 2022-10-27
 
 # Verdict : Pas d'avenue établie...
 # Verdict2 : réglé
+# ===========================================================
 
 
+
+
+
+# ===========================================================
 # Code pour le median sequencing depth
 total = median(sample_sums(GP))
 standf = function(x, t=total) round(t * (x / sum(x)))
 gps = transform_sample_counts(GP, standf)
 
 # Voir quel type d'objet est GP avec la page web : https://web.stanford.edu/class/bios221/labs/phyloseq/lab_phyloseq.html
+# ===========================================================
+
+
+
+
+
+# ===========================================================
+Pour meeting du 2022-11-17
+
+- Arranger barplots au phylum (ou classe?)
+- Essayer d'homogénéiser les méthodes (LVM - NMDS)
+- Diagramme de Venn global Desert vs Urban
+# ===========================================================

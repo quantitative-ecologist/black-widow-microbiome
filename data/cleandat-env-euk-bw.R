@@ -44,7 +44,7 @@
 
   # Taxonomy data
  taxa_sp <- readRDS(
-    file.path(folder, "env-data-raw",
+    file.path(folder, "data-raw-env",
               "taxa-table-env-euk.rds"))
  # make sur order of ASVs match 
  taxo <- taxa_sp[colnames(comm),]
@@ -52,8 +52,8 @@
 
   # Raw metadata
  metadata <- read.csv(
-    file.path(folder, "env-data-raw",
-              "metadata-raw-env-euk.csv"),
+    file.path(folder, "data-raw-env",
+              "metadata-raw-env.csv"),
               row.names = 1)
  # only spider samples
  metadata <- metadata[metadata$sample_type %in%
@@ -88,26 +88,29 @@
 
 # Remove non target DNA --------------------------------------------
  
- # Inspect for ASVs other than bacteria in "domain"
- table(taxo[,"domain"]) # 2 eukaryota
- 
- # Remove the eukaryotas
- taxo <- subset(taxo, taxo[,"domain"]!="Eukaryota")
+ # Print column names
+ colnames(taxo)
 
+ # Inspect for ASVs other than eukaryota in "kingdom"
+ table(taxo[,"kingdom"]) # only eukaryota
  
- # Inspect if there are chloroplasts or mitochondria
- table(taxo[,"order"])["Chloroplast"]
- table(taxo[,"family"])["Mitochondria"]
+ # Inspect the phylum groups
+ table(taxo[,"phylum"])
+ # Remove unclassified eukaryotas
+ taxo <- subset(taxo, taxo[, "phylum"] != "unclassified_Eukaryota")
  
- # Delete any mitochondria or chloroplast
- taxo <- subset(taxo,
-                taxo[, "order"]!= "Chloroplast" &
-                taxo[, "family"]!= "Mitochondria")
 
+ # Delete the Black Widows DNA
+ table(taxo[,"genus"])
+ taxo <- subset(taxo, taxo[, "genus"] != "Latrodectus")
 
  # Apply changes to the community data
  comm <- comm[, rownames(taxo)]
 
+ # Test only with metazoans
+ taxo_meta <- subset(taxo, taxo[, "phylum"] == "Metazoa")
+ comm_meta <- comm[, rownames(taxo_meta)]
+ comm_meta <- comm_meta[, colSums(comm_meta) > 0]
 # ==================================================================
 # ==================================================================
 
@@ -125,20 +128,19 @@
 
  # Separate community to have only spider samples
  comm_bw <- comm[c(1:3, 7:10, 15:18, 23, 24:26), ]
-
+ comm_bw_meta <- comm_meta[c(1:3, 7:10, 15:18, 23, 24:26), ]
 
  # Number of reads per sample
  rowSums(comm_bw)
  
 
  # Adjust the new number of reads to the metadata
- metadata$n_reads <- rowSums(comm_bw)
+ metadata$n_reads_euk <- rowSums(comm_bw)
 
 
  # visualize log10 number of reads per sample
  hist(rowSums(comm_bw))
  hist(log10(rowSums(comm_bw)))
- # Most samples have around 35K to 100K reads
 
  # log10 of number of reads per ASV
  hist(log10(colSums(comm_bw)))
@@ -149,7 +151,7 @@
 
  # PCA on Hellinger-transformed community data
  comm_pca <- prcomp(decostand(comm_bw, "hellinger"))
- 
+ #comm_pca <- prcomp(decostand(comm_bw_meta, "hellinger"))
 
  # Prepare the ordination results for plotting
  labs <- as.factor(metadata$sample_env)
@@ -185,12 +187,13 @@
                                 "#E69F00",
                                 "#666666")) +
    labs(color = "Environment :") +
-   xlab("\nPC1 (34.8%)") + ylab("PC2 (18.9%)\n") +
+   xlab("\nPC1 (32.3%)") + ylab("PC2 (19.7%)\n") +
+   #xlab("\nPC1 (24.2%)") + ylab("PC2 (16.1%)\n") + # meta only
    theme_bw() + 
    theme(legend.position = "top",
          panel.grid = element_blank())
 
- # LO-VN-114-BAC is very similar to the negative control.
+ # LO-VN-109-EUC is very similar to the negative control.
 
  # Number of sequences per sample mapped onto ordination axes
  ordisurf(comm_pca, rowSums(comm_bw),
@@ -202,14 +205,16 @@
 # Check negative controls -----------------------------------------
 
  # Abundance of ASVs in negative control
- comm_bw["PCR-neg-CTRL-bac",][
-     comm_bw["PCR-neg-CTRL-bac",]>0]
+ comm_bw["PCR-neg-CTRL-euc",][
+     comm_bw["PCR-neg-CTRL-euc",]>0]
  # Some problems here. Some ASVs are above 100
- # See ASV_172, ASV_354, and ASV_399
+ # See ASV_44, ASV_47
 
  # Check the taxonomic identity of ASVs present in negative control
- taxo[names(comm_bw["PCR-neg-CTRL-bac",][
-     comm_bw["PCR-neg-CTRL-bac",]>0]),]
+ taxo[names(comm_bw["PCR-neg-CTRL-euc",][
+     comm_bw["PCR-neg-CTRL-euc",]>0]),]
+ 
+ # It is mostly Sordariomycetes family
 
 # ==================================================================
 # ==================================================================
@@ -232,7 +237,7 @@
  comm_sub <- comm_bw[-12,]
 
  # Remove sample too close to negative control
- comm_sub <- comm_sub[-8,]
+ comm_sub <- comm_sub[-4,]
 
 
 
@@ -251,8 +256,8 @@
 
 
  # subset metadata and taxonomy to match
- metadata_sub <- metadata[rownames(comm_sub),]
- metadata_sub$n_reads <- rowSums(comm_sub)
+ metadata_sub <- metadata[-c(4, 12),]
+ metadata_sub$n_reads_euk <- rowSums(comm_sub)
  taxo_sub <- taxo[colnames(comm_sub),]
 
 
@@ -274,6 +279,7 @@
  score <- scores(comm_sub_pca)[, 1:2]
  score <- cbind(score, sample_env = metadata_sub$sample_env)
  score <- data.frame(score)
+ score$sample_id <- as.factor(rownames(score))
  score[,1] <- as.numeric(score[,1])
  score[,2]<- as.numeric(score[,2])
  score[,3] <- as.factor(score[,3])
@@ -288,25 +294,14 @@
                   y = PC2),
               shape = 3,
               size = 1) +
-   geom_point(data = score,
-              aes(x = PC1,
-                  y = PC2,
-                  color = sample_env,
-                  shape = sample_env),
-               size = 3) +
-   stat_ellipse(data = score,
-                geom = "polygon",
-                aes(x = PC1,
-                    y = PC2,
-                    fill = sample_env,
-                    color = sample_env),
-                level = 0.95,
-                alpha = 0.25,
-                linetype = "dashed",
-                linewidth = 1,
-                show.legend = FALSE) +
+   geom_text(data = score,
+             aes(x = PC1,
+                 y = PC2,
+                 label = sample_id,
+                 color = sample_env),
+             size = 3) +
    scale_x_continuous(breaks = seq(-1.5, 1.5, 0.5),
-                      limits = c(-1.5, 1.6)) +
+                      limits = c(-1.5, 1.5)) +
    scale_y_continuous(breaks = seq(-1.5, 1.5, 0.5),
                       limits = c(-1.5, 1.5)) +
    scale_fill_manual(values = c("#E69F00",
@@ -316,7 +311,7 @@
                                  "#666666")) +
    labs(color = "Environment :",
         shape = "Environment :") +
-   xlab("\nPC1 (42.0%)") + ylab("PC2 (28.6%)\n") +
+   xlab("\nPC1 (40.4%)") + ylab("PC2 (22.1%)\n") +
    theme_bw() + 
    theme(legend.position = "top",
          panel.grid = element_blank())
@@ -334,25 +329,25 @@
  
  # Setup folder path
  path <- file.path(folder,
-                   "env-data-clean")
+                   "data-clean-env")
  
  
  # Save clean taxa table
  saveRDS(
   taxo_sub,
-  file = file.path(path, "env-bac-taxa-bw.rds")
+  file = file.path(path, "taxa-env-euk-bw.rds")
  )
 
  # Save clean community table
  saveRDS(
   comm_sub,
-  file = file.path(path, "env-bac-comm-bw.rds")
+  file = file.path(path, "comm-env-euk-bw.rds")
  )
 
  # Save clean metadata
  saveRDS(
   metadata_sub,
-  file = file.path(path, "env-bac-metadata-bw.rds")
+  file = file.path(path, "metadata-env-euk-bw.rds")
  )
 
 # ==================================================================
