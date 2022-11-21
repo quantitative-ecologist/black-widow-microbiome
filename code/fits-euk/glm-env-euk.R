@@ -27,15 +27,15 @@
 # Load the data ----------------------------------------------------
 
  # Path on Cedar
- path <- file.path(getwd(), "data-clean-env")
+ path <- file.path(getwd(), "env-data-clean")
 
  # Community matrices
- comm_bw_env <- readRDS(file.path(path, "comm-env-bac-bw.rds"))
- comm_w_env <- readRDS(file.path(path, "comm-env-bac-w.rds"))
+ comm_bw_env <- readRDS(file.path(path, "comm-env-euk-bw.rds"))
+ comm_w_env <- readRDS(file.path(path, "env-bac-comm-w.rds"))
  
  # Metadata
- meta_bw_env <- readRDS(file.path(path, "metadata-env-bac-bw.rds"))
- meta_w_env <- readRDS(file.path(path, "metadata-env-bac-w.rds"))
+ meta_bw_env <- readRDS(file.path(path, "env-bac-metadata-bw.rds"))
+ meta_w_env <- readRDS(file.path(path, "env-bac-metadata-w.rds"))
 
 # ==================================================================
 # ==================================================================
@@ -239,7 +239,7 @@
               data = data1)
  
  # Save the model output
- saveRDS(model1, file = "glm-env-bac-bw.rds")
+ saveRDS(model1, file = "env-bac-glm-bw.rds")
 
 
  # Model for env webs
@@ -259,7 +259,7 @@
               data = data2)
  
  # Save the model output
- saveRDS(model2, file = "glm-env-bac-w.rds")
+ saveRDS(model2, file = "env-bac-glm-w.rds")
 
 # ==================================================================
 # ==================================================================
