@@ -27,15 +27,15 @@
 # Load the data ----------------------------------------------------
 
  # Path on Cedar
- path <- file.path(getwd(), "env-data-clean")
+ path <- file.path(getwd(), "data-clean-env")
 
  # Community matrices
- comm_bw_env <- readRDS(file.path(path, "comm-env-euk-bw.rds"))
- comm_w_env <- readRDS(file.path(path, "env-bac-comm-w.rds"))
+ comm_bw <- readRDS(file.path(path, "comm-env-euk-bw.rds"))
+ comm_w <- readRDS(file.path(path, "comm-env-euk-w.rds"))
  
  # Metadata
- meta_bw_env <- readRDS(file.path(path, "env-bac-metadata-bw.rds"))
- meta_w_env <- readRDS(file.path(path, "env-bac-metadata-w.rds"))
+ meta_bw <- readRDS(file.path(path, "metadata-env-euk-bw.rds"))
+ meta_w <- readRDS(file.path(path, "metadata-env-euk-w.rds"))
 
 # ==================================================================
 # ==================================================================
@@ -52,9 +52,11 @@
 # Prepare the env spider data --------------------------------------
 
  # Data frame from community matrix
- env_bw <- t(comm_bw_env)
+ env_bw <- t(comm_bw)
  env_bw <- data.frame(env_bw)
- colnames(env_bw) <- rownames(comm_bw_env)
+ colnames(env_bw) <- as.character(
+    strsplit(rownames(comm_bw), "-euc")
+ )
 
  # Add ASV name
  env_bw$ASV_id <- rownames(env_bw)
@@ -86,7 +88,7 @@
  # Merge with the metadata to add covariates
  data1 <- merge(
    data1,
-   meta_bw_env[,c(1,4,6)],
+   meta_bw[,c(1,4,7)],
    by = "sample_id")
 
 
@@ -114,15 +116,17 @@
 # Prepare the env web data -----------------------------------------
 
  # Data frame from community matrix
- env_w <- t(comm_w_env)
+ env_w <- t(comm_w)
  env_w <- data.frame(env_w)
- colnames(env_w) <- rownames(comm_w_env)
+ colnames(env_w) <- as.character(
+    strsplit(rownames(comm_w), "-euc")
+ )
 
  # Add ASV name
  env_w$ASV_id <- rownames(env_w)
 
  # Reorder
- env_w <- env_w[,c(14,1:13)]
+ env_w <- env_w[,c(15,1:14)]
 
  # Transform
  env_w <- data.table(env_w)
@@ -148,7 +152,7 @@
  # Merge with the metadata to add covariates
  data2 <- merge(
    data2,
-   meta_w_env[,c(1,4,6)],
+   meta_w[,c(1,4,7)],
    by = "sample_id")
 
 
@@ -180,11 +184,11 @@
   log_sp_richness ~
     1 +
     sample_env +
-    n_reads,
+    n_reads_euk,
  sigma ~ 
     1 +
     sample_env +
-    n_reads
+    n_reads_euk
  ) +
  gaussian()
  
@@ -193,10 +197,12 @@
  form2 <- bf(
   log_sp_richness ~
     1 + 
-    sample_env,
+    sample_env +
+    n_reads_euk,
   sigma ~ 
     1 + 
-    sample_env
+    sample_env +
+    n_reads_euk
  ) +
  gaussian()
 
@@ -223,43 +229,49 @@
 # Run the models ---------------------------------------------------
  
  # Model for env spiders
- model1 <- brm(form1,
-              warmup = 2000, 
-              iter = 22000,
-              thin = 80,
-              chains = 4,
-              seed = 123,
-              init = 0,
-              prior = priors1,
-              threads = threading(12),
-              backend = "cmdstanr",
-              control = list(
-                adapt_delta = 0.99,
-                max_treedepth = 12),
-              data = data1)
+ model1 <- brm(
+    form1,
+    warmup = 2000, 
+    iter = 22000,
+    thin = 80,
+    chains = 4,
+    seed = 123,
+    init = 0,
+    prior = priors1,
+    threads = threading(12),
+    backend = "cmdstanr",
+    control = list(
+      adapt_delta = 0.99,
+      max_treedepth = 12
+    ),
+    data = data1
+ )
  
  # Save the model output
- saveRDS(model1, file = "env-bac-glm-bw.rds")
+ saveRDS(model1, file = "glm-env-euk-bw.rds")
 
 
  # Model for env webs
- model2 <- brm(form2,
-              warmup = 2000, 
-              iter = 22000,
-              thin = 80,
-              chains = 4,
-              seed = 123,
-              init = 0,
-              prior = priors1,
-              threads = threading(12),
-              backend = "cmdstanr",
-              control = list(
-                adapt_delta = 0.99,
-                max_treedepth = 12),
-              data = data2)
+ model2 <- brm(
+    form2,
+    warmup = 2000, 
+    iter = 22000,
+    thin = 80,
+    chains = 4,
+    seed = 123,
+    init = 0,
+    prior = priors1,
+    threads = threading(12),
+    backend = "cmdstanr",
+    control = list(
+      adapt_delta = 0.99,
+      max_treedepth = 12
+    ),
+    data = data2
+ )
  
  # Save the model output
- saveRDS(model2, file = "env-bac-glm-w.rds")
+ saveRDS(model2, file = "glm-env-euk-w.rds")
 
 # ==================================================================
 # ==================================================================
