@@ -32,4 +32,5 @@ Pour meeting du 2022-11-17
 - Arranger barplots au phylum (ou classe?)
 - Essayer d'homogénéiser les méthodes (LVM - NMDS)
 - Diagramme de Venn global Desert vs Urban
+- sortir les taxons qui overlap dans les venn
 # ===========================================================
