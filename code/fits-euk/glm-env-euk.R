@@ -212,12 +212,12 @@
  
  # Gaussian priors for b and intercepts
  priors <- c(
-   set_prior("normal(0, 2)", 
+   set_prior("normal(2, 1)", 
              class = "Intercept"),
-   set_prior("normal(0, 2)", 
+   set_prior("normal(1, 2)", 
              class = "Intercept",
              dpar = "sigma"),
-   set_prior("normal(0, 2)",
+   set_prior("normal(0, 1)",
              class = "b"),
    set_prior("normal(0, 2)",
              class = "b",
@@ -232,12 +232,13 @@
  model1 <- brm(
     form1,
     warmup = 2000, 
-    iter = 22000,
-    thin = 80,
+    iter = 42000,
+    thin = 160,
     chains = 4,
     seed = 123,
     init = 0,
     prior = priors,
+    sample_prior = TRUE,
     threads = threading(12),
     backend = "cmdstanr",
     control = list(
@@ -255,12 +256,13 @@
  model2 <- brm(
     form2,
     warmup = 2000, 
-    iter = 22000,
-    thin = 80,
+    iter = 42000,
+    thin = 160,
     chains = 4,
     seed = 123,
     init = 0,
     prior = priors,
+    sample_prior = TRUE,
     threads = threading(12),
     backend = "cmdstanr",
     control = list(
