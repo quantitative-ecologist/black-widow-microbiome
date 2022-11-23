@@ -38,6 +38,10 @@
  # Models
  fit1 <- readRDS(file.path(path2, "fits-euk", "glm-env-euk-bw.rds"))
  fit2 <- readRDS(file.path(path2, "fits-euk", "glm-env-euk-w.rds"))
+ 
+ # Extract posterior draws
+ draws1 <- as_draws_df(fit1)
+ draws2 <- as_draws_df(fit2)
 
 # ==================================================================
 # ==================================================================
@@ -96,9 +100,158 @@
 
 
 
+# ==================================================================
+# 3. Prior predictive checks
+# ==================================================================
+
+
+# Model 1 ----------------------------------------------------------
+
+ ggplot(draws1) +
+   geom_density(aes(prior_Intercept),
+                fill = "steelblue",
+                color = "black",
+                alpha = 0.6) +
+   geom_density(aes(Intercept),
+                fill = "#FC4E07",
+                color = "black",
+                alpha = 0.6) + 
+   theme_classic()
+
+ ggplot(draws1) +
+   geom_density(aes(prior_Intercept_sigma),
+                fill = "steelblue",
+                color = "black",
+                alpha = 0.6) +
+   geom_density(aes(b_sigma_Intercept),
+                fill = "#FC4E07",
+                color = "black",
+                alpha = 0.6) + 
+   theme_classic()
+ 
+ ggplot(draws1) +
+   geom_density(aes(prior_b),
+                fill = "steelblue",
+                color = "black",
+                alpha = 0.6) +
+   geom_density(aes(b_n_reads_euk),
+                fill = "#FC4E07",
+                color = "black",
+                alpha = 0.6) + 
+   theme_classic()
+
+ ggplot(draws1) +
+   geom_density(aes(prior_b),
+                fill = "steelblue",
+                color = "black",
+                alpha = 0.6) +
+   geom_density(aes(b_sigma_n_reads_euk),
+                fill = "#FC4E07",
+                color = "black",
+                alpha = 0.6) + 
+   theme_classic()
+
+ ggplot(draws1) +
+   geom_density(aes(prior_b),
+                fill = "steelblue",
+                color = "black",
+                alpha = 0.6) +
+   geom_density(aes(b_sample_envurban),
+                fill = "#FC4E07",
+                color = "black",
+                alpha = 0.6) + 
+   theme_classic()
+ 
+ ggplot(draws1) +
+   geom_density(aes(prior_b_sigma),
+                fill = "steelblue",
+                color = "black",
+                alpha = 0.6) +
+   geom_density(aes(b_sigma_sample_envurban),
+                fill = "#FC4E07",
+                color = "black",
+                alpha = 0.6) + 
+   theme_classic()
+
+
+
+# Model 2 ----------------------------------------------------------
+
+ggplot(draws2) +
+   geom_density(aes(prior_Intercept),
+                fill = "steelblue",
+                color = "black",
+                alpha = 0.6) +
+   geom_density(aes(Intercept),
+                fill = "#FC4E07",
+                color = "black",
+                alpha = 0.6) + 
+   theme_classic()
+
+ ggplot(draws2) +
+   geom_density(aes(prior_Intercept_sigma),
+                fill = "steelblue",
+                color = "black",
+                alpha = 0.6) +
+   geom_density(aes(b_sigma_Intercept),
+                fill = "#FC4E07",
+                color = "black",
+                alpha = 0.6) + 
+   theme_classic()
+ 
+ ggplot(draws2) +
+   geom_density(aes(prior_b),
+                fill = "steelblue",
+                color = "black",
+                alpha = 0.6) +
+   geom_density(aes(b_n_reads_euk),
+                fill = "#FC4E07",
+                color = "black",
+                alpha = 0.6) + 
+   theme_classic()
+
+ ggplot(draws2) +
+   geom_density(aes(prior_b),
+                fill = "steelblue",
+                color = "black",
+                alpha = 0.6) +
+   geom_density(aes(b_sigma_n_reads_euk),
+                fill = "#FC4E07",
+                color = "black",
+                alpha = 0.6) + 
+   theme_classic()
+
+ ggplot(draws2) +
+   geom_density(aes(prior_b),
+                fill = "steelblue",
+                color = "black",
+                alpha = 0.6) +
+   geom_density(aes(b_sample_envurban),
+                fill = "#FC4E07",
+                color = "black",
+                alpha = 0.6) + 
+   theme_classic()
+ 
+ ggplot(draws2) +
+   geom_density(aes(prior_b_sigma),
+                fill = "steelblue",
+                color = "black",
+                alpha = 0.6) +
+   geom_density(aes(b_sigma_sample_envurban),
+                fill = "#FC4E07",
+                color = "black",
+                alpha = 0.6) + 
+   theme_classic()
 
 # ==================================================================
-# 3. Save the plots into figures
+# ==================================================================
+
+
+
+
+
+# ==================================================================
+# 4. Save the plots into figures
 # ==================================================================
 
 
