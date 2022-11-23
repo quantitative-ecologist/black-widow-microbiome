@@ -58,7 +58,7 @@
  
  # Save the output
  path1 <- file.path(getwd(), "outputs", "fits-bac")
- saveRDS(nmds_w, file = file.path(path1, "nmds-bac-w.rds"))
+ saveRDS(nmds_w, file = file.path(path1, "nmds-env-bac-w.rds"))
 
 # ==================================================================
 # ==================================================================
