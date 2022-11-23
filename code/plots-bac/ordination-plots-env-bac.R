@@ -44,8 +44,8 @@
  comm2 <- readRDS(
   file.path(
     path1,
-    "data-clean-diet",
-    "comm-diet-bac.rds"
+    "data-clean-env",
+    "comm-env-bac-w.rds"
   )
  )
 
@@ -62,8 +62,8 @@
  meta2 <- readRDS(
   file.path(
     path1,
-    "data-clean-diet",
-    "metadata-diet-bac.rds"
+    "data-clean-env",
+    "metadata-env-bac-w.rds"
   )
  )
 
@@ -80,8 +80,8 @@
  taxa2 <- readRDS(
   file.path(
     path1,
-    "data-clean-diet",
-    "taxa-diet-bac.rds"
+    "data-clean-env",
+    "taxa-env-bac-w.rds"
   )
  )
 
@@ -94,10 +94,10 @@
   )
  )
  
- nmds <- readRDS(
+ nmds_w <- readRDS(
   file.path(
     path2,
-    "lvm-env-bac-bw.rds"
+    "nmds-env-bac-w.rds"
   )
  )
 # ==================================================================
@@ -287,7 +287,7 @@
 
  # NMDS axes + environment
  dat <- data.frame(nmds_w$points[,1:2])
- dat <- cbind(dat, env = meta_w$sample_env)
+ dat <- cbind(dat, env = meta2$sample_env)
  dat$env <- as.factor(dat$env)
 
 
@@ -332,7 +332,7 @@ df_ell <- data.frame()
 
 # Compute the plot ------------------------------------------------
 
- plot1 <- ggplot() +
+ plot2 <- ggplot() +
    geom_point(
     data = dat,
     aes(x = MDS1,
@@ -352,11 +352,11 @@ df_ell <- data.frame()
    ) +
    scale_x_continuous(
     breaks = seq(-3, 3, 1),
-    limits = c(-3, 3)
+    limits = c(-3.4, 3.4)
    ) +
    scale_y_continuous(
     breaks = seq(-3, 3, 1),
-    limits = c(-3, 3)
+    limits = c(-3.4, 3.4)
    ) +
    scale_shape_manual(
     values = c(21, 24)
@@ -375,6 +375,28 @@ df_ell <- data.frame()
    ) +
    xlab("\nNMDS1") + ylab("NMDS2\n") +
    custom_theme
+
+
+
+# Add web image to biplot ------------------------------------------
+ 
+ # specifying the image path
+ path3 <- file.path(getwd(), "data", "images")
+
+ # function to open the file
+ get_png <- function(filename) {
+   grid::rasterGrob(png::readPNG(filename), interpolate = TRUE)
+ }
+ 
+ # read the file
+ web <- get_png(file.path(path3, "spider-web.png"))
+
+ # Add the file to the plot
+ plot2 <- plot2 + 
+ annotation_custom(
+     web, 
+     xmin = 2.2, xmax = 3.4, 
+     ymin = 2.2, ymax = 3.4)
 
 # ==================================================================
 # ==================================================================
