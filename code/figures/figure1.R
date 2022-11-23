@@ -16,8 +16,8 @@
  library(ggpubr)
  
  # Script paths
- path1 <- file.path(getwd(), "code", "plots-bac")
- path2 <- file.path(getwd(), "code", "plots-euk")
+ path1 <- file.path(getwd(), "code", "figures", "plots-bac")
+ path2 <- file.path(getwd(), "code", "figures", "plots-euk")
  
  # These files have to be run in this order
  #1
