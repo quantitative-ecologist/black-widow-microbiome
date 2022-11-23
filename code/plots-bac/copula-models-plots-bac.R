@@ -45,7 +45,7 @@
   file.path(
     path1,
     "data-clean-diet",
-    "comm-diet-bac-bw.rds"
+    "comm-diet-bac.rds"
   )
  )
 
@@ -63,7 +63,7 @@
   file.path(
     path1,
     "data-clean-diet",
-    "metadata-diet-bac-bw.rds"
+    "metadata-diet-bac.rds"
   )
  )
 
@@ -81,7 +81,7 @@
   file.path(
     path1,
     "data-clean-diet",
-    "taxa-diet-bac-bw.rds"
+    "taxa-diet-bac.rds"
   )
  )
 
@@ -209,9 +209,9 @@
 
 
 
-# Compute the biplot and export ------------------------------------
-
- # Compute the plot
+# Compute the biplot -----------------------------------------------
+ 
+ # Plot
  plot1 <- ggplot() +
      geom_point(
         data = site_res1,
@@ -248,6 +248,28 @@
      xlab("\nLatent variable 1") +
      ylab("Latent variable 2\n") +
      custom_theme
+
+
+
+# Add spider image to biplot ---------------------------------------
+ 
+ # specifying the image path
+ path3 <- file.path(getwd(), "data", "images")
+
+ # function to open the file
+ get_png <- function(filename) {
+   grid::rasterGrob(png::readPNG(filename), interpolate = TRUE)
+ }
+ 
+ # read the file
+ spid <- get_png(file.path(path3, "black-widow-spider.png"))
+
+ # Add the file to the plot
+ plot1 <- plot1 + 
+ annotation_custom(
+     spid, 
+     xmin = 2.2, xmax = 3.4, 
+     ymin = 2.2, ymax = 3.4)
 
 # ==================================================================
 # ==================================================================

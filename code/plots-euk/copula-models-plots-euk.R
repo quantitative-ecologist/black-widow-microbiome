@@ -416,11 +416,13 @@
  
  # Arrange one figure
  fig <- ggarrange(
-     plot1, plot2,
-     nrow = 1, ncol = 2,
-     #labels = c("(A)", "(B)"),
+     plot1, NULL, plot2,
+     nrow = 1, ncol = 3,
+     labels = c("(A)", "", "(B)"),
      common.legend = TRUE,
-     legend = "top"
+     legend = "top",
+     hjust = -0.1, vjust = 1.5,
+     widths = c(1, 0.1, 1)
  )
 
  # Export figure
