@@ -16,7 +16,7 @@
  library(brms)
  library(data.table)
  library(ggplot2)
- library(ggpubr)
+ #library(ggpubr)
  library(viridis)
 
 
@@ -238,7 +238,8 @@
       ylab("log(posterior predicted richness)") +
       #xlab("\nParameter") +
       custom_theme +
-      theme(axis.title.x = element_blank())
+      theme(axis.title.x = element_blank(),
+            legend.position = "none")
 
 
 
@@ -266,7 +267,8 @@
       ylab("log(posterior predicted richness)") +
       #xlab("\nParameter") +
       custom_theme + 
-      theme(axis.title.x = element_blank())
+      theme(axis.title.x = element_blank(),
+            legend.position = "none")
 
 
 
@@ -345,36 +347,39 @@
 # Combine as one figure --------------------------------------------
 
  # Prepare the figure
- fig <- ggarrange(
-    plot1, NULL, plot2,
-    nrow = 1, ncol = 3,
-    labels = c("(A)", "", "(B)"),
-    hjust = -0.1,
-    vjust = 1.5,
-    widths = c(1, 0.1, 1),
-    common.legend = TRUE,
-    legend.position = "top"
- )
+ #fig <- ggarrange(
+ #   plot1, NULL, plot2,
+ #   nrow = 1, ncol = 3,
+ #   labels = c("(A)", "", "(B)"),
+ #   hjust = -0.1,
+ #   vjust = 1.5,
+ #   widths = c(1, 0.1, 1),
+ #   common.legend = TRUE,
+ #   legend.position = "top"
+ #)
 
-
+ #saveRDS(
+ #  fig,
+ #  file.path(path, "plots-bac", "glm-env-bac-plot.rds")
+ #)
 
 # Export in the outputs folder -------------------------------------
  
- ggexport(
-    fig[1],
-    filename = file.path(path, "plots-bac", "glm-env-bac.png"),
-    width = 2000,
-    height = 1200,
-    res = 300
- )
+ #ggexport(
+ #   fig[1],
+ #   filename = file.path(path, "plots-bac", "glm-env-bac.png"),
+ #   width = 2000,
+ #   height = 1200,
+ #   res = 300
+ #)
 
- ggexport(
-    plot3,
-    filename = file.path(path, "plots-bac", "glm-diet-bac.png"),
-    width = 1500,
-    height = 1500,
-    res = 300
- )
+ #ggexport(
+ #   plot3,
+ #   filename = file.path(path, "plots-bac", "glm-diet-bac.png"),
+ #   width = 1500,
+ #   height = 1500,
+ #   res = 300
+ #)
 
 # ==================================================================
 # ==================================================================

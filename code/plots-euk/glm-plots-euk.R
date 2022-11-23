@@ -16,7 +16,7 @@
  library(brms)
  library(data.table)
  library(ggplot2)
- library(ggpubr)
+ #library(ggpubr)
 
 
 
@@ -179,7 +179,7 @@
 
 # Plot for env spiders ---------------------------------------------
 
- plot1 <- ggplot(dat1,
+ plot4 <- ggplot(dat1,
                  aes(x = type, y = mean,
                  fill = env,
                  shape = env)) +
@@ -199,7 +199,6 @@
       labs(fill = "Environment :",
            shape = "Environment :") +
       ylab("log(posterior predicted richness)") +
-      #xlab("\nParameter") +
       custom_theme +
       theme(axis.title.x = element_blank())
 
@@ -207,7 +206,7 @@
 
 # Plot for env webs ------------------------------------------------
 
- plot2 <- ggplot(dat2,
+ plot5 <- ggplot(dat2,
                  aes(x = type, y = mean,
                  fill = env,
                  shape = env)) +
@@ -227,12 +226,12 @@
       labs(fill = "Environment :",
            shape = "Environment :") +
       ylab("log(posterior predicted richness)") +
-      #xlab("\nParameter") +
       custom_theme + 
       theme(axis.title.x = element_blank())
 
 # ==================================================================
 # ==================================================================
+
 
 
 
@@ -254,59 +253,17 @@
  web <- get_png(file.path(path1, "spider-web.png"))
 
  # Add the files to the plots
- plot1 <- plot1 + 
+ plot4 <- plot4 + 
  annotation_custom(
      spider, 
      xmin = 2, xmax = 3, 
      ymin = 5.7, ymax = 6.7)
 
- plot2 <- plot2 + 
+ plot5 <- plot5 + 
  annotation_custom(
      web, 
      xmin = 2, xmax = 3.2, 
      ymin = 5.5, ymax = 6.7)    
-
-# ==================================================================
-# ==================================================================
-
-
-
-
-
-# ==================================================================
-# 6. Combine the plots as one figure
-# ==================================================================
-
-
-# Combine as one figure --------------------------------------------
-
- # Prepare the figure
- fig <- ggarrange(
-    plot1, NULL, plot2,
-    nrow = 1, ncol = 3,
-    labels = c("(A)", "", "(B)"),
-    hjust = -0.1,
-    vjust = 1.5,
-    widths = c(1, 0.1, 1),
-    common.legend = TRUE,
-    legend.position = "top"
- )
-
- saveRDS(
-    fig, 
-    file = file.path(path, "plots-euk", "glm-env-euk-plot.rds")
- )
-
-
-# Export in the outputs folder -------------------------------------
- 
-# ggexport(
-#    fig[1],
-#    filename = file.path(path, "plots-euk", "glm-env-euk.png"),
-#    width = 2000,
-#    height = 1200,
-#    res = 300
-# )
 
 # ==================================================================
 # ==================================================================
