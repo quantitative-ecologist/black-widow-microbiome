@@ -16,7 +16,6 @@
  library(brms)
  library(data.table)
  library(ggplot2)
- #library(cowplot)
  library(ggpubr)
  library(viridis)
 
@@ -236,7 +235,7 @@
       scale_x_discrete(expand = c(1, 0)) +
       labs(fill = "Environment :",
            shape = "Environment :") +
-      ylab("Log(posterior predicted richness)") +
+      ylab("log(posterior predicted richness)") +
       #xlab("\nParameter") +
       custom_theme +
       theme(axis.title.x = element_blank())
@@ -264,7 +263,7 @@
       scale_x_discrete(expand = c(1, 0)) +
       labs(fill = "Environment :",
            shape = "Environment :") +
-      ylab("Log(posterior predicted richness)") +
+      ylab("log(posterior predicted richness)") +
       #xlab("\nParameter") +
       custom_theme + 
       theme(axis.title.x = element_blank())
@@ -290,7 +289,7 @@
       #scale_y_continuous(breaks = seq(0, 6, 2),
       #                   limits = c(0, 6.8)) +
       scale_x_discrete(expand = c(1, 0)) +
-      ylab("Log(posterior predicted richness)") +
+      ylab("log(posterior predicted richness)") +
       #xlab("\nParameter") +
       custom_theme + 
       theme(axis.title.x = element_blank(),
@@ -302,28 +301,50 @@
 
 
 
+# ==================================================================
+# 5. Add web and spider icons to plots
+# ==================================================================
+
+ # Specifying the image path
+ path1 <- file.path(getwd(), "data", "images")
+
+ # function to open the file
+ get_png <- function(filename) {
+   grid::rasterGrob(png::readPNG(filename), interpolate = TRUE)
+ }
+ 
+ # read the file
+ spider <- get_png(file.path(path1, "black-widow-spider.png"))
+ web <- get_png(file.path(path1, "spider-web.png"))
+
+ # Add the files to the plots
+ plot1 <- plot1 + 
+ annotation_custom(
+     spider, 
+     xmin = 2, xmax = 3, 
+     ymin = 5.7, ymax = 6.7)
+
+ plot2 <- plot2 + 
+ annotation_custom(
+     web, 
+     xmin = 2, xmax = 3.2, 
+     ymin = 5.5, ymax = 6.7)    
 
 # ==================================================================
-# 5. Combine the plots as one figure
+# ==================================================================
+
+
+
+
+
+# ==================================================================
+# 6. Combine the plots as one figure
 # ==================================================================
 
 
 # Combine as one figure --------------------------------------------
 
  # Prepare the figure
- #prow <- plot_grid(
- #   plot1 + theme(legend.position="none"),
- #   NULL,
- #   plot2 + theme(legend.position="none"),
- #   NULL,
- #   plot3 + theme(legend.position="none"),
- #   rel_widths = c(1, 0.08, 1, 0.08, 1),
- #   align = "hv",
- #   labels = c("(A)","", "(B)", "", "(C)"),
- #   hjust = -0.2,
- #   nrow = 1
- #)
- 
  fig <- ggarrange(
     plot1, NULL, plot2,
     nrow = 1, ncol = 3,
@@ -335,35 +356,18 @@
     legend.position = "top"
  )
 
- # Create the two legends
- #legend_a <- get_legend(plot1 + theme(legend.position="bottom"))
- #legend_b <- get_legend(plot3 + theme(legend.position="bottom"))
-
- # Combine the plot with legends
- #fig <- plot_grid(
- #  prow,
- #  plot_grid(legend_a, legend_b),
- #  ncol = 1, nrow = 2, rel_heights = c(1, .2)
- #)
-
- #fig <- plot_grid(
- #  prow,
- #  plot_grid(legend_a),
- #  ncol = 1, nrow = 2, rel_heights = c(1, .2)
- #)
-
 
 
 # Export in the outputs folder -------------------------------------
  
  ggexport(
-    fig,
+    fig[1],
     filename = file.path(path, "plots-bac", "glm-env-bac.png"),
     width = 2000,
     height = 1200,
     res = 300
  )
- 
+
  ggexport(
     plot3,
     filename = file.path(path, "plots-bac", "glm-diet-bac.png"),
