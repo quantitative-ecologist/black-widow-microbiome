@@ -1,6 +1,6 @@
 # ==================================================================
 
-#                       Plot the copula models
+#                Plot the copula models for bacteria
 
 # ==================================================================
 
@@ -93,14 +93,13 @@
     "lvm-env-bac-bw.rds"
   )
  )
-
- lvm2 <- readRDS(
+ 
+ nmds <- readRDS(
   file.path(
     path2,
-    "lvm2-diet-bac-bw.rds"
+    "lvm-env-bac-bw.rds"
   )
  )
-
 # ==================================================================
 # ==================================================================
 
@@ -278,33 +277,30 @@
 
 
 
+
 # ==================================================================
-# 4. Plot the model for diet spiders
+# 4. Plot the NMDS results for webs
 # ==================================================================
-
-# Prepare plot data ------------------------------------------------
-
- alpha2 <- 0.7 # ou 2 comme dans l'exemple?
- site_res2 <- data.frame(lvm2$scores, meta2)
- site_res2$diet_treatment <- as.factor(site_res2$diet_treatment)
- sp_res2 <- data.frame(lvm2$loadings,
-                      ASV = colnames(comm2))
- fam2 <- data.frame(ASV = rownames(taxa2),
-                   family = taxa2[,5])
- sp_res2 <- merge(sp_res2, fam2, by = "ASV")
-
-
-
-# Calculate ellipses for each environment --------------------------
  
- # Mean Factor axis for each environment
- lvm_mean2 <- aggregate(
-  site_res2[,1:2],
-  list(site_res2$diet_treatment),
+
+# Extract the nmds data -------------------------------------------
+
+ # NMDS axes + environment
+ dat <- data.frame(nmds_w$points[,1:2])
+ dat <- cbind(dat, env = meta_w$sample_env)
+ dat$env <- as.factor(dat$env)
+
+
+
+# Prepare the plot ------------------------------------------------
+ 
+ # Mean NMDS axis for each environment
+ nmds_mean <- aggregate(
+  dat[,1:2],
+  list(dat$env),
   mean
  )
  
-
  # Compute the function to calculate ellipses
  veganCovEllipse <-
   function (cov,
@@ -317,107 +313,68 @@
     t(center + scale * t(Circle %*% chol(cov)))
   }
 
-
  # Create a data frame of the ellipses results for ggplot
- df_ell2 <- data.frame()
-  for (g in levels(site_res2$diet_treatment)) {
-    df_ell2 <- rbind(df_ell2,
-                    cbind(as.data.frame(with(
-                      site_res2[site_res2$diet_treatment == g, ],
-                      veganCovEllipse(cov.wt(
-                        cbind(Factor1, Factor2),
-                        wt = rep(1 / length(Factor1), length(Factor2))
-                      )$cov,
-                      center = c(mean(Factor1), mean(Factor2)))
-                    )),
-                    diet_treatment = g))
-  }
+df_ell <- data.frame()
+ for (g in levels(dat$env)) {
+   df_ell <- rbind(df_ell,
+                   cbind(as.data.frame(with(
+                     dat[dat$env == g, ],
+                     veganCovEllipse(cov.wt(
+                       cbind(MDS1, MDS2),
+                       wt = rep(1 / length(MDS1), length(MDS1))
+                     )$cov,
+                     center = c(mean(MDS1), mean(MDS2)))
+                   )),
+                   env = g))
+ }
 
 
 
-# Compute the biplot and export ------------------------------------
+# Compute the plot ------------------------------------------------
 
- # Compute the plot
- plot2 <- ggplot() +
-     geom_point(
-        data = site_res2,
-        aes(x = Factor1,
-            y = Factor2,
-            fill = diet_treatment,
-            shape = diet_treatment),
-        size = 3
-     ) +
-     geom_path(
-        data = df_ell2,
-        aes(x = Factor1, 
-            y = Factor2,
-            color = diet_treatment),
-        linewidth = 1,
-        linetype = "dashed",
-        show.legend = FALSE
-     ) +
-     scale_x_continuous(
-        breaks = seq(-3, 3, 1),
-        limits = c(-3, 3)
-     ) +
-     scale_y_continuous(
-        breaks = seq(-3, 3, 1),
-        limits = c(-3, 3)
-     ) +
-     scale_shape_manual(values = c(23, 22, 25)) +
-     scale_fill_viridis(discrete = TRUE,
-                        option = "viridis") +
-     scale_color_viridis(discrete = TRUE,
-                         option = "viridis") +
-     labs(fill = "Diet :",
-          shape = "Diet :") +
-     xlab("\nLatent variable 1") +
-     ylab("Latent variable 2\n") +
-     custom_theme
-
-# ==================================================================
-# ==================================================================
-
-
-
-
-
-# ==================================================================
-# 5. Export the plots
-# ==================================================================
- 
- # Folder path
- path <- file.path(
-  getwd(),
-  "outputs",
-  "plots-bac"
- )
-
- # Environment spiders
- ggsave(
-  plot1,
-  width = 12,
-  height = 12,
-  dpi = 300,
-  units = c("cm"),
-  file = file.path(
-    path,
-    "lvm-env-bac-bw.png"
-  )
- )
-
- # Diet spiders
- ggsave(
-  plot2,
-  width = 12,
-  height = 12,
-  dpi = 300,
-  units = c("cm"),
-  file = file.path(
-    path,
-    "lvm-diet-bac-bw.png"
-  )
- )
+ plot1 <- ggplot() +
+   geom_point(
+    data = dat,
+    aes(x = MDS1,
+        y = MDS2,
+        fill = env,
+        shape = env),
+    size = 3
+   ) +
+   geom_path(
+     data = df_ell,
+     aes(x = MDS1,
+         y = MDS2,
+         color = env),
+     linewidth = 1,
+     linetype = "dashed",
+     show.legend = FALSE
+   ) +
+   scale_x_continuous(
+    breaks = seq(-3, 3, 1),
+    limits = c(-3, 3)
+   ) +
+   scale_y_continuous(
+    breaks = seq(-3, 3, 1),
+    limits = c(-3, 3)
+   ) +
+   scale_shape_manual(
+    values = c(21, 24)
+   ) +
+   scale_fill_manual(
+    values = c("#E69F00",
+               "#666666")
+   ) +
+   scale_color_manual(
+    values = c("#E69F00",
+               "#666666")
+   ) +
+   labs(
+    fill = "Environment :",
+    shape = "Environment :"
+   ) +
+   xlab("\nNMDS1") + ylab("NMDS2\n") +
+   custom_theme
 
 # ==================================================================
 # ==================================================================

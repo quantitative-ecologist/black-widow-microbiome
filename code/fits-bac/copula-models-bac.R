@@ -32,11 +32,11 @@
 
  # Community matrices
  comm_bw_env <- readRDS(file.path(path1, "comm-env-bac-bw.rds"))
- comm_bw_diet <- readRDS(file.path(path2, "comm-diet-bac-bw.rds"))
+ comm_bw_diet <- readRDS(file.path(path2, "comm-diet-bac.rds"))
  
  # Metadata
  meta_bw_env <- readRDS(file.path(path1, "metadata-env-bac-bw.rds"))
- meta_bw_diet <- readRDS(file.path(path2, "metadata-diet-bac-bw.rds"))
+ meta_bw_diet <- readRDS(file.path(path2, "metadata-diet-bac.rds"))
 
 # ==================================================================
 # ==================================================================
@@ -75,18 +75,7 @@
 
 # For diet spiders -------------------------------------------------
 
- # fit marginal model
- fit2a <- stackedsdm(
-    y = comm_bw_diet,
-    formula_X = ~ n_reads,
-    # If parallelization is enabled
-    #do_parallel = TRUE,
-    #ncores = 48,
-    data = meta_bw_diet,
-    family = "negative.binomial"
- )
-
- fit2b <- stackedsdm(
+ fit2 <- stackedsdm(
     y = comm_bw_diet,
     formula_X = ~ n_reads + spider_weight,
     # If parallelization is enabled
@@ -95,18 +84,10 @@
     data = meta_bw_diet,
     family = "negative.binomial"
  )
- 
- # Inspect the residuals fit1
- plot(
-    residuals(fit2a) ~ fitted(fit2a),
-    xlab = "Fitted values", 
-    ylab = "Dunn-Smyth residuals"
- )
- abline(h = 0, col = "red")
 
  # Inspect the residuals fit2
  plot(
-    residuals(fit2b) ~ fitted(fit2b),
+    residuals(fit2) ~ fitted(fit2),
     xlab = "Fitted values", 
     ylab = "Dunn-Smyth residuals"
  )
@@ -133,8 +114,7 @@
 # For diet spiders -------------------------------------------------
  
  # Fit
- lvm2a <- cord(fit2a, seed = 123)
- lvm2b <- cord(fit2b, seed = 123)
+ lvm2 <- cord(fit2, seed = 123)
 
 # ==================================================================
 # ==================================================================
@@ -142,28 +122,26 @@
 
 
 
+
 # ==================================================================
-# 4. Save the outputs 
+# 5. Save the outputs 
 # ==================================================================
 
  # Setup the folder path
  path <- file.path(
    getwd(),
    "outputs",
-   "fits"
+   "fits-bac"
  )
  
  # Models for the env spiders
  saveRDS(fit1, file = file.path(path, "fit-env-bac-bw.rds"))
  saveRDS(lvm1, file = file.path(path, "lvm-env-bac-bw.rds"))
-
+ 
  
  # Models for the diet spiders
- saveRDS(fit2a, file = file.path(path, "fit1-diet-bac-bw.rds"))
- saveRDS(lvm2a, file = file.path(path, "lvm1-diet-bac-bw.rds"))
-
- saveRDS(fit2b, file = file.path(path, "fit2-diet-bac-bw.rds"))
- saveRDS(lvm2b, file = file.path(path, "lvm2-diet-bac-bw.rds"))
+ saveRDS(fit2, file = file.path(path, "fit-diet-bac-bw.rds"))
+ saveRDS(lvm2, file = file.path(path, "lvm-diet-bac-bw.rds"))
 
 # ==================================================================
 # ==================================================================
