@@ -16,7 +16,6 @@
  library(brms)
  library(data.table)
  library(ggplot2)
- #library(ggpubr)
  library(viridis)
 
 
@@ -235,7 +234,7 @@
       scale_x_discrete(expand = c(1, 0)) +
       labs(fill = "Environment :",
            shape = "Environment :") +
-      ylab("log(posterior predicted richness)") +
+      ylab("log(predicted richness)") +
       #xlab("\nParameter") +
       custom_theme +
       theme(axis.title.x = element_blank(),
@@ -264,7 +263,7 @@
       scale_x_discrete(expand = c(1, 0)) +
       labs(fill = "Environment :",
            shape = "Environment :") +
-      ylab("log(posterior predicted richness)") +
+      ylab("log(predicted richness)") +
       #xlab("\nParameter") +
       custom_theme + 
       theme(axis.title.x = element_blank(),
@@ -291,8 +290,7 @@
       #scale_y_continuous(breaks = seq(0, 6, 2),
       #                   limits = c(0, 6.8)) +
       scale_x_discrete(expand = c(1, 0)) +
-      ylab("log(posterior predicted richness)") +
-      #xlab("\nParameter") +
+      ylab("log(predicted richness)") +
       custom_theme + 
       theme(axis.title.x = element_blank(),
             legend.position = "none")
@@ -331,55 +329,6 @@
      web, 
      xmin = 2, xmax = 3.2, 
      ymin = 5.5, ymax = 6.7)    
-
-# ==================================================================
-# ==================================================================
-
-
-
-
-
-# ==================================================================
-# 6. Combine the plots as one figure
-# ==================================================================
-
-
-# Combine as one figure --------------------------------------------
-
- # Prepare the figure
- #fig <- ggarrange(
- #   plot1, NULL, plot2,
- #   nrow = 1, ncol = 3,
- #   labels = c("(A)", "", "(B)"),
- #   hjust = -0.1,
- #   vjust = 1.5,
- #   widths = c(1, 0.1, 1),
- #   common.legend = TRUE,
- #   legend.position = "top"
- #)
-
- #saveRDS(
- #  fig,
- #  file.path(path, "plots-bac", "glm-env-bac-plot.rds")
- #)
-
-# Export in the outputs folder -------------------------------------
- 
- #ggexport(
- #   fig[1],
- #   filename = file.path(path, "plots-bac", "glm-env-bac.png"),
- #   width = 2000,
- #   height = 1200,
- #   res = 300
- #)
-
- #ggexport(
- #   plot3,
- #   filename = file.path(path, "plots-bac", "glm-diet-bac.png"),
- #   width = 1500,
- #   height = 1500,
- #   res = 300
- #)
 
 # ==================================================================
 # ==================================================================

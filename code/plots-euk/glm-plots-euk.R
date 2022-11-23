@@ -198,7 +198,7 @@
       scale_x_discrete(expand = c(1, 0)) +
       labs(fill = "Environment :",
            shape = "Environment :") +
-      ylab("log(posterior predicted richness)") +
+      ylab("log(predicted richness)") +
       custom_theme +
       theme(axis.title.x = element_blank())
 
@@ -225,7 +225,7 @@
       scale_x_discrete(expand = c(1, 0)) +
       labs(fill = "Environment :",
            shape = "Environment :") +
-      ylab("log(posterior predicted richness)") +
+      ylab("log(predicted richness)") +
       custom_theme + 
       theme(axis.title.x = element_blank())
 
