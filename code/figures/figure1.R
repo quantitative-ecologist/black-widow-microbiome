@@ -53,7 +53,7 @@
  fig1 <- annotate_figure(
    fig1,
    left = text_grob(
-     "Bacteria", hjust = -1.8, vjust = -0.5,
+     "Bacteria", hjust = -2.2, vjust = -0.5,
      face = "bold", size = "12", rot = 90)
  )
 
@@ -65,11 +65,12 @@
  )
 
  # Export the figure
+ path <- file.path(getwd(), "outputs")
  ggexport(
     fig1,
     filename = file.path(path, "figures", "figure1.png"),
-    width = 2000,
-    height = 1800,
+    width = 2500,
+    height = 2200,
     res = 300
  )
  

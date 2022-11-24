@@ -1,6 +1,6 @@
 # ==================================================================
 
-#                       Plot the copula models
+#              Plot the copula models for eukaryotes
 
 # ==================================================================
 
@@ -102,7 +102,6 @@
 
 # ==================================================================
 # ==================================================================
-
 
 
 
@@ -211,7 +210,7 @@
 # Compute the biplot -----------------------------------------------
 
  # Compute the plot
- plot1 <- ggplot() +
+ plot3 <- ggplot() +
      geom_point(
         data = site_res1,
         aes(x = Factor1,
@@ -231,11 +230,11 @@
      ) +
      scale_x_continuous(
         breaks = seq(-3, 3, 1),
-        limits = c(-3, 3)
+        limits = c(-3.4, 3.4)
      ) +
      scale_y_continuous(
         breaks = seq(-3, 3, 1),
-        limits = c(-3, 3)
+        limits = c(-3.4, 3.4)
      ) +
      scale_shape_manual(values = c(21, 24)) +
      scale_fill_manual(values = c("#E69F00",
@@ -264,11 +263,11 @@
  spid <- get_png(file.path(path3, "black-widow-spider.png"))
 
  # Add the file to the plot
- plot1 <- plot1 + 
+ plot3 <- plot3 + 
  annotation_custom(
      spid, 
-     xmin = 1.8, xmax = 3, 
-     ymin = 1.8, ymax = 3)
+     xmin = 2.2, xmax = 3.4, 
+     ymin = 2.2, ymax = 3.4)
 
 # ==================================================================
 # ==================================================================
@@ -337,7 +336,7 @@
 # Compute the biplot and export ------------------------------------
 
  # Compute the plot
- plot2 <- ggplot() +
+ plot4 <- ggplot() +
      geom_point(
         data = site_res2,
         aes(x = Factor1,
@@ -357,11 +356,11 @@
      ) +
      scale_x_continuous(
         breaks = seq(-3, 3, 1),
-        limits = c(-3, 3)
+        limits = c(-3.4, 3.4)
      ) +
      scale_y_continuous(
         breaks = seq(-3, 3, 1),
-        limits = c(-3, 3)
+        limits = c(-3.4, 3.4)
      ) +
      scale_shape_manual(values = c(21, 24)) +
      scale_fill_manual(values = c("#E69F00",
@@ -390,49 +389,11 @@
  web <- get_png(file.path(path3, "spider-web.png"))
 
  # Add the file to the plot
- plot2 <- plot2 + 
+ plot4 <- plot4 + 
  annotation_custom(
      web, 
-     xmin = 1.8, xmax = 3, 
-     ymin = 1.8, ymax = 3)
-
-# ==================================================================
-# ==================================================================
-
-
-
-
-
-# ==================================================================
-# 5. Export the plots
-# ==================================================================
- 
-# # Folder path
-# path4 <- file.path(
-#  getwd(),
-#  "outputs",
-#  "plots-euk"
-# )
-# 
-# # Arrange one figure
-# fig <- ggarrange(
-#     plot1, NULL, plot2,
-#     nrow = 1, ncol = 3,
-#     labels = c("(A)", "", "(B)"),
-#     common.legend = TRUE,
-#     legend = "top",
-#     hjust = -0.1, vjust = 1.5,
-#     widths = c(1, 0.1, 1)
-# )
-#
-# # Export figure
-# ggexport(
-#  fig,
-#  filename = file.path(path4, "lvm-env-euk.png"),
-#  width = 2500,
-#  height = 1300,
-#  res = 300
-# )
+     xmin = 2.2, xmax = 3.4, 
+     ymin = 2.2, ymax = 3.4)
 
 # ==================================================================
 # ==================================================================

@@ -244,8 +244,8 @@
                                    "#666666")) +
      labs(fill = "Environment :",
           shape = "Environment :") +
-     xlab("\nLatent variable 1") +
-     ylab("Latent variable 2\n") +
+     xlab("Latent variable 1") +
+     ylab("Latent variable 2") +
      custom_theme
 
 
@@ -373,7 +373,7 @@ df_ell <- data.frame()
     fill = "Environment :",
     shape = "Environment :"
    ) +
-   xlab("\nNMDS1") + ylab("NMDS2\n") +
+   xlab("NMDS1") + ylab("NMDS2") +
    custom_theme
 
 
